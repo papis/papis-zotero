@@ -7,7 +7,6 @@ into papis.
 
 """
 
-import papis_zotero.main
 import papis_zotero.utils
 
 import papis.api
