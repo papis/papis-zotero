@@ -2,6 +2,29 @@ ZOTERO COMPATIBILITY FOR PAPIS
 ==============================
 
 
+Use zotero conectors
+--------------------
+
+Just install the zotero connector browser plugin
+`here <https://www.zotero.org/download/>`_
+and type
+
+::
+
+  papis zotero serve
+
+to start listening to your browser for incoming data.  Whenever you click the
+zotero button to add a paper, papis will add this paper to the library.
+
+
+Installation from pypi
+----------------------
+
+Just run
+
+::
+
+  sudo pip3 install papis-zotero
 
 Installation
 ------------

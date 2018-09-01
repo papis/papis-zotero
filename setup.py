@@ -40,5 +40,6 @@ setup(
             'papis-zotero=papis_zotero:main'
         ]
     ),
+    packages=['papis_zotero'],
     platforms=['linux', 'osx'],
 )
