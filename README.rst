@@ -1,3 +1,6 @@
+.. image:: https://badge.fury.io/py/papis-zotero.svg
+    :target: https://badge.fury.io/py/papis-zotero
+
 ZOTERO COMPATIBILITY FOR PAPIS
 ==============================
 
