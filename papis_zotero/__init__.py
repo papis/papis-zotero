@@ -4,6 +4,7 @@ import papis.api
 import logging
 import http.server
 import papis_zotero.server
+import papis_zotero.importer
 
 
 @click.group()
@@ -36,6 +37,27 @@ def serve(address, port):
     )
     httpd.serve_forever()
 
+
+@main.command('import')
+@click.help_option('-h', '--help')
+@click.option(
+    '--from-bibtex',
+    help='Import zotero library from a bibtex dump, the files fields in '
+         'the bibtex files should point to valid paths',
+    default=None,
+    type=click.Path(exists=True)
+)
+@click.option(
+    '--outfolder',
+    help='Folder to save the imported library, if None is given the usual'
+         ' papis library will be used',
+    default=None
+)
+def do_importer(from_bibtex, outfolder):
+    """Import zotero libraries into papis libraries
+    """
+    if from_bibtex is not None:
+        papis_zotero.importer.import_from_bibtexfile(from_bibtex, outfolder)
 
 if __name__ == "__main__":
     main()
