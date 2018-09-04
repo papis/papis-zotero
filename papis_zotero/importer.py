@@ -16,7 +16,8 @@ logger = logging.getLogger('papis_zotero:importer')
 
 def import_from_bibtexfile(
         bib_file,
-        out_folder=None
+        out_folder=None,
+        link=False
     ):
 
     if out_folder is not None:
@@ -49,6 +50,6 @@ def import_from_bibtexfile(
 
         papis_add(
             [pdf_file] if pdf_file is not None else [],
-            no_document=False if pdf_file is not None else True,
-            data=entry
+            data=entry,
+            link=link
         )

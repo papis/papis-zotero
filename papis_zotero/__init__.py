@@ -53,11 +53,18 @@ def serve(address, port):
          ' papis library will be used',
     default=None
 )
-def do_importer(from_bibtex, outfolder):
+@click.option(
+    '--link',
+    help='Wether to link the pdf files or copy them',
+    default=None
+)
+def do_importer(from_bibtex, outfolder, link):
     """Import zotero libraries into papis libraries
     """
     if from_bibtex is not None:
-        papis_zotero.importer.import_from_bibtexfile(from_bibtex, outfolder)
+        papis_zotero.importer.import_from_bibtexfile(
+            from_bibtex, outfolder, link
+        )
 
 if __name__ == "__main__":
     main()
