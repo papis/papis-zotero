@@ -239,12 +239,11 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
             papis_item = zotero_data_to_papis_data(item)
             if len(files) == 0:
-                logger.error('Not adding any attachments...')
+                logger.warning('Not adding any attachments...')
             logger.info("Adding paper")
             papis.commands.add.run(
                 files,
-                data=papis_item,
-                no_document=len(files) == 0
+                data=papis_item
             )
 
         self.send_response(201)  # Created
