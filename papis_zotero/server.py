@@ -248,6 +248,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.send_response(201)  # Created
         self.set_zotero_headers()
+        # return the JSON data back
+        self.wfile.write(rawinput)
 
     def snapshot(self):
         logger.warning("Snapshot not implemented")
