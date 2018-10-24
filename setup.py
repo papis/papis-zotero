@@ -6,13 +6,13 @@ with open('README.rst') as fd:
 
 setup(
     name='papis-zotero',
-    version='0.0.2',
+    version='0.0.3',
     author='Alejandro Gallo',
     author_email='aamsgallo@gmail.com',
     license='GPLv3',
     url='https://github.com/papis/papis-zotero',
     install_requires=[
-        "papis>=0.7.2",
+        "papis>=0.7.4",
     ],
     classifiers=[
         'Environment :: Console',
