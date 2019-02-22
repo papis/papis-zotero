@@ -41,7 +41,7 @@ def serve(address, port):
 @main.command('import')
 @click.help_option('-h', '--help')
 @click.option(
-    '--from-bibtex',
+    '-f', '--from-bibtex', 'from_bibtex',
     help='Import zotero library from a bibtex dump, the files fields in '
          'the bibtex files should point to valid paths',
     default=None,
