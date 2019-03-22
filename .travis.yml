@@ -1,0 +1,30 @@
+language: python
+os:
+- linux
+python:
+- '3.3'
+- '3.4'
+- '3.5'
+- '3.6'
+script:
+- python -m pytest papis_dmenu tests --cov=papis_dmenu
+install:
+- pip install setuptools
+- pip install python-coveralls
+- pip install pytest
+- pip install pytest-cov
+- pip install .
+- pip install sphinx
+after_success:
+- coveralls
+- cd docs
+- make html
+deploy:
+  provider: pages
+  skip-cleanup: true
+  local-dir: docs/build/html/
+  keep-history: false
+  on:
+    repo: papis/papis-zotero
+    python: '3.6'
+  github-token: $GITHUB_TOKEN
