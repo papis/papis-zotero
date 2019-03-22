@@ -1,14 +1,11 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-import tempfile
-import sys
 import os
 import papis.bibtex
 import papis.api
 from papis.commands.add import run as papis_add
 import papis.config
 import papis.utils
-import yaml
 import logging
 
 logger = logging.getLogger('papis_zotero:importer')
@@ -49,4 +46,3 @@ def add_from_bibtex(bib_file, out_folder=None, link=False):
             data=entry,
             link=link
         )
-

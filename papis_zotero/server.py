@@ -18,7 +18,6 @@ import papis.crossref
 import urllib.request
 import urllib.error
 
-import os
 import re
 import json
 import logging

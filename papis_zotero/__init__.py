@@ -63,7 +63,7 @@ def serve(address, port):
     help='Wether to link the pdf files or copy them',
     default=None
 )
-def do_importer(from_bibtex, outfolder, link):
+def do_importer(from_bibtex, from_sql, outfolder, link):
     """Import zotero libraries into papis libraries
     """
     import papis_zotero.bibtex
@@ -76,6 +76,7 @@ def do_importer(from_bibtex, outfolder, link):
         papis_zotero.sql.add_from_sql(
             from_sql, outfolder
         )
+
 
 if __name__ == "__main__":
     main()
