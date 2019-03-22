@@ -4,7 +4,6 @@ import papis.api
 import logging
 import http.server
 import papis_zotero.server
-import papis_zotero.importer
 
 
 @click.group()
@@ -48,6 +47,12 @@ def serve(address, port):
     type=click.Path(exists=True)
 )
 @click.option(
+    '-s', '--from-sql', 'from_sql',
+    help='Path to the FOLDER where the "zotero.sqlite" file resides',
+    default=None,
+    type=click.Path(exists=True)
+)
+@click.option(
     '--outfolder',
     help='Folder to save the imported library, if None is given the usual'
          ' papis library will be used',
@@ -61,9 +66,15 @@ def serve(address, port):
 def do_importer(from_bibtex, outfolder, link):
     """Import zotero libraries into papis libraries
     """
+    import papis_zotero.bibtex
+    import papis_zotero.sql
     if from_bibtex is not None:
-        papis_zotero.importer.import_from_bibtexfile(
+        papis_zotero.bibtex.add_from_bibtex(
             from_bibtex, outfolder, link
+        )
+    elif from_sql is not None:
+        papis_zotero.sql.add_from_sql(
+            from_sql, outfolder
         )
 
 if __name__ == "__main__":
