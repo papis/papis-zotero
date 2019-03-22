@@ -179,7 +179,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.set_zotero_headers()
-        papis_library = papis.api.get_lib()
+        papis_library = papis.api.get_lib_name()
         response = json.dumps(
             {
                 "libraryID": 1,

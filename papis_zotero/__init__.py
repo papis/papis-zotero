@@ -10,7 +10,7 @@ import papis_zotero.server
 @click.help_option('-h', '--help')
 def main():
     logger = logging.getLogger("papis:zotero")
-    logger.info("library '{0}'".format(papis.api.get_lib()))
+    logger.info("library '{0}'".format(papis.api.get_lib_name()))
 
 
 @main.command('serve')
