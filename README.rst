@@ -1,6 +1,9 @@
 .. image:: https://badge.fury.io/py/papis-zotero.svg
     :target: https://badge.fury.io/py/papis-zotero
 
+.. image:: https://travis-ci.org/papis/papis-zotero.svg?branch=master
+    :target: https://travis-ci.org/papis/papis-zotero
+
 ZOTERO COMPATIBILITY FOR PAPIS
 ==============================
 
