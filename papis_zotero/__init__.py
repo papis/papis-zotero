@@ -7,9 +7,12 @@ import papis_zotero.server
 import papis_zotero.importer
 
 
-@click.group()
+@click.group('zotero')
 @click.help_option('-h', '--help')
 def main():
+    """
+    Zotero interface for papis
+    """
     logger = logging.getLogger("papis:zotero")
     logger.info("library '{0}'".format(papis.api.get_lib()))
 
