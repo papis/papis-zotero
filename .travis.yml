@@ -7,7 +7,7 @@ python:
 - '3.5'
 - '3.6'
 script:
-- python -m pytest papis_dmenu tests --cov=papis_dmenu
+- python -m pytest papis_zotero tests --cov=papis_zotero
 install:
 - pip install setuptools
 - pip install python-coveralls
