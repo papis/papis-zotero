@@ -35,11 +35,11 @@ setup(
         'papis', 'zotero', 'bibtex',
         'management', 'cli', 'biliography'
     ],
-    entry_points=dict(
-        console_scripts=[
-            'papis-zotero=papis_zotero:main'
+    entry_points={
+        'papis.command': [
+            'zotero=papis_zotero:main'
         ]
-    ),
+    },
     packages=['papis_zotero'],
     platforms=['linux', 'osx'],
 )

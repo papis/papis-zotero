@@ -1,4 +1,5 @@
 import click
+import os
 import papis.api
 
 import logging
@@ -13,7 +14,6 @@ def main():
     Zotero interface for papis
     """
     logger = logging.getLogger("papis:zotero")
-    logger.info("library '{0}'".format(papis.api.get_lib_name()))
 
 
 @main.command('serve')
@@ -56,10 +56,10 @@ def serve(address, port):
     type=click.Path(exists=True)
 )
 @click.option(
-    '--outfolder',
-    help='Folder to save the imported library, if None is given the usual'
-         ' papis library will be used',
-    default=None
+    '-o', '--outfolder',
+    help='Folder to save the imported library',
+    type=str,
+    required=True
 )
 @click.option(
     '--link',
@@ -71,6 +71,8 @@ def do_importer(from_bibtex, from_sql, outfolder, link):
     """
     import papis_zotero.bibtex
     import papis_zotero.sql
+    if not os.path.exists(outfolder):
+        os.makedirs(outfolder)
     if from_bibtex is not None:
         papis_zotero.bibtex.add_from_bibtex(
             from_bibtex, outfolder, link
