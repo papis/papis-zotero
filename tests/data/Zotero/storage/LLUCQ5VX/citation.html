@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html class="x-border-box x-strict"><head><script type="text/javascript" async="" src="linkid.js"></script><script type="text/javascript" async="" src="analytics.js"></script><script async="" src="gtm.js"></script><script type="text/javascript">/* <![CDATA[ */_cf_loadingtexthtml="<img alt=' ' src='/cf_scripts/scripts/ajax/resources/cf/images/loading.gif'/>";
+_cf_contextpath="";
+_cf_ajaxscriptsrc="/cf_scripts/scripts/ajax";
+_cf_jsonprefix='//';
+_cf_websocket_port=0;
+_cf_flash_policy_port=0;
+_cf_clientid='AB7C1CD26FFE2115707B0D6EE89DDAE8';/* ]]> */</script><script type="text/javascript" src="cfmessage.js"></script>
+<script type="text/javascript" src="cfajax.js"></script>
+<script type="text/javascript" src="cfform.js"></script>
+<script type="text/javascript" src="masks.js"></script>
+<script type="text/javascript" src="cfformhistory.js"></script>
+<script type="text/javascript" src="ckeditor.js"></script><style>.cke{visibility:hidden;}</style>
+<script type="text/javascript" src="cfrichtexteditor.js"></script>
+<script type="text/javascript" src="yahoo-dom-event.js"></script>
+<script type="text/javascript" src="animation-min.js"></script>
+<script type="text/javascript" src="ext-all.js"></script>
+<script type="text/javascript" src="cflayout.js"></script>
+<link rel="stylesheet" type="text/css" href="ext-all.css">
+<script type="text/javascript" src="cfwindow.js"></script>
+<link rel="stylesheet" type="text/css" href="cf.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="dl.css">
+<title>The Org Mode 7 Reference Manual - Organize your life with GNU Emacs</title>
+<style type="text/css"><!--
+    body {margin-left: 0em; margin-top: 0}
+    a:link {text-decoration: underline; 	Color: #1d4d0f;}
+    a:visited  { color: #990033; text-decoration: underline;}
+    a:hover {color: red; text-decoration: none}
+    a.dLink1:link {color:#336699}
+    a.dLink1:visited {color:#666666}
+	a.isblack:link {text-decoration: underline; 	Color: #000000;}
+    a.isblack:visited  { color: #000000; text-decoration: underline;}
+    a.isblack:hover {color: #000000; text-decoration: none}
+    h1 {font-size: 140%; margin-bottom: 0}
+	ul {margin-top: .25em; list-style-type: disc}
+	ol {margin-top: .25em;}
+	li {padding-bottom: .25em;}
+    h2 {color: white; background-color: #069; 
+        font-size: 100%; padding-left: 1em;
+		margin: 0}
+	h3 {color: black; background-color: yellow; 
+    	font-size: 100%;
+		margin: 0}
+	 h4 {color: black; background-color: #99c5e8; 
+        font-size: 100%;
+		margin: 0}
+    hr {color: #39176d;}
+    form {margin-top: 10}
+    form.xrs {margin-top: 0}
+	
+	a {text-decoration: none; }
+	
+	input {font-size: 1em;}
+	.chevron {color: #ff0000;}
+	.light-blue {color:#336699;}
+	.black {color:#000000;}
+	
+	
+	.mono-text {font-size: 14px; font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;}
+	
+	/* ### standard text styles, smallest to largest ### */
+	
+	.footer-link-text {font-family: Arial, Helvetica, sans-serif;
+		color:#336699; font-size: .75em; line-height: 1.33em;
+		text-indent: -.75 em; margin-left: 2em; margin-right: .75em;}
+		
+	.footer-copy-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .75em; line-height: 1.3em;
+		margin-left: .75em; margin-right: .75em;}
+		
+	.small-link-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .83em; padding-bottom : 2px;
+	  	padding-top : 2px;}
+		
+	.small-link-text2 {font-size: .83em !important; 
+	}
+
+	.smallerer-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .65em;}
+	.smaller-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .75em;}		
+	.small-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .83em;}
+	.small-textb {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .83em; font-weight: bold;}
+	.medium-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: 1em;}
+	.mediumb-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: 1em; font-weight: bold;}
+	.large-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: 1.3em;}		
+	.instr-text {font-family: Arial, Helvetica, sans-serif;
+		color:#666666; font-size: .83em;}
+		
+	.list-link-text {font-family: Arial, Helvetica, sans-serif;
+		color:#336699; font-size: .83em; line-height: 1.3em;}
+	.list-link-btext {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: .83em; line-height: 1.3em;}
+	
+	.searchbox-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000066; font-size: 1em; font-weight: bold;}
+	.footer-header-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000066; font-size: 1em; font-weight: bold;
+		margin-left: .75em; margin-right: .75em;}
+	.medium-link-text {font-family: Arial, Helvetica, sans-serif;
+		color:#000066; font-size: 1em; font-weight: bold; line-height: 1em;
+		text-indent: -1.25em; margin-left: 2em; margin-right: .75em;}
+	
+	.text16 {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: 16px;}
+		
+	.text14 {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: 14px;}
+	
+	.text12 {font-family: Arial, Helvetica, sans-serif;
+		color:#000000; font-size: 12px;}
+		
+	.text10 {font-family: Arial, Helvetica, sans-serif;
+	    color:#000000; font-size: 12px;}
+		
+	.text9 {font-family: Arial, Helvetica, sans-serif;
+	   color:#000000; font-size: 12px;}
+	
+	.error-text {color:red;}
+	
+	.small-copy-text {font-family: Times, Times New Roman, serif;
+		color:#000066; font-size: .75em; line-height: 1.2em;
+		margin-left: .75em; margin-right: .75em;}
+
+	.medium-copy-text {font-family: Times, Times New Roman, serif;
+		color:#000066; font-size: 1em; line-height: 1.2em;
+		margin-left: .75em; margin-right: .75em;}
+	
+	.large-copy-text {font-family: Times, Times New Roman, serif;
+		color:#000066; font-size: 1.3em; line-height: 1.5em;
+		margin-left: .75em; margin-right: .75em;}
+	
+	.medium-header-text {font-family: Times, Times New Roman, serif;
+		color:#ff0000; font-size: 1em;
+		margin-left: .75em; margin-right: .75em;}
+	
+	.large-header-text {font-family: Times, Times New Roman, serif;
+		color:#ff0000; font-size: 1.5em;
+		margin-left: .75em; margin-right: .75em;}
+
+		#side {
+			width: 10px;
+			float: left;
+			margin-left: -1px;
+			padding: 2px;
+			}
+							
+		#content {
+			padding: 2px;
+			margin-left: 25px;
+			
+		        
+		        }
+	 .fulltext_lnk {border:0px;
+	 				 margin-right: 2px;
+					 vertical-align:baseline;
+	 				}
+	 
+	  .leftcoltab { 
+		  position:relative;
+		  top:5px;
+		  left:5px;
+		  float:left;
+		  width:530px;  /* for IE5/WIN */
+		  width:520px; /* actual value */
+		  margin:0 0 0px 0;
+		  padding:5px;
+		  z-index:100;
+		  }
+	  .rightcoltab {
+    float: right;
+    margin: 0;
+    padding: 5px;
+    position: relative;
+    right: 50px;
+    top: 25px;
+    width: 350px;
+    z-index: 99;
+}
+	  .centercoltab {
+		  position:absolute;
+		  padding:0 0px;
+		  }
+	  .alt {
+		background: #ece9d8;
+		margin: 0;
+		padding: 1px;
+		}
+		.leftcolc { 
+	position:relative;
+	top:5px;
+	left:5px;
+	float:left;
+	width:420px;  /* for IE5/WIN */
+	width:400px; /* actual value */
+	margin:0 0 0px 0;
+	padding:5px;
+	z-index:100;
+	}
+.rightcolc {
+	position:relative;
+	top:0px;
+	right:0px;
+	float:right;
+	margin:0 0px;
+	padding:0px;
+	width:500px;
+	z-index:99;
+	}
+.centercolc {
+	position:absolute;
+	padding:0 0px;
+	}
+	
+	.leftcoltabv { 
+		  position:relative;
+		  top:5px;
+		  left:5px;
+		  float:left;
+		  width:460px;  /* for IE5/WIN */
+		  width:350px; /* actual value */
+		  margin:0 0 0px 0;
+		  padding:5px;
+		  z-index:100;
+		  }
+	.rightcoltabv {
+		position:relative;
+		top:5px;
+		right:0px;
+		float:right;
+		margin:0 0px 0 0;
+		padding:15px;
+		width:480px;
+		z-index:99;
+		}
+		
+.x-tabs-strip-wrap {
+	overflow-y: hidden !important;
+}
+  --></style>
+<script src="tagcanvas.js" type="text/javascript"></script>
+<script type="text/javascript">
+  function loadCloud() {
+	try {
+	  TagCanvas.Start('myCanvas','tags',{
+		textColour: '#000000',
+		outlineColour: '#ff00ff',
+		reverse: true,
+		shuffleTags:true,
+		depth: 0.8,
+		maxSpeed: 0.05,
+		textHeight: 12,
+		initial: [0.000, 0.050],
+		shape: "hring",
+		lock: "x"
+	  });
+	} catch(e) {
+	  // something went wrong, hide the canvas container
+	  // document.getElementById('myCanvasContainer').style.display = 'none';
+	}
+  };
+</script>
+<script type="text/javascript" src="cffp.js"></script>
+<script type="text/javascript" src="jsapi"></script>
+<style type="text/css"><!--
+.google-visualization-orgchart-node {
+    background-color: #FFFFFF !important;
+    border: 2px solid #AFCF40 !important;
+    cursor: default;
+    font-family: arial,helvetica;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.CandormapWidget iframe {float:right; 
+		margin:10px;
+		border: 2px solid #1B4D0E;
+		
+		}
+
+a.boxed:link {text-decoration: none !important; 	Color: #000000 !important;}
+a.boxed:visited  { color: #000000 !important; text-decoration: none !important;}
+a.boxed:hover {color: red !important; text-decoration: underline !important;}
+
+a.boxedh:link {text-decoration: none !important; 	Color: #000000 !important;}
+a.boxedh:visited  { color: #000000 !important; text-decoration: none !important;}
+a.boxedh:hover {color: red !important; text-decoration: underline !important;}		
+
+a.boxedm:link {text-decoration: none !important; 	Color: #606060 !important;}
+a.boxedm:visited  { color: #606060 !important; text-decoration: none !important;}
+a.boxedm:hover {color: red !important; text-decoration: underline !important;}		
+
+a.boxedl:link {text-decoration: none !important; 	Color: #808080   !important;}
+a.boxedl:visited  { color: 	#808080 !important; text-decoration: none !important;}
+a.boxedl:hover {color: red !important; text-decoration: underline !important;}				
+
+.google-visualization-orgchart-linebottom {
+    border-bottom: 1px solid #006699 !important;
+}
+.google-visualization-orgchart-lineleft {
+    border-left: 1px solid #006699 !important;
+}
+
+.google-visualization-orgchart-lineright {
+    border-right: 1px solid #006699 !important;
+}
+
+
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+.fade-in {
+    opacity:0;
+    -webkit-animation:fadeIn ease-in 1;
+    -moz-animation:fadeIn ease-in 1;
+    animation:fadeIn ease-in 1;
+
+    -webkit-animation-fill-mode:forwards; 
+    -moz-animation-fill-mode:forwards;
+    animation-fill-mode:forwards;
+
+    -webkit-animation-duration:1s;
+    -moz-animation-duration:1s;
+    animation-duration:1s;
+	
+	-webkit-animation-delay: 1s;
+	-moz-animation-delay: 1s;
+	animation-delay: 1s;
+}
+
+-->
+</style>
+<script type="text/javascript">
+
+
+function settab() {
+    var mytabs = ColdFusion.Layout.getTabLayout('citationdetails');
+   
+ 
+  mytabs.on('tabchange', function(tabpanel,activetab) { document.cookie = 'picked=' + '1952135' + ',' + activetab.id; })
+ 
+}
+
+
+function letemknow(){
+  ColdFusion.Window.show('letemknow');
+}
+
+function letemknow2(){
+  ColdFusion.Window.show('letemknow2');
+}
+
+
+
+
+
+function testthis(){
+
+alert('test');
+}
+function loadalert(){ 
+ alert("I am in the load alert");
+ 
+}
+function loadalert2(){ 
+  alert("I am in the load alert2");
+ 
+}
+</script>
+<script type="text/javascript">
+	  	google.load('visualization', '1', {packages:['orgchart']});
+	    google.setOnLoadCallback(drawChart);
+	  
+	  function drawChart() {
+	    var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Name');
+        data.addColumn('string', 'Manager');
+        data.addColumn('string', 'ToolTip');
+  	  
+		data.addRows([
+          [{v:'0', f:'<div style="color:black; font-size:150%; font-style:normal">CCS&nbsp;for&nbsp;this&nbsp;Book</div>'}, '', ''],
+		  
+        ]);
+		
+		if (document.getElementById('chart_div')) {
+       var chart = new google.visualization.OrgChart(document.getElementById('chart_div'));
+       chart.draw(data, {allowHtml:true});
+		}
+      }
+	  
+</script><script src="a" type="text/javascript"></script><link href="uien.css" type="text/css" rel="stylesheet"><script src="formatendefaultenuienorgcharten.js" type="text/javascript"></script><link href="orgchart.css" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+ function expandcollapse(anchor,whichone) {
+	 var inner = document.getElementById(anchor);
+	 var theshow = "toShow" + whichone;
+ 	 var thehide = "toHide" + whichone;
+	 var span = document.getElementById(theshow);
+     span.style.display = (span.style.display=='inline')?'none':'inline';
+     var span = document.getElementById(thehide);
+     span.style.display = (span.style.display=='none')?'inline':'none';
+     inner.innerHTML = (inner.innerHTML=='collapse')?'expand':'collapse';
+    }
+
+  
+</script>
+<script type="text/javascript">
+ /* <!-- Begin
+	if(document.layers || document.all) {
+	a = 1;
+	setInterval("Jump()", 10);
+	}
+	function Jump() {
+	a = a + 1;
+	//self.moveBy((Math.random() * a * 2 - a), (Math.random() * a * 2) - a);
+	}
+//  End --> */
+</script>
+<script type="text/javascript">
+function expandWatson(divID,theConcept) { 
+			if (document.getElementById(divID).style.display == "none") {
+				document.getElementById(divID).style.display = "block";
+				document.getElementById(divID).innerHTML = theConcept + "<br />" + document.getElementById(divID).innerHTML;
+			}
+			 else {
+				 document.getElementById(divID).style.display = "none"
+			}
+		}
+</script>
+
+<script type="text/javascript">
+  function togglePatMap() {
+        var div = document.getElementById('patmap'); 
+        if (div.style.display == "none") {
+            div.style.display = "block";
+            document.getElementById("expandcollapsepmapa").src = "images/collapse.png";
+			
+			if (div.innerHTML.length == 0){
+				httpGetAsyncwID("patent.cfm?id=1952135",'patmap');
+				httpGetAsyncwID("simmap_track.cfm?id=1952135&how=live",'blackhole');
+			}
+			else {
+				httpGetAsyncwID("simmap_track.cfm?id=1952135&how=cache",'blackhole');
+			}
+			
+        }
+        else {
+            div.style.display = "none";
+            document.getElementById("expandcollapsepmapa").src = "images/expand.png";
+        }
+    }
+  
+  function toggleCO() {
+        var div = document.getElementById('codisp'); 
+        if (div.style.display == "none") {
+            div.style.display = "block";
+            document.getElementById("expandcollapsecoa").src = "images/collapse.png";
+			
+			if (div.innerHTML.length == 0){
+				/* httpGetAsyncwID("coint.cfm?id=1952135",'codisp'); */
+				/*httpGetAsyncwID("simmap_track.cfm?id=1952135&how=live",'blackhole'); */
+			}
+			else {
+				/* httpGetAsyncwID("simmap_track.cfm?id=1952135&how=cache",'blackhole'); */
+			}
+			
+        }
+        else {
+            div.style.display = "none";
+            document.getElementById("expandcollapsecoa").src = "images/expand.png";
+        }
+    }
+	
+	function httpGetAsyncwID(theUrl,theID) {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.onreadystatechange = function() {
+			if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+				
+				document.getElementById(theID).innerHTML=xmlHttp.responseText;
+		}
+		xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+		xmlHttp.send();
+	}
+</script>
+<meta name="citation_publisher" content="Network Theory Ltd."> <meta name="citation_authors" content="Dominik, Carsten"> <meta name="citation_title" content="The Org Mode 7 Reference Manual - Organize your life with GNU Emacs"> <meta name="citation_date" content="11/26/2010"> <meta name="citation_isbn" content="1906966087, 9781906966089"> <meta name="citation_abstract_html_url" content="http://dl.acm.org/citation.cfm?id=1952135">
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFAJAXPROXY');
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFFORM');
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFDIV');
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFTEXTAREA');
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFLAYOUT-TAB');
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+		Ext.onReady(function(){var _cf_layout_init_577418571757068=function()
+		{
+			var _cf_layout=ColdFusion.Layout.initializeTabLayout("citationdetails", false, null, null, true);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareaabstract","abstract","<span>Abstract</span>",null,false,false,false,true);
+			ColdFusion.Layout.selectTab('citationdetails','abstract');
+			_cf_bind_init_577418571757069=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareaabstract','bindExpr':['tab_abstract.cfm?id=1952135&type=Book&usebody=tabbody']},ColdFusion.Bind.urlBindHandler,true);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757069);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareaauthors","authors","<span>Authors</span>",null,false,false,false,true);
+			_cf_bind_init_577418571757070=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareaauthors','bindExpr':['tab_authors2.cfm?id=1952135&usebody=tabbody']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757070);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareareferences","references","<span style='color:#999999'>References</span>",null,false,false,false,true);
+			_cf_bind_init_577418571757071=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareareferences','bindExpr':['tab_references.cfm?id=1952135&type=nondiv_book&usebody=tabbody']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757071);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareacitedby","citedby","<span>Cited By</span>",null,false,false,false,true);
+			_cf_bind_init_577418571757072=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareacitedby','bindExpr':['tab_citings.cfm?id=1952135&usebody=tabbody']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757072);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareaindexterms","indexterms","<span style='color:#999999'>Index Terms</span>",null,false,false,false,true);
+			_cf_bind_init_577418571757073=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareaindexterms','bindExpr':['tab_indexterms.cfm?id=1952135&usebody=tabbody']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757073);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareasource","source","<span>Publication</span>",null,false,false,false,true);
+			_cf_bind_init_577418571757074=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareasource','bindExpr':['tab_source.cfm?id=1952135&usebody=tabbody&type=nondiv_book&sellOnline=0&purchaseable=no']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757074);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutarearevs","revs","<span style='color:#999999'>Reviews</span>",null,false,false,false,true);
+			_cf_bind_init_577418571757075=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutarearevs','bindExpr':['tab_reviews.cfm?id=1952135&logged=0&curclient_no=NO&usebody=tabbody']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757075);
+			ColdFusion.Layout.addTab(_cf_layout,"cf_layoutareacomments","comments","<span>Comments</span>",null,false,true,false,true);
+			_cf_bind_init_577418571757076=function()
+			{
+				ColdFusion.Bind.register([],{'bindTo':'cf_layoutareacomments','bindExpr':['tab_comments.cfm?id=1952135&logged=0&loggedbyip=0&curclient_no=NO&usebody=tabbody&full_name=&email=']},ColdFusion.Bind.urlBindHandler,false);
+			};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757076);
+			
+		};ColdFusion.Event.registerOnLoad(_cf_layout_init_577418571757068);});
+	/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Ajax.importTag('CFWINDOW');
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757078=function()
+	{
+		_cf_bind_init_577418571757079=function()
+		{
+			ColdFusion.Bind.register([],{'bindTo':'letemknow-body','bindExpr':['letemknow.cfm']},ColdFusion.Bind.urlBindHandler,false);
+		};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757079);var _cf_window=ColdFusion.Window.create('letemknow','<div style=\'text-align:left; color:black;\'>Did you know the ACM DL App is now available?</div>','letemknow.cfm',{ modal:false, closable:true, divid:'cf_window577418571757077', draggable:true, resizable:true, fixedcenter:false, width:600, height:275, shadow:true, callfromtag:true, minwidth:600, minheight:275, initshow:false, destroyonclose:false, x:75, y:125});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757078);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757081=function()
+	{
+		_cf_bind_init_577418571757082=function()
+		{
+			ColdFusion.Bind.register([],{'bindTo':'letemknow2-body','bindExpr':['letemknow_recomm.cfm']},ColdFusion.Bind.urlBindHandler,false);
+		};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757082);var _cf_window=ColdFusion.Window.create('letemknow2','<div style=\'text-align:left; color:black;\'>Did you know your Organization can subscribe to the ACM Digital Library?</div>','letemknow_recomm.cfm',{ modal:false, closable:true, divid:'cf_window577418571757080', draggable:true, resizable:true, fixedcenter:false, width:600, height:275, shadow:true, callfromtag:true, minwidth:600, minheight:275, initshow:false, destroyonclose:false, x:70, y:175});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757081);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757084=function()
+	{
+		_cf_bind_init_577418571757085=function()
+		{
+			ColdFusion.Bind.register([],{'bindTo':'theguide-body','bindExpr':['whatisguide.cfm']},ColdFusion.Bind.urlBindHandler,false);
+		};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757085);var _cf_window=ColdFusion.Window.create('theguide','The ACM Guide to Computing Literature','whatisguide.cfm',{ modal:false, closable:true, divid:'cf_window577418571757083', draggable:true, resizable:true, fixedcenter:true, width:500, height:300, shadow:true, callfromtag:true, minwidth:300, minheight:250, initshow:false, destroyonclose:false});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757084);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757087=function()
+	{
+		_cf_bind_init_577418571757088=function()
+		{
+			ColdFusion.Bind.register([],{'bindTo':'thetags-body','bindExpr':['showthetags.cfm?id=1952135']},ColdFusion.Bind.urlBindHandler,false);
+		};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757088);var _cf_window=ColdFusion.Window.create('thetags','All Tags','showthetags.cfm?id=1952135',{ modal:false, closable:true, divid:'cf_window577418571757086', draggable:true, resizable:true, fixedcenter:true, width:500, height:300, shadow:true, callfromtag:true, minwidth:300, minheight:250, initshow:false, destroyonclose:false});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757087);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757090=function()
+	{
+		var _cf_window=ColdFusion.Window.create('theformats','Export Formats','',{ modal:false, closable:true, divid:'cf_window577418571757089', draggable:true, resizable:true, fixedcenter:false, width:500, height:300, shadow:true, bodystyle:'text-align:left', callfromtag:true, minwidth:250, minheight:250, initshow:false, destroyonclose:false});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757090);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757092=function()
+	{
+		var _cf_window=ColdFusion.Window.create('theexplaination','','',{ modal:false, closable:true, divid:'cf_window577418571757091', draggable:true, resizable:true, fixedcenter:false, width:600, height:600, shadow:true, bodystyle:'text-align:left', callfromtag:true, minwidth:300, minheight:250, initshow:false, destroyonclose:false});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757092);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757094=function()
+	{
+		var _cf_window=ColdFusion.Window.create('theservices','','',{ modal:false, closable:true, divid:'cf_window577418571757093', draggable:true, resizable:true, fixedcenter:false, width:500, height:300, shadow:true, bodystyle:'text-align:left', callfromtag:true, minwidth:300, minheight:250, initshow:false, destroyonclose:false});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757094);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	Ext.onReady(function(){var _cf_window_init_577418571757096=function()
+	{
+		_cf_bind_init_577418571757097=function()
+		{
+			ColdFusion.Bind.register([],{'bindTo':'savetobinder-body','bindExpr':['savetobinder.cfm?id=1952135']},ColdFusion.Bind.urlBindHandler,false);
+		};ColdFusion.Event.registerOnLoad(_cf_bind_init_577418571757097);var _cf_window=ColdFusion.Window.create('savetobinder','Save to Binder','savetobinder.cfm?id=1952135',{ modal:false, closable:true, divid:'cf_window577418571757095', draggable:true, resizable:true, fixedcenter:true, width:600, height:600, shadow:true, callfromtag:true, minwidth:300, minheight:250, initshow:false, destroyonclose:false, _cf_refreshOnShow:true});
+	};ColdFusion.Event.registerOnLoad(_cf_window_init_577418571757096);});
+/* ]]> */</script>
+<script type="text/javascript">/* <![CDATA[ */
+	ColdFusion.Event.registerOnLoad(settab,null,false,true);
+/* ]]> */</script>
+<script charset="utf-8" src="button.js"></script></head>
+
+<body style="text-align:center; font-size:100%" id="ext-gen1018" class="x-body x-gecko x-linux x-reset"><div style="display: none;" id="lightningjs-usabilla_live"><div><iframe id="lightningjs-frame-usabilla_live" frameborder="0"></iframe></div></div> 
+<script type="text/javascript">
+setTimeout(function(){
+document.getElementById('DLnext').style.display = "block";
+},1500);
+</script>
+<script type="text/javascript">
+						addthis_pub             = 'acm'; 
+						//addthis_logo            = 'http://www.addthis.com/images/yourlogo.png';
+						addthis_logo            = 'https://dl.acm.org/images/ACM_transparent.png';
+						addthis_logo_background = 'c2d5fc';
+						addthis_logo_color      = '000000';
+						addthis_brand           = 'Citation Page';
+						addthis_options         = 'favorites, email, slashdot, citeulike, digg, delicious, twitter, myspace, facebook, google, more';
+						</script>
+<script src="AC_RunActiveContent.js" type="text/javascript"></script>
+<div style="width:940px; margin-left: auto; margin-right: auto; text-align:left">
+<a id="CIT"></a>
+
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-NFGCMX"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NFGCMX');</script>
+
+<div id="header">
+<table style="table-layout:fixed; margin-top: 5px; margin-bottom: 10px; border:0px; width:100%; border-collapse:collapse;">
+ <tbody><tr id="trMessage" style="vertical-align:top">
+<td colspan="3" style="padding-top: 5px; padding-left: 10px; padding-bottom: 10px; padding-right: 10px; text-align:left; background-color:#d8e4f2; border: solid 2px #0f5ea9;" class="small-link-text2">
+<div id="cfp" style="margin-top:5px; margin-bottom:5px;">
+<div>
+<strong>Help Design Your New ACM Digital Library</strong>
+</div>
+<div style="margin-top:10px;">
+We're upgrading the ACM DL, and would like your input.&nbsp;&nbsp;Please
+ sign up to review new features, functionality and page designs.
+</div>
+<div style="margin-top:10px;">
+<form id="cfp_form" style="display:inline" action="#" method="post"><label id="cfp_email" title="email address">Leave an email address: <input id="cfp_email" name="cfp_email" type="email"></label><input src="ok-button-20x20.jpg" alt="submit email address" style="vertical-align:middle; margin-left: 5px;" type="image"><span style="padding-left:10px; padding-right:10px;">or</span><div style="display:inline-block; vertical-align:middle" onmouseover="javascript: document.cookie = 'CFP=1; expires=Thu, 31 Dec 2048 12:00:00 UTC; path=/';"><a href="https://twitter.com/ACMDL?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false" data-twitter-extracted-i1559761788444723851="true">Follow @ACMDL</a><script async="" src="widgets.js" charset="utf-8"></script></div>
+<span style="padding-left:10px; padding-right:10px;">or</span><div style="display:inline-block; vertical-align: middle;">[<a href="#" onclick="javascript: document.getElementById('cfp_form').submit();">Not interested</a>]</div></form>
+</div>
+</div>
+</td>
+</tr>
+<tr style="vertical-align:top">
+<td style="padding-left: 5px; padding-right:10px; padding-bottom:0px; width:300px" class="small-link-text2"><img src="ACMDL_Logo.jpg" alt="ACM DL" style="border:0px" usemap="#port">
+</td>
+<td style="padding-left: 5px; padding-right:10px; padding-bottom:0px; vertical-align:middle;" class="small-link-text2">
+<table style="width:100%; border-collapse:collapse; padding:0px">
+<tbody><tr><td style="text-align:center">
+<div style="margin:0px auto;color:#356b20;font-size:10pt;line-height:10%;"> </div>
+</td>
+</tr>
+</tbody></table>
+</td>
+<td style="padding-top: 0px; padding-left: 0px; padding-bottom:0px; text-align:right;" class="small-link-text2">
+<p style="margin-top:0px; margin-bottom:10px;">
+<a href="https://dl.acm.org/signin.cfm" class="small-link-text2" title="Sign in to personalize your Digital Library experience">SIGN IN</a>
+&nbsp;&nbsp;<a href="https://dl.acm.org/signin.cfm" class="small-link-text2" title="Sign up to personalize your Digital Library experience">SIGN UP</a>
+</p>
+<table style="padding: 5px; border-collapse:collapse; float:right">
+<tbody><tr>
+<td class="small-link-text2" style="text-align:right">
+<script type="text/javascript">
+								function encodeInput(form){
+								    	var cleanQuery = form.elements['query'].value.replace(new RegExp( "\\+", "g" ),"%2B");
+										cleanQuery = cleanQuery.replace(/#/g, "%23");
+										cleanQuery = cleanQuery.replace(/(\n)/g, " ");
+										cleanQuery = cleanQuery.trim();
+										
+										
+										var ascii = /^[ -~]+$/;
+										if( !ascii.test( cleanQuery ) ) {
+											var fixedUseQuery = "";
+											for (var i = 0, len = cleanQuery.length; i < len; i++) {
+												var str = "";
+												if( !ascii.test(cleanQuery[i]) ) {
+										 			str = "%26%23" + cleanQuery[i].charCodeAt(0) + ";";
+												} else {
+										 			str = cleanQuery[i];
+												}
+												fixedUseQuery = fixedUseQuery + str;
+											}
+											cleanQuery = fixedUseQuery;
+										}
+										
+
+										form.elements['query'].value = cleanQuery;
+								}
+							</script>
+<form name="qiksearch" action="/results.cfm" onsubmit="encodeInput(this)">
+<span style="margin-left:0px"><label><input name="query" size="30" type="text"></label>&nbsp;
+<input style="vertical-align:top;" alt="Search" name="Go" src="search_small.jpg" type="image">
+</span>
+</form>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+<tr><td colspan="3" class="small-link-text2" style="padding-bottom:5px; padding-top:0px; text-align:center">
+<div style="margin:0px auto;color:#356b20;line-height:10%;"> </div>
+</td>
+</tr>
+</tbody></table>
+<map name="port" id="port">
+<area shape="rect" coords="1,1,60,50" href="https://www.acm.org/" alt="ACM Home Page">
+<area shape="rect" coords="65,1,275,68" href="https://dl.acm.org/dl.cfm" alt="ACM Digital Library Home Page">
+</map>
+</div>
+<style>
+  .watsonCont {
+	  width:170px;
+	  
+	  color: #000000;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 1em;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	 /* background-color: lightgray;*/
+  }
+  #watsonInside {
+    border-radius: 25px;
+    border: 2px solid #649134;
+	margin-top: 12px;
+	padding: 5px;
+	height: 80px;
+  }
+
+</style>
+<table style="table-layout:fixed; padding-bottom:10px; width:100%; padding:0px;">
+<tbody><tr style="vertical-align:top">
+<td style="padding-right:10px; text-align:left" class="small-link-text">
+<div id="divmain" style="border:1px solid #356b20;">
+<div class="large-text" style="text-align:left; margin-left:2px;margin-bottom:5px;">
+<h1 class="mediumb-text" style="margin-top:0px; margin-bottom:0px;">The Org Mode 7 Reference Manual - Organize your life with GNU Emacs</h1>
+</div>
+<table class="medium-text" style="border-collapse:collapse; padding:0px; margin-left: 2px;">
+<colgroup>
+<col style="width:540px">
+</colgroup>
+<tbody><tr style="vertical-align:top">
+<td>
+<table style="border-collapse:collapse; padding:2px;" class="medium-text">
+<colgroup><col style="width:80px;">
+<col style="width:auto">
+</colgroup><tbody><tr style="vertical-align:top">
+</tr>
+</tbody></table>
+<table style="margin-top: 10px; border-collapse:collapse; padding:2px;" class="medium-text">
+<colgroup><col style="width:80px">
+</colgroup><tbody><tr>
+<td valign="top" nowrap="nowrap">
+Author:
+</td>
+<td style="padding-right:3px;" valign="top" nowrap="nowrap">
+<a href="https://dl.acm.org/author_page.cfm?id=81482647413&amp;coll=DL&amp;dl=ACM&amp;trk=0" title="Author Profile Page" target="_self">Carsten Dominik</a>
+</td>
+<td valign="bottom">
+</td>
+</tr>
+</tbody></table>
+<table style="margin-top: 10px" class="medium-text" border="0" cellspacing="0" cellpadding="2">
+<tbody><tr>
+<td><table class="medium-text" style="margin-left:5px;" border="0" cellspacing="0" cellpadding="1">
+<tbody><tr valign="top">
+<td rowspan="20" style="padding-top:0px;" align="center" nowrap="nowrap">Publication:<br>
+<a href="" title="" target="_blank"><img style="margin-top:5px; border-width:thin; border-color:black" src="9781906966089-cover_thumb.jpg" alt="Cover Image" width="50" height="75"></a><br>
+</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr valign="top">
+<td style="padding-bottom:0px" nowrap="nowrap">·&nbsp;Book</td>
+<td colspan="2"></td>
+</tr>
+<tr valign="top">
+<td colspan="3" style="padding-left:10px"> The Org Mode 7 Reference Manual - Organize your life with GNU Emacs <a href="" target="_self" class="small-link-text"></a>
+</td>
+</tr>
+<tr valign="top">
+<td colspan="3" style="padding-left:10px"> <span class="small-link-text">Network Theory Ltd.</span> <span class="small-link-text"> ©2010</span>
+<br>
+ISBN:1906966087 9781906966089
+</td>
+</tr>
+</tbody></table></td>
+</tr>
+</tbody></table>
+</td>
+<td rowspan="20">
+<table class="medium-text" border="0" cellspacing="0" cellpadding="0">
+<tbody><tr>
+<td style="padding-bottom: 5px;" align="center">
+</td>
+<td align="left" nowrap="nowrap">
+2010 Book<br>
+</td>
+</tr>
+<tr>
+<td colspan="2" style="padding-bottom:5px; padding-top:5px;" valign="baseline">
+<img src="stats.jpg" alt="Bibliometrics Data">&nbsp;
+<a href="javascript:ColdFusion.Window.show('theexplaination');ColdFusion.navigate('explain.cfm?expid=1','theexplaination');" title="Bibliometrics: explained">Bibliometrics</a>
+</td>
+</tr>
+<tr>
+<td class="small-text" colspan="2" style="padding-left:30px;" valign="top">
+·&nbsp;Citation Count: 2<br>
+·&nbsp;Downloads (cumulative): n/a<br>
+·&nbsp;Downloads (12 Months): n/a<br>
+·&nbsp;Downloads (6 Weeks): n/a<br>
+</td>
+</tr>
+</tbody></table>
+</td>
+</tr>
+</tbody></table>
+<br clear="all">
+<br clear="all">
+</div>
+
+</td>
+<td style="padding-left: 5px; vertical-align:top; text-align:left; width:170px" class="small-link-text">
+<div id="divtools" style="background-color:#ece9d8; text-align:left; padding-top:5px; padding-bottom:5px; ">
+<div class="medium-text" style="margin-left:3px; margin-top:10px;"><h1 class="mediumb-text" style="margin-top:-15px;">Tools and Resources</h1></div>
+<ul title="Tools and Resources" style="list-style: none; list-style-position:outside;
+margin-left: 25px;
+padding-left: 0em;
+text-indent: 0px;
+margin-bottom: 0px;">
+<li style="list-style-image:url(img/binder.gif);margin-top:10px;"><span style="margin-left:0px;">
+<a href="https://dl.acm.org/citation.cfm?id=1952135#" onclick="window.alert('To use this Feature, you must login with your personal ACM Web Account.');" class="small-link-text">Save to Binder</a>
+</span></li>
+<li style="list-style-image:url(img/binder_green.gif);margin-top:10px;"><span style="margin-left:0px; margin-bottom:0px">
+<span class="small-link-text">Export Formats:</span>
+<ul style="margin-left: 0; padding-left: 0; margin-bottom:0px;">
+<li style="list-style:disc; display:inline; margin-bottom:0px;"><a href="javascript:ColdFusion.Window.show('theformats');ColdFusion.navigate('exportformats.cfm?id=1952135&amp;expformat=bibtex','theformats');" class="small-link-text">BibTeX</a></li>
+<li style="list-style:disc; display:inline; margin-bottom:0px;"><a href="javascript:ColdFusion.Window.show('theformats');ColdFusion.navigate('exportformats.cfm?id=1952135&amp;expformat=endnotes','theformats');" class="small-link-text">EndNote</a></li>
+<li style="list-style:disc; display:inline; margin-bottom:0px;"><a href="javascript:ColdFusion.Window.show('theformats');ColdFusion.navigate('exportformats.cfm?id=1952135&amp;expformat=acmref','theformats');" class="small-link-text">ACM&nbsp;Ref</a></li>
+</ul>
+</span>
+</li>
+</ul>
+<p style="margin-top: 5px; margin-left:0px">
+<a href="https://www.amazon.com/exec/obidos/ASIN/1906966087/acmorg-20" onclick="noValue('http://www.amazon.com/exec/obidos/ASIN/1906966087/acmorg-20');"><img src="BuyABook88x31.gif" alt="Purchase this Book" width="88" border="0" align="texttop" height="31"></a>&nbsp;&nbsp;
+</p>
+
+
+<p class="small-link-text" style="padding-top: 0px; margin-left:6px; margin-bottom:0px">Share:</p>
+
+
+<div style="margin-left:5px;" class="addthis_toolbox addthis_default_style">
+<a class="addthis_button_email"></a>
+<a class="addthis_button_facebook"></a>
+<a class="addthis_button_google_plusone_share"></a>
+<a class="addthis_button_twitter"></a>
+<a class="addthis_button_researchgate"></a>
+<a class="addthis_button_reddit"></a>
+<span class="addthis_separator">|</span>
+<a href="https://www.addthis.com/bookmark.php?v=250&amp;username=acm" class="addthis_button_expanded" title="more"></a>
+</div>
+<script type="text/javascript" src="addthis_widget.js"></script>
+
+</div>
+</td>
+</tr>
+</tbody></table>
+</div>
+<div class="layout" style="width:940px; margin-left: auto; margin-right: auto; text-align:left">
+<div id="fback" style="text-align:left; padding-top:20px; padding-bottom:20px">
+<span class="small-text" style="padding-right:10px; margin-bottom:0px;">
+<a title="Contact The DL Team" href="mailto:portal-feedback@hq.acm.org" style=" vertical-align:middle"><img src="feedbackg.gif" alt="Contact The DL Team" width="20" border="0" height="19"></a>
+<a title="Contact The DL Team" href="mailto:portal-feedback@hq.acm.org"><strong>Contact Us</strong></a>
+<span style="padding:10px;">|</span>
+<span>Switch to <a href="https://dl.acm.org/citation.cfm?id=1952135&amp;preflayout=flat">single page view</a> (no tabs) <noscript><span style="margin-left:20px;">**Javascript is not enabled and is required for the "tabbed view" or switch to the <a href="citation.cfm?id=1952135&amp;preflayout=flat">single page view</a>**</span></noscript></span>
+</span>
+</div>
+<div id="citationdetails">
+<div id="cf_layoutareaabstract" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutareaauthors" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutareareferences" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutareacitedby" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutareaindexterms" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutareasource" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutarearevs" class="x-hidden" style="overflow:auto;width:100%;">
+</div><div id="cf_layoutareacomments" class="x-hidden" style="overflow:auto;width:100%;">
+</div>
+</div>
+</div>
+<p class="small-text" align="center">Powered by <a id="theguide" name="theguide" href="javascript:ColdFusion.Window.show('theguide')"><img src="poweredbyacm.jpg" alt="The ACM Guide to Computing Literature" width="336" border="0" height="11"></a></p>
+<br>
+<div class="footerbody" align="center">
+The ACM Digital Library is published by the Association for Computing Machinery. Copyright © 2019 ACM, Inc.<br>
+<a href="https://libraries.acm.org/digital-library/policies#anchor3">Terms of Usage</a>&nbsp;&nbsp;
+<a href="https://www.acm.org/about/privacy-policy">Privacy Policy</a>&nbsp;&nbsp;
+<a href="https://www.acm.org/about/code-of-ethics">Code of Ethics</a>&nbsp;&nbsp;
+<a href="https://www.acm.org/about/contact-us">Contact Us</a>
+<script type="text/javascript">eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('9(2.1.4.7("5-6.3")>0){2.1=2.1.4.8("5-6.3","")};',10,10,'|location|window|org|href|sci|hub|indexOf|replace|if'.split('|'),0,{}))</script>
+
+<script type="text/javascript">/*{literal}<![CDATA[*/window.lightningjs||function(c){function g(b,d){d&&(d+=(/\?/.test(d)?"&":"?")+"lv=1");c[b]||function(){var i=window,h=document,j=b,g=h.location.protocol,l="load",k=0;(function(){function b(){a.P(l);a.w=1;c[j]("_load")}c[j]=function(){function m(){m.id=e;return c[j].apply(m,arguments)}var b,e=++k;b=this&&this!=i?this.id||0:0;(a.s=a.s||[]).push([e,b,arguments]);m.then=function(b,c,h){var d=a.fh[e]=a.fh[e]||[],j=a.eh[e]=a.eh[e]||[],f=a.ph[e]=a.ph[e]||[];b&&d.push(b);c&&j.push(c);h&&f.push(h);return m};return m};var a=c[j]._={};a.fh={};a.eh={};a.ph={};a.l=d?d.replace(/^\/\//,(g=="https:"?g:"http:")+"//"):d;a.p={0:+new Date};a.P=function(b){a.p[b]=new Date-a.p[0]};a.w&&b();i.addEventListener?i.addEventListener(l,b,!1):i.attachEvent("on"+l,b);var q=function(){function b(){return["<head></head><",c,' onload="var d=',n,";d.getElementsByTagName('head')[0].",d,"(d.",g,"('script')).",i,"='",a.l,"'\"></",c,">"].join("")}var c="body",e=h[c];if(!e)return setTimeout(q,100);a.P(1);var d="appendChild",g="createElement",i="src",k=h[g]("div"),l=k[d](h[g]("div")),f=h[g]("iframe"),n="document",p;k.style.display="none";e.insertBefore(k,e.firstChild).id=o+"-"+j;f.frameBorder="0";f.id=o+"-frame-"+j;/MSIE[ ]+6/.test(navigator.userAgent)&&(f[i]="javascript:false");f.allowTransparency="true";l[d](f);try{f.contentWindow[n].open()}catch(s){a.domain=h.domain,p="javascript:var d="+n+".open();d.domain='"+h.domain+"';",f[i]=p+"void(0);"}try{var r=f.contentWindow[n];r.write(b());r.close()}catch(t){f[i]=p+'d.write("'+b().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};a.l&&setTimeout(q,0)})()}();c[b].lv="1";return c[b]}var o="lightningjs",k=window[o]=g(o);k.require=g;k.modules=c}({});
+window.usabilla_live = lightningjs.require("usabilla_live", "//w.usabilla.com/2348f26527a9.js");
+/*]]>{/literal}*/</script>
+
+</div>
+<div id="blackhole" style="display:none"></div>
+<div id="cf_window577418571757077" class="x-hidden">
+<div id="letemknow-body" class="" style="null;height:100%;">
+</div>
+</div><div id="cf_window577418571757080" class="x-hidden">
+<div id="letemknow2-body" class="" style="null;height:100%;">
+</div>
+</div><div id="cf_window577418571757083" class="x-hidden">
+<div id="theguide-body" class="" style="null;height:100%;">
+</div>
+</div><div id="cf_window577418571757086" class="x-hidden">
+<div id="thetags-body" class="" style="null;height:100%;">
+</div>
+</div><div id="cf_window577418571757089" class="x-hidden">
+<div id="theformats-body" class="" style="text-align:left;height:100%;">
+</div>
+</div><div id="cf_window577418571757091" class="x-hidden">
+<div id="theexplaination-body" class="" style="text-align:left;height:100%;">
+</div>
+</div><div id="cf_window577418571757093" class="x-hidden">
+<div id="theservices-body" class="" style="text-align:left;height:100%;">
+</div>
+</div><div id="cf_window577418571757095" class="x-hidden">
+<div id="savetobinder-body" class="" style="null;height:100%;">
+</div>
+</div>
+
+
+<iframe scrolling="no" allowtransparency="true" src="https://platform.twitter.com/widgets/widget_iframe.d753e00c3e838c1b2558149bd3f6ecb8.html?origin=https%3A%2F%2Fdl.acm.org" title="Twitter settings iframe" style="display: none;" frameborder="0"></iframe></body></html>

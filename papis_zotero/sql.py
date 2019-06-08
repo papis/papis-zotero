@@ -7,7 +7,6 @@ import yaml
 import os
 import shutil
 import glob
-import dateutil.parser
 import logging
 import re
 
@@ -207,14 +206,6 @@ def getCollections(connection, itemId):
     return {"project": collections}
 
 
-def cleanItem(item):
-    if item.get("year") is None and item.get("date") is not None:
-        try:
-            item["year"] = dateutil.parser.parse(
-                item["date"].split(" ")[-1]).year
-        except:
-            pass
-
 
 ###############################################################################
 
@@ -304,7 +295,6 @@ def add_from_sql(input_path, output_path):
         item.update(getFiles(connection, itemId, itemKey))
 
         item.update({"ref": ref})
-        cleanItem(item)
 
         with open(os.path.join(path, "info.yaml"), "w+") as itemFile:
             yaml.dump(item, itemFile, default_flow_style=False)

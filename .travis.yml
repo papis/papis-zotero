@@ -7,24 +7,12 @@ python:
 - '3.5'
 - '3.6'
 script:
-- python -m pytest papis_zotero tests --cov=papis_zotero
+- python -m pytest tests/ --cov=papis_zotero
 install:
 - pip install setuptools
 - pip install python-coveralls
 - pip install pytest
-- pip install pytest-cov
-- pip install .
-- pip install sphinx
+- pip install pytest-cov==2.5.0
+- pip install -e .
 after_success:
 - coveralls
-- cd docs
-- make html
-deploy:
-  provider: pages
-  skip-cleanup: true
-  local-dir: docs/build/html/
-  keep-history: false
-  on:
-    repo: papis/papis-zotero
-    python: '3.6'
-  github-token: $GITHUB_TOKEN
