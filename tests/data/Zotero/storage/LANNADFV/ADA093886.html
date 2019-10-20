@@ -1,0 +1,391 @@
+<html lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMACS Manual for Twenex Users.</title>
+<meta name="citation_title" content="EMACS Manual for Twenex Users.">
+<meta name="citation_author" content="Stallman,Richard M">
+<meta name="citation_date" content="Sep 1980">
+<meta name="citation_id" content="ADA093886">
+<meta name="citation_technical_report_institution" content="MASSACHUSETTS INST OF TECH  CAMBRIDGE ARTIFICIAL INTELLIGENCE LAB">
+<meta name="citation_technical_report_number" content="AI-M-555">
+<meta name="citation_technical_report_institution" content="MASSACHUSETTS INST OF TECH  CAMBRIDGE ARTIFICIAL INTELLIGENCE LAB">
+<meta name="citation_keywords" content="*COMPUTER PROGRAM DOCUMENTATION, *COMPUTER PROGRAMMING, *COMPUTER GRAPHICS, REAL TIME, SPECIFICATIONS, PARAMETERS, COMMAND AND CONTROL SYSTEMS, SELF OPERATION, USER NEEDS, INSTRUCTION MANUALS">
+<meta name="AD" content="ADA093886">
+<meta name="AN" content="ADA093886">
+<meta name="COL" content="TR">
+<meta name="robots" content="index,follow">
+<meta name="citation_pdf_url" content="https://apps.dtic.mil/dtic/tr/fulltext/u2/a093886.pdf">
+<meta name="FTLOC" content="https://apps.dtic.mil/dtic/tr/fulltext/u2/a093886.pdf">
+<meta name="FTBYTES" content="10 MB">
+<meta name="CS" content="Active">
+<meta name="TT" content="Active">
+<meta name="RC" content="Unclassified">
+<meta name="RCC" content="Unclassified">
+<meta name="CI" content="Unclassified">
+<meta name="DC" content="APPROVED FOR PUBLIC RELEASE">
+<meta name="AC" content="Unclassified">
+<meta name="TC" content="Unclassified">
+<meta name="IC" content="Unclassified">
+<meta name="UPD" content="19 Jun 2002">
+<meta name="TI" content="EMACS Manual for Twenex Users.">
+<meta name="EFA" content="Sep 1980">
+<meta name="RD" content="Sep 1980">
+<meta name="SC" content="407483">
+<meta name="DLC" content="DTIC AND NTIS">
+<meta name="PAG" content="210">
+<meta name="PGC" content="0">
+<meta name="CA" content="MASSACHUSETTS INST OF TECH  CAMBRIDGE ARTIFICIAL INTELLIGENCE LAB">
+<meta name="RN" content="AI-M-555">
+<meta name="CT" content="N00014-75-C-0643">
+<meta name="DCS" content="Unclassified">
+<meta name="ORG" content="PRIVATE ACADEMIC EDUCATIONAL INSTITUTIONS">
+<meta name="FG" content="Computer Programming and Software">
+<meta name="AU" content="Stallman,Richard M ">
+<meta name="DE" content="*COMPUTER PROGRAM DOCUMENTATION, *COMPUTER PROGRAMMING, *COMPUTER GRAPHICS, REAL TIME, SPECIFICATIONS, PARAMETERS, COMMAND AND CONTROL SYSTEMS, SELF OPERATION, USER NEEDS, INSTRUCTION MANUALS">
+<meta name="AB" content="This manual documents the use and simple customization of the display editor EMACS with the Twenex (Officially known as TOPS-20) operating system. The reader is not expected to be a programmer. Even simple customizations do not require programming skill, but the user who is not interested in customizing can ignore the scattered customization hints. This is primarily a reference manual, but can also be used as a primer. (Author)">
+<meta name="description" content="This manual documents the use and simple customization of the display editor EMACS with the Twenex (Officially known as TOPS-20) operating system. The reader is not expected to be a programmer. Even simple customizations do not require programming skill, but the user who is not interested in customizing can ignore the scattered customization hints. This is primarily a reference manual, but can also be used as a primer. (Author)">
+<meta name="DNT" content="ADA093886">
+<meta name="GC" content="2508">
+<meta name="COS" content="14.60">
+<meta name="ID" content="TOPS 20 operating system, Display editors, EMACS display editor">
+
+ 
+
+ 
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="bootstrap.css" crossorigin="anonymous">
+
+<link rel="stylesheet" type="text/css" href="wp_style">
+
+
+<script async="" src="async-ads.js"></script><script src="cse_element__en.js" type="text/javascript"></script><link type="text/css" rel="stylesheet" href="defaulten.css"><link type="text/css" rel="stylesheet" href="default.css"><style type="text/css">.gsc-control-cse{font-family:roboto, arial, sans-serif}.gsc-control-cse .gsc-table-result{font-family:roboto, arial, sans-serif}.gsc-refinementsGradient{background:linear-gradient(to left,rgba(255,255,255,1),rgba(255,255,255,0))}.gsc-control-cse{border-color:#FFFFFF;background-color:#FFFFFF}input.gsc-input,.gsc-input-box,.gsc-input-box-hover,.gsc-input-box-focus{border-color:#D9D9D9}.gsc-search-button-v2,.gsc-search-button-v2:hover,.gsc-search-button-v2:focus{border-color:#2F5BB7;background-color:#4D90FE;background-image:none;filter:none}.gsc-search-button-v2 svg{fill:#FFFFFF}.gsc-tabHeader.gsc-tabhActive,.gsc-refinementHeader.gsc-refinementhActive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-tabHeader.gsc-tabhInactive,.gsc-refinementHeader.gsc-refinementhInactive{color:#CCCCCC;border-color:#CCCCCC;background-color:#FFFFFF}.gsc-webResult.gsc-result,.gsc-results .gsc-imageResult{border-color:#FFFFFF;background-color:#FFFFFF}.gsc-webResult.gsc-result:hover,.gsc-imageResult:hover{border-color:#FFFFFF;background-color:#FFFFFF}.gs-webResult.gs-result a.gs-title:link,.gs-webResult.gs-result a.gs-title:link b,.gs-imageResult a.gs-title:link,.gs-imageResult a.gs-title:link b{color:#1155CC}.gs-webResult.gs-result a.gs-title:visited,.gs-webResult.gs-result a.gs-title:visited b,.gs-imageResult a.gs-title:visited,.gs-imageResult a.gs-title:visited b{color:#1155CC}.gs-webResult.gs-result a.gs-title:hover,.gs-webResult.gs-result a.gs-title:hover b,.gs-imageResult a.gs-title:hover,.gs-imageResult a.gs-title:hover b{color:#1155CC}.gs-webResult.gs-result a.gs-title:active,.gs-webResult.gs-result a.gs-title:active b,.gs-imageResult a.gs-title:active,.gs-imageResult a.gs-title:active b{color:#1155CC}.gsc-cursor-page{color:#1155CC}a.gsc-trailing-more-results:link{color:#1155CC}.gs-webResult .gs-snippet,.gs-imageResult .gs-snippet,.gs-fileFormatType{color:#333333}.gs-webResult div.gs-visibleUrl,.gs-imageResult div.gs-visibleUrl{color:#009933}.gs-webResult div.gs-visibleUrl-short{color:#009933}.gs-webResult div.gs-visibleUrl-short{display:none}.gs-webResult div.gs-visibleUrl-long{display:block}.gs-promotion div.gs-visibleUrl-short{display:none}.gs-promotion div.gs-visibleUrl-long{display:block}.gsc-cursor-box{border-color:#FFFFFF}.gsc-results .gsc-cursor-box .gsc-cursor-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-results .gsc-cursor-box .gsc-cursor-current-page{border-color:#CCCCCC;background-color:#FFFFFF;color:#CCCCCC}.gsc-webResult.gsc-result.gsc-promotion{border-color:#F6F6F6;background-color:#F6F6F6}.gsc-completion-title{color:#1155CC}.gsc-completion-snippet{color:#333333}.gs-promotion a.gs-title:link,.gs-promotion a.gs-title:link *,.gs-promotion .gs-snippet a:link{color:#1155CC}.gs-promotion a.gs-title:visited,.gs-promotion a.gs-title:visited *,.gs-promotion .gs-snippet a:visited{color:#1155CC}.gs-promotion a.gs-title:hover,.gs-promotion a.gs-title:hover *,.gs-promotion .gs-snippet a:hover{color:#1155CC}.gs-promotion a.gs-title:active,.gs-promotion a.gs-title:active *,.gs-promotion .gs-snippet a:active{color:#1155CC}.gs-promotion .gs-snippet,.gs-promotion .gs-title .gs-promotion-title-right,.gs-promotion .gs-title .gs-promotion-title-right *{color:#999999}.gs-promotion .gs-visibleUrl,.gs-promotion .gs-visibleUrl-short{color:#009933}.gcsc-find-more-on-google{color:#1155CC}.gcsc-find-more-on-google-magnifier{fill:#1155CC}</style><style type="text/css">.gscb_a{display:inline-block;font:27px/13px arial,sans-serif}.gsst_a .gscb_a{color:#a1b9ed;cursor:pointer}.gsst_a:hover .gscb_a,.gsst_a:focus .gscb_a{color:#36c}.gsst_a{display:inline-block}.gsst_a{cursor:pointer;padding:0 4px}.gsst_a:hover{text-decoration:none!important}.gsst_b{font-size:16px;padding:0 2px;position:relative;user-select:none;-moz-user-select:none;white-space:nowrap}.gsst_e{vertical-align:middle;opacity:0.55;}.gsst_a:hover .gsst_e,.gsst_a:focus .gsst_e{opacity:0.72;}.gsst_a:active .gsst_e{opacity:1;}.gsst_f{background:white;text-align:left}.gsst_g{background-color:white;border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.2);margin:-1px -3px;padding:0 6px}.gsst_h{background-color:white;height:1px;margin-bottom:-1px;position:relative;top:-1px}.gsib_a{width:100%;padding:4px 6px 0}.gsib_a,.gsib_b{vertical-align:top}.gssb_c{border:0;position:absolute;z-index:989}.gssb_e{border:1px solid #ccc;border-top-color:#d9d9d9;box-shadow:0 2px 4px rgba(0,0,0,0.2);-moz-box-shadow:0 2px 4px rgba(0,0,0,0.2);cursor:default}.gssb_f{visibility:hidden;white-space:nowrap}.gssb_k{border:0;display:block;position:absolute;top:0;z-index:988}.gsdd_a{border:none!important}.gsq_a{padding:0}.gssb_a{padding:0 7px}.gssb_a,.gssb_a td{white-space:nowrap;overflow:hidden;line-height:22px}#gssb_b{font-size:11px;color:#36c;text-decoration:none}#gssb_b:hover{font-size:11px;color:#36c;text-decoration:underline}.gssb_g{text-align:center;padding:8px 0 7px;position:relative}.gssb_h{font-size:15px;height:28px;margin:0.2em}.gssb_i{background:#eee}.gss_ifl{visibility:hidden;padding-left:5px}.gssb_i .gss_ifl{visibility:visible}a.gssb_j{font-size:13px;color:#36c;text-decoration:none;line-height:100%}a.gssb_j:hover{text-decoration:underline}.gssb_l{height:1px;background-color:#e5e5e5}.gssb_m{color:#000;background:#fff}.gssb_a{padding:0 9px}.gsib_a{padding:5px 9px 4px 9px}.gscb_a{line-height:27px}.gssb_e{border:0}.gssb_l{margin:5px 0}input.gsc-input::-webkit-input-placeholder{font-size:14px}input.gsc-input:-moz-placeholder{font-size:14px}input.gsc-input::-moz-placeholder{font-size:14px}input.gsc-input:-ms-input-placeholder{font-size:14px}input.gsc-input:focus::-webkit-input-placeholder{color:transparent}input.gsc-input:focus:-moz-placeholder{color:transparent}input.gsc-input:focus::-moz-placeholder{color:transparent}input.gsc-input:focus:-ms-input-placeholder{color:transparent}.gssb_c .gsc-completion-container{position:static}.gssb_c{z-index:5000}.gsc-completion-container table{background:transparent;font-size:inherit;font-family:inherit}.gssb_c > tbody > tr,.gssb_c > tbody > tr > td,.gssb_d,.gssb_d > tbody > tr,.gssb_d > tbody > tr > td,.gssb_e,.gssb_e > tbody > tr,.gssb_e > tbody > tr > td{padding:0;margin:0;border:0}.gssb_a table,.gssb_a table tr,.gssb_a table tr td{padding:0;margin:0;border:0}</style></head><body><div id="wrap" style="min-height: auto"> 
+
+
+
+
+<!-- <p style="background-color: #E9E9E9; height: 50px; margin-bottom: -5px; padding-right:20px;"></p> -->
+<p style="background-color: grey; height: 50px; margin-bottom: -5px; padding-right:20px;"></p>
+    
+<p style="background-color: #eac700; height: 7px;"></p>
+<div class="row">
+
+     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+
+         <a href="https://discover.dtic.mil/">
+	<img src="PubLogo5.jpg" class="img-responsive"> </a>		
+
+     </div> 
+
+     
+
+     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+<p style="margin: 20px 0 20px 0 ; ">
+
+<small><em>Search this site, DoD S&amp;T Reports, and more..</em></small>
+<script type="text/javascript" async="" src="cse.js"></script><script>
+  (function() {
+    var cx = '006607896340954257426:37lbh1v_w-g';
+    var gcse = document.createElement('script');
+    gcse.type = 'text/javascript';
+    gcse.async = true;
+    gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(gcse, s);
+  })();
+</script>
+<div id="___gcse_0"><div class="gsc-control-searchbox-only gsc-control-searchbox-only-en" dir="ltr"><form class="gsc-search-box gsc-search-box-tools" accept-charset="utf-8"><table class="gsc-search-box" cellspacing="0" cellpadding="0"><tbody><tr><td class="gsc-input"><div class="gsc-input-box" id="gsc-iw-id1"><table style="width: 100%; padding: 0px;" id="gs_id50" class="gstl_50 gsc-input" cellspacing="0" cellpadding="0"><tbody><tr><td id="gs_tti50" class="gsib_a"><input autocomplete="off" size="10" class="gsc-input" name="search" title="search" style="width: 100%; padding: 0px; border: medium none; margin: 0px; height: auto; background: rgb(255, 255, 255) url(&quot;https://www.google.com/cse/static/images/1x/googlelogo_lightgrey_46x16dp.png&quot;) no-repeat scroll left center; text-indent: 48px; outline: medium none;" id="gsc-i-id1" placeholder="Custom Search" dir="ltr" spellcheck="false" type="text"></td><td class="gsib_b"><div class="gsst_b" id="gs_st50" dir="ltr"><a class="gsst_a" href="javascript:void(0)" style="display: none;" title="Clear search box" role="button"><span class="gscb_a" id="gs_cb50" aria-hidden="true">×</span></a></div></td></tr></tbody></table></div></td><td class="gsc-search-button"><button class="gsc-search-button gsc-search-button-v2"><svg width="13" height="13" viewBox="0 0 13 13"><title>search</title><path d="m4.8495 7.8226c0.82666 0 1.5262-0.29146 2.0985-0.87438 0.57232-0.58292 0.86378-1.2877 0.87438-2.1144 0.010599-0.82666-0.28086-1.5262-0.87438-2.0985-0.59352-0.57232-1.293-0.86378-2.0985-0.87438-0.8055-0.010599-1.5103 0.28086-2.1144 0.87438-0.60414 0.59352-0.8956 1.293-0.87438 2.0985 0.021197 0.8055 0.31266 1.5103 0.87438 2.1144 0.56172 0.60414 1.2665 0.8956 2.1144 0.87438zm4.4695 0.2115 3.681 3.6819-1.259 1.284-3.6817-3.7 0.0019784-0.69479-0.090043-0.098846c-0.87973 0.76087-1.92 1.1413-3.1207 1.1413-1.3553 0-2.5025-0.46363-3.4417-1.3909s-1.4088-2.0686-1.4088-3.4239c0-1.3553 0.4696-2.4966 1.4088-3.4239 0.9392-0.92727 2.0864-1.3969 3.4417-1.4088 1.3553-0.011889 2.4906 0.45771 3.406 1.4088 0.9154 0.95107 1.379 2.0924 1.3909 3.4239 0 1.2126-0.38043 2.2588-1.1413 3.1385l0.098834 0.090049z"></path></svg></button></td><td class="gsc-clear-button"><div class="gsc-clear-button" title="clear results">&nbsp;</div></td></tr></tbody></table></form></div></div>
+
+	
+	<!--
+	<form  target="_blank"  id="search_form" action="https://search.usa.gov/search/docs/" accept-charset="UTF-8" method="get">
+		<input name="utf8" type="hidden" value="&#x2713;" />
+		<input type="hidden" name="affiliate" id="affiliate" value="dtic.all" />
+
+		<div class="row">
+    
+   			<div class="col-xs-6">
+    
+       				<select class="form-control" name="dc" >
+					<option value="5191" selected="selected">Search DoD S&T Reports</option>
+
+					</optgroup>            
+				</select>
+   			</div>
+   
+   			<div class="col-xs-4">
+       				<input type="text" name="query"  id="query" autocomplete="off" class="form-control" class="usagov-search-autocomplete"  placeholder=" Keywords ">
+    			</div>
+    			<div class="col-xs-2">
+				<button name="commit" type="submit" class="btn"  style="background-color: #eac700;">Search</button> 
+   			</div>
+		</div>
+	</form>
+	-->
+	
+	
+	
+	</p>
+     </div>
+
+</div> <!-- /row -->
+
+
+<x div=""> <!-- container -->
+
+<p style="background-color: #eac700; height: 7px;"></p>
+<p style="margin-top: 45px;">
+<!-- Modal -->
+
+</p><div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+
+  <div class="modal-dialog">
+
+    <div class="modal-content">
+
+      <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+
+        <h3 class="modal-title" id="myModalLabel">What's included in this search?</h3>
+
+      </div>
+
+      <div class="modal-body">
+
+
+ions -  Search all of the collections listed below at once.
+
+<br>
+
+<strong>Technical Reports - </strong> Scientific and technical (S&amp;T)
+ reports conveying results of Defense-sponsored research, development, 
+test and evaluation (RDT&amp;E) efforts on a wide range of topics. 
+Collection includes both citations and many full-text, downloadable 
+documents from mid-1900s to present. <br>
+
+
+
+<strong>AULIMP -  </strong>Air University Library Index to Military 
+Periodicals.
+
+ Subject index to significant articles, news items, and editorials from 
+military and aeronautical periodicals, with citations from 1988 to 
+present.
+
+<br>
+
+
+
+<strong>BRD - </strong> Biomedical Research Database. Developed from federally funded research, testing and training programs; updated annually.
+
+<br>
+
+<strong>Congressional Budget Data (CBD) - </strong> Congressional Budget
+ Data Provides detailed search and analysis capabilities across the 
+military departments and agencies for Research Development Test and 
+Evaluation (RDT&amp;E) data. DTIC's PDF and Excel spreadsheet versions 
+of Congressional Budget reports are available shortly after postings on 
+Thomas (Library of Congress) website.  
+
+<br>
+
+<strong>DoD Labs and S&amp;T - </strong>Allows users to query the DoD laboratory community or other sites identified as related to S&amp;T organizations.
+
+
+
+<br>
+
+<strong>DTIC Online -</strong> This search queries the DTIC Online Public Web site.
+
+
+
+<br><strong>NDIA - </strong> National Defense Industrial Association Conference Proceedings. Collection of presentations from NDIA-sponsored conferences.
+
+<br>
+
+<strong>RDDS - </strong> R-2s furnish narrative information on Research,
+ Development, Test and Evaluation (RDT&amp;E) programs and Program 
+Elements (PE Numbers) within the Department of Defense (DoD).
+
+<br>
+
+<strong>SCAMPI - </strong> Staff College Automated Military Periodical 
+Index. Database of articles on military and naval science, operational 
+warfare, joint planning, national and international politics, and other 
+areas researched by Joint Forces Staff College from 1985 to present.
+
+<br>
+
+<strong>WHS - </strong> Washington Headquarters Service. Department of 
+Defense (DoD) Issuances (current and cancelled), Joint Staff and other 
+U.S. Military (i.e., Army, Navy, Air Force) service publications, 
+Administrative Instructions, Directive-Type Memorandums and DoD Forms.
+
+
+
+
+
+
+
+
+
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- /Modal -->
+
+
+
+	<div id="content-container1">
+
+<!-- DOAC Connect Now image -->
+
+
+
+<div id="citation-contents" style="padding-right: 35px; padding-left: 35px; min-height: 100%">
+
+
+
+
+
+
+<div class="gsa_s" role="main">
+<p>
+<b> Accession Number : </b>ADA093886</p>
+<br>
+<p>
+<b>Title : &nbsp; </b>EMACS Manual for Twenex Users.</p>
+<br>
+<p align="left">
+<b>Descriptive Note : </b>Memorandum rept.,</p>
+<br>
+<p>
+<b>Corporate Author : </b>MASSACHUSETTS INST OF TECH  CAMBRIDGE ARTIFICIAL INTELLIGENCE LAB</p>
+<br>
+<p>
+<b> Personal Author(s) : </b>Stallman,Richard M </p>
+<br>
+<p>
+<b>Full Text : </b><a href="https://apps.dtic.mil/dtic/tr/fulltext/u2/a093886.pdf">https://apps.dtic.mil/dtic/tr/fulltext/u2/a093886.pdf
+
+								</a>
+</p>
+<br>
+<p align="left">
+<b>Report Date : </b>Sep 1980</p>
+<br>
+<p align="left">
+<b>Pagination or Media Count : </b>210</p>
+<br>
+<p align="left">
+<b>Abstract : </b>This manual documents the use and simple customization
+ of the display editor EMACS with the Twenex (Officially known as 
+TOPS-20) operating system. The reader is not expected to be a 
+programmer. Even simple customizations do not require programming skill,
+ but the user who is not interested in customizing can ignore the 
+scattered customization hints. This is primarily a reference manual, but
+ can also be used as a primer. (Author)</p>
+<br>
+<p align="left">
+<b>Descriptors : </b>
+										&nbsp;
+									*COMPUTER PROGRAM DOCUMENTATION
+										,
+									*COMPUTER PROGRAMMING
+										,
+									*COMPUTER GRAPHICS
+										,
+									REAL TIME
+										,
+									SPECIFICATIONS
+										,
+									PARAMETERS
+										,
+									COMMAND AND CONTROL SYSTEMS
+										,
+									SELF OPERATION
+										,
+									USER NEEDS
+										,
+									INSTRUCTION MANUALS</p>
+<br>
+<p>
+<b> Subject Categories : </b>Computer Programming and Software</p>
+<br>
+<p align="left">
+<b>Distribution Statement : </b>APPROVED FOR PUBLIC RELEASE</p>
+</div>
+
+
+
+
+
+</div> <!-- citation contents -->
+
+<!-- Footer -->
+
+ </div> <!-- /col-9 -->
+
+</x></div> <!-- row -->
+
+ <!-- / main container -->
+
+ <!-- wrap -->
+
+<div class="footer" style="margin-top: 0px; background-color: grey ; color: #fff; ">    
+
+    <div class="container">
+<p> </p> 
+
+			 <p style="text-align:center;"><strong>DEFENSE TECHNICAL INFORMATION CENTER</strong><br>
+
+				8725 John J. Kingman Road, Fort Belvoir, VA 22060-6218 <br> 1-800-CAL-DTIC  (1-800-225-3842)  </p>
+
+			 
+
+    </div> <!-- container -->
+</div> <!-- /footer -->
+  
+<script src="jquery.js" integrity="" crossorigin="anonymous"></script><script src="bootstrap.js" crossorigin="anonymous"></script><script type="text/javascript" src="simple_search.js"></script><script type="text/javascript" src="scripts.js"></script><script type="text/javascript">
+
+				$(document).ready(function ($) {
+
+				$('#tabs').tab();
+
+				$('#myModal').on('shown.bs.modal', function () {
+
+				$('#myInput').focus()
+
+				});
+
+				$('.selectpicker').selectpicker({
+
+				style:
+				'btn-info',
+
+				size: 4
+
+				});
+
+				});
+
+
+			</script>
+
+
+
+<table style="width: 533px; display: none; top: 133px; left: 680px; position: absolute;" class="gstl_50 gssb_c" cellspacing="0" cellpadding="0"><tbody><tr><td class="gssb_f"></td><td class="gssb_e" style="width: 100%;"></td></tr></tbody></table></body></html>
