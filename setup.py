@@ -6,7 +6,7 @@ with open('README.rst') as fd:
 
 setup(
     name='papis-zotero',
-    version='0.0.3',
+    version='0.1.0',
     author='Alejandro Gallo',
     author_email='aamsgallo@gmail.com',
     license='GPLv3',
@@ -35,11 +35,11 @@ setup(
         'papis', 'zotero', 'bibtex',
         'management', 'cli', 'biliography'
     ],
-    entry_points=dict(
-        console_scripts=[
-            'papis-zotero=papis_zotero:main'
+    entry_points={
+        'papis.command': [
+            'zotero=papis_zotero:main'
         ]
-    ),
+    },
     packages=['papis_zotero'],
     platforms=['linux', 'osx'],
 )
