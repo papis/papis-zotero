@@ -16,7 +16,16 @@ excludedTypes = ["note"]
 
 # dictionary of zotero attachments mime types to be included
 # mapped onto their respective extension to be used in papis
-includedAttachments = {"application/pdf": "pdf"}
+includedAttachments = {"application/vnd.ms-htmlhelp":  "chm",
+                       "image/vnd.djvu": "djvu",
+                       "application/msword":  "doc",
+                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+                       "application/epub+zip": "epub",
+                       "application/octet-stream":  "fb2",
+                       "application/x-mobipocket-ebook": "mobi",
+                       "application/pdf":  "pdf",
+                       "text/rtf":  "rtf",
+                       "application/zip":  "zip"}
 
 # dictionary translating from zotero to papis type names
 translatedTypes = {"journalArticle": "article"}
@@ -29,7 +38,7 @@ tagDelimiter = ","
 
 # if no attachment is found, give info.yaml as content file
 # set to None if no file should be given in that case
-defaultFile = "info.yaml"
+defaultFile = None
 
 
 def getTuple(elements):
@@ -141,11 +150,12 @@ def getFiles(connection, itemId, itemKey):
         key = attachmentRow[0]
         path = attachmentRow[1]
         mime = attachmentRow[2]
-        extension = includedAttachments[mime]
+        # extension = includedAttachments[mime]
         try:
             # NOTE: a single file is assumed in the attachment's folder
             # to avoid using path, which may contain invalid characters
             importPath = glob.glob(inputPath + "/storage/" + key + "/*.*")[0]
+            extension = os.path.splitext(importPath)[1]
             localPath = os.path.join(
                 outputPath, itemKey, key + "." + extension
             )
@@ -249,7 +259,10 @@ def add_from_sql(input_path, output_path):
       SELECT
         item.itemID,
         itemType.typeName,
-        key
+        key,
+        dateAdded,
+        dateModified,
+        clientDateModified
       FROM
         items item,
         itemTypes itemType
@@ -267,6 +280,9 @@ def add_from_sql(input_path, output_path):
         itemId = row[0]
         itemType = translatedTypes.get(row[1], row[1])
         itemKey = row[2]
+        dateAdded = row[3]
+        dateModified = row[4]
+        clientDateModified = row[5]
         logger.info(
             "exporting item {currentItem}/{itemsCount}: {key}".format(
                 currentItem=currentItem, itemsCount=itemsCount, key=itemKey
@@ -287,7 +303,10 @@ def add_from_sql(input_path, output_path):
             if matches:
                 ref = matches.group(1)
         logger.info("exporting under ref %s" % ref)
-        item = {"ref": ref, "type": itemType}
+        item = {"ref": ref, "type": itemType
+                , "created": dateAdded
+                , "modified": dateModified
+                , "modified.client": clientDateModified}
         item.update(fields)
         item.update(getCreators(connection, itemId))
         item.update(getTags(connection, itemId))
