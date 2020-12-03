@@ -1,8 +1,7 @@
 .. image:: https://badge.fury.io/py/papis-zotero.svg
     :target: https://badge.fury.io/py/papis-zotero
 
-.. image:: https://travis-ci.org/papis/papis-zotero.svg?branch=master
-    :target: https://travis-ci.org/papis/papis-zotero
+|ghbadge|
 
 ZOTERO COMPATIBILITY FOR PAPIS
 ==============================
@@ -154,3 +153,5 @@ If you want to develop on the code, you can also alternatively hit
 ::
 
   python3 setup.py develop --user
+
+.. |ghbadge| image:: https://github.com/papis/papis-zotero/workflows/CI/badge.svg

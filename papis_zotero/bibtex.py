@@ -57,7 +57,7 @@ def add_from_bibtex(bib_file, out_folder=None, link=False):
                 if not os.path.exists(pdf_file):
                     logger.warning(
                         colorama.Back.YELLOW + colorama.Fore.BLACK +
-                        ('Path (%s)' % pdf_file ) +
+                        ('Path (%s)' % pdf_file) +
                         colorama.Back.RED +
                         ' not found! Ignoring it' +
                         colorama.Style.RESET_ALL
@@ -65,8 +65,6 @@ def add_from_bibtex(bib_file, out_folder=None, link=False):
                     del entry['file']
                     pdf_file = None
 
-            papis_add(
-                [pdf_file] if pdf_file is not None else [],
-                data=entry,
-                link=link
-            )
+            papis_add([pdf_file] if pdf_file is not None else [],
+                      data=entry,
+                      link=link)

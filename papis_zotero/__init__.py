@@ -1,6 +1,5 @@
 import click
 import os
-import papis.api
 
 import logging
 import http.server
@@ -13,7 +12,7 @@ def main():
     """
     Zotero interface for papis
     """
-    logger = logging.getLogger("papis:zotero")
+    pass
 
 
 @main.command('serve')
