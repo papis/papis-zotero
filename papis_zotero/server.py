@@ -1,5 +1,3 @@
-#! /usr/bin/env python3
-# -*- coding: utf-8 -*-
 """Start a web server listening on port 23119. This server is
 compatible with the `zotero connector`. This means that if zotero is
 *not* running, you can have items from your web browser added directly
@@ -7,22 +5,20 @@ into papis.
 
 """
 
-import papis_zotero.utils
-
-import papis.api
-import papis.config
-import papis.document
-import papis.commands.add
-import papis.crossref
-
+import http.server
+import json
+import logging
+import re
+import tempfile
 import urllib.request
 import urllib.error
 
-import re
-import json
-import logging
-import tempfile
-import http.server
+import papis.api
+import papis.config
+import papis.crossref
+import papis.document
+
+import papis_zotero.utils
 
 logger = logging.getLogger("papis:zotero:server")
 logging.basicConfig(filename="", level=logging.INFO)
@@ -32,55 +28,15 @@ zotero_version = "5.0.25"
 zotero_port = 23119
 
 papis_translation = {
-    'abstractNote': 'abstract',
-    'publicationTitle': 'journal',
-    'DOI': 'doi',
-    'itemType': 'type',
-    'ISBN': 'isbn',
+    "abstractNote": "abstract",
+    "publicationTitle": "journal",
+    "DOI": "doi",
+    "itemType": "type",
+    "ISBN": "isbn",
 }
 
 
 def zotero_data_to_papis_data(item):
-    """
-    {
-        'itemType': 'book',
-        'language': 'en',
-        'shortTitle': 'Nuclear Collective Motion',
-        'DOI': '10.1142/6721',
-        'accessDate': '2018-07-09T22:57:55Z',
-        'extra': 'DOI: 10.1142/6721',
-        'creators': [
-            {
-                'creatorType': 'author',
-                'firstName': 'David J',
-                'lastName': 'Rowe'
-            }
-        ],
-        'publisher': 'WORLD SCIENTIFIC',
-        'ISBN': '9789812790644 9789812790668',
-        'url': 'http://www.worldscientific.com/worldscibooks/10.1142/6721',
-        'notes': [],
-        'seeAlso': [],
-        'attachments': [
-            {
-                'url': 'https://...pdf/10.1103/physrevlett.121.090503',
-                'title': 'full text pdf',
-                'mimetype': 'application/pdf'
-            },
-            {
-                'url': 'https://...pdf/10.1103/physrevlett.121.090503',
-                'title': 'aps snapshot',
-                'mimetype': 'text/html'
-            }
-        ],
-        'tags': [],
-        'date': '05/2010',
-        'libraryCatalog': 'Crossref',
-        'title': 'Nuclear Collective Motion: Models and Theory',
-        'id': 'SL2sa7hx'
-    }
-    """
-
     data = {}
 
     for key in papis_translation.keys():
@@ -89,27 +45,27 @@ def zotero_data_to_papis_data(item):
             del item[key]
 
     # Maybe zotero has good tags
-    if isinstance(item.get('tags'), list):
+    if isinstance(item.get("tags"), list):
         try:
-            data['tags'] = " ".join(item['tags'])
-        except:
+            data["tags"] = " ".join(item["tags"])
+        except Exception:
             pass
-        del item['tags']
+        del item["tags"]
 
-    if item.get('id'):
-        del item['id']
+    if item.get("id"):
+        del item["id"]
 
-    if item.get('attachments'):
-        del item['attachments']
+    if item.get("attachments"):
+        del item["attachments"]
 
     # still get all information from zotero
     data.update(item)
 
     # and also get all infromation from crossref
-    if data.get('doi'):
-        crossref_data = papis.crossref.doi_to_data(data['doi'])
-        if crossref_data.get('title'):
-            del crossref_data['title']
+    if data.get("doi"):
+        crossref_data = papis.crossref.doi_to_data(data["doi"])
+        if crossref_data.get("title"):
+            del crossref_data["title"]
         logger.info("Updating also from crossref")
         data.update(crossref_data)
 
@@ -130,10 +86,10 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.end_headers()
 
     def read_input(self):
-        length = int(self.headers['content-length'])
+        length = int(self.headers["content-length"])
         return self.rfile.read(length)
 
-    def pong(self, POST=True):
+    def pong(self, POST=True):  # noqa: N803
         global logger
         logger.info("pong!")
         # Pong must respond to ping on both GET and POST
@@ -143,7 +99,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-Type", "text/html")
             self.set_zotero_headers()
-            response = '''\
+            response = """\
             <!DOCTYPE html>
             <html>
                 <head>
@@ -153,7 +109,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                     Zotero Connector Server is Available
                 </body>
             </html>
-            '''
+            """
         else:  # POST
             logger.debug("POST request")
             self.send_response(200)
@@ -185,43 +141,47 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
     def add(self):
         logger.info("Adding paper from zotero connector")
         rawinput = self.read_input()
-        data = json.loads(rawinput.decode('utf8'))
+        data = json.loads(rawinput.decode("utf8"))
 
-        for item in data['items']:
+        for item in data["items"]:
             files = []
-            if item.get('attachments') and len(item.get('attachments')) > 0:
-                for attachment in item.get('attachments'):
-                    mime = str(attachment.get('mimeType'))
-                    logger.info("Checking attachment (mime {0})".format(mime))
-                    if re.match(r'.*pdf.*', mime):
-                        url = attachment.get('url')
+            if item.get("attachments") and len(item.get("attachments")) > 0:
+                for attachment in item.get("attachments"):
+                    mime = str(attachment.get("mimeType"))
+                    logger.info(
+                        "Checking attachment (mime {0})".format(mime)
+                    )
+                    if re.match(r".*pdf.*", mime):
+                        url = attachment.get("url")
                         logger.info("Downloading pdf '{0}'".format(url))
                         try:
                             pdfbuffer = urllib.request.urlopen(url).read()
                         except urllib.error.HTTPError:
                             logger.error(
-                                'Error downloading pdf, probably you do not'
-                                'have the rights for the journal.')
+                                "Error downloading pdf, probably you do not"
+                                "have the rights for the journal."
+                            )
                             continue
 
-                        pdfpath = tempfile.mktemp(suffix='.pdf')
+                        pdfpath = tempfile.mktemp(suffix=".pdf")
                         logger.info("Saving pdf in '{0}'".format(pdfpath))
 
-                        with open(pdfpath, 'wb+') as fd:
+                        with open(pdfpath, "wb+") as fd:
                             fd.write(pdfbuffer)
 
                         if papis_zotero.utils.is_pdf(pdfpath):
                             files.append(pdfpath)
                         else:
                             logger.error(
-                                'File retrieved does not appear to be a pdf'
-                                'So no file will be saved...')
+                                "File retrieved does not appear to be a pdf"
+                                "So no file will be saved..."
+                            )
             else:
                 logger.warning("Document has no attachments")
 
             papis_item = zotero_data_to_papis_data(item)
             if len(files) == 0:
-                logger.warning('Not adding any attachments...')
+                logger.warning("Not adding any attachments...")
             logger.info("Adding paper")
             papis.commands.add.run(files, data=papis_item)
 
@@ -236,17 +196,17 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.set_zotero_headers()
         return
 
-    def do_POST(self):
+    def do_POST(self):      # noqa: N802
         if self.path == "/connector/ping":
             self.pong()
-        elif self.path == '/connector/getSelectedCollection':
+        elif self.path == "/connector/getSelectedCollection":
             self.papis_collection()
-        elif self.path == '/connector/saveSnapshot':
+        elif self.path == "/connector/saveSnapshot":
             self.snapshot()
-        elif self.path == '/connector/saveItems':
+        elif self.path == "/connector/saveItems":
             self.add()
         return
 
-    def do_GET(self):
+    def do_GET(self):       # noqa: N802
         if self.path == "/connector/ping":
             self.pong(POST=False)
