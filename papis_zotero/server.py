@@ -22,8 +22,7 @@ import papis.document
 
 import papis_zotero.utils
 
-logger = logging.getLogger("papis:zotero:server")
-logging.basicConfig(filename="", level=logging.INFO)
+logger = logging.getLogger("papis.{}".format(__name__))
 
 connector_api_version = 2
 zotero_version = "5.0.25"
@@ -69,7 +68,7 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
         crossref_data = papis.crossref.doi_to_data(str(doi))
         if crossref_data.get("title"):
             del crossref_data["title"]
-        logger.info("Updating also from crossref")
+        logger.info("Updating document with data from Crossref.")
         data.update(crossref_data)
 
     return data
@@ -78,7 +77,7 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
     def log_message(self, fmt: str, *args: Any) -> None:
-        logger.info(fmt % args)
+        logger.info(fmt, args)
 
     def set_zotero_headers(self) -> None:
         self.send_header(
@@ -96,12 +95,10 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         return self.rfile.read(length)
 
     def pong(self, POST: bool = True) -> None:  # noqa: N803
-        global logger
-        logger.info("pong!")
         # Pong must respond to ping on both GET and POST
         # It must accepts application/json and text/plain
         if not POST:  # GET
-            logger.debug("GET request")
+            logger.debug("Received a GET request.")
             self.send_response(200)
             self.send_header("Content-Type", "text/html")
             self.set_zotero_headers()
@@ -117,7 +114,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             </html>
             """
         else:  # POST
-            logger.debug("POST request")
+            logger.debug("Received a POST request.")
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.set_zotero_headers()
@@ -145,7 +142,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(bytes(response, "utf8"))
 
     def add(self) -> None:
-        logger.info("Adding paper from zotero connector")
+        logger.info("Adding paper from the Zotero Connector.")
         rawinput = self.read_input()
         data = json.loads(rawinput.decode("utf8"))
 
@@ -154,23 +151,21 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             if item.get("attachments") and len(item.get("attachments")) > 0:
                 for attachment in item.get("attachments"):
                     mime = str(attachment.get("mimeType"))
-                    logger.info(
-                        "Checking attachment (mime {0})".format(mime)
-                    )
+                    logger.info("Checking attachment (mime %s).", mime)
                     if re.match(r".*pdf.*", mime):
                         url = attachment.get("url")
-                        logger.info("Downloading pdf '{0}'".format(url))
+                        logger.info("Downloading PDF: '%s'.", url)
                         try:
                             pdfbuffer = urllib.request.urlopen(url).read()
                         except urllib.error.HTTPError:
                             logger.error(
-                                "Error downloading pdf, probably you do not"
-                                "have the rights for the journal."
+                                "Error downloading PDF. You probably do not"
+                                "have the rights to access the journal."
                             )
                             continue
 
                         pdfpath = tempfile.mktemp(suffix=".pdf")
-                        logger.info("Saving pdf in '{0}'".format(pdfpath))
+                        logger.info("Saving PDF: '%s'", pdfpath)
 
                         with open(pdfpath, "wb+") as fd:
                             fd.write(pdfbuffer)
@@ -179,17 +174,18 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                             files.append(pdfpath)
                         else:
                             logger.error(
-                                "File retrieved does not appear to be a pdf"
-                                "So no file will be saved..."
+                                "File retrieved does not appear to be a PDF. "
+                                "Skipping!"
                             )
             else:
-                logger.warning("Document has no attachments")
+                logger.info("Document has no attachments.")
 
             papis_item = zotero_data_to_papis_data(item)
-            if len(files) == 0:
-                logger.warning("Not adding any attachments...")
-            logger.info("Adding paper")
-            papis.commands.add.run(files, data=papis_item)
+            logger.info("Adding paper to papis.")
+            papis.commands.add.run(
+                files,
+                data=papis_item
+            )
 
         self.send_response(201)  # Created
         self.set_zotero_headers()
@@ -197,7 +193,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(rawinput)
 
     def snapshot(self) -> None:
-        logger.warning("Snapshot not implemented")
+        logger.error("Snapshot not implemented!")
         self.send_response(201)
         self.set_zotero_headers()
 

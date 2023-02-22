@@ -11,7 +11,7 @@ import papis.commands.add
 import papis.config
 import papis.utils
 
-logger = logging.getLogger("zotero:bibtex")
+logger = logging.getLogger("papis.{}".format(__name__))
 
 info_template = """{c.Back.BLACK}
 {c.Fore.RED}||
@@ -55,15 +55,11 @@ def add_from_bibtex(bib_file: str,
             if pdf_file is not None:
                 pdf_file = pdf_file.split(":")[1]
                 pdf_file = os.path.join(os.path.dirname(bib_file), pdf_file)
-                logger.info("\tINFO: File field detected (%s)" % pdf_file)
+                logger.info("File field detected: '%s'", pdf_file)
                 if not os.path.exists(pdf_file):
                     logger.warning(
-                        colorama.Back.YELLOW + colorama.Fore.BLACK
-                        + ("Path (%s)" % pdf_file)
-                        + colorama.Back.RED
-                        + " not found! Ignoring it"
-                        + colorama.Style.RESET_ALL
-                    )
+                        "{c.Back.YELLOW}{c.Fore.BALCK}Document file not found: '%s'."
+                        "{c.Style.RESET_ALL}", pdf_file)
                     del entry["file"]
                     pdf_file = None
 
