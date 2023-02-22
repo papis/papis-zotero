@@ -6,7 +6,7 @@ import shutil
 import sqlite3
 from typing import Any, Dict, Iterable, List, Optional
 
-import yaml
+logger = logging.getLogger("papis.{}".format(__name__))
 
 # zotero item types to be excluded.
 # "attachment" are automatically excluded and will be treated as "files"
@@ -238,7 +238,6 @@ def add_from_sql(inpath: str, outpath: str) -> None:
     global input_path
     global output_path
 
-    logger = logging.getLogger("papis_zotero:importer:sql")
     input_path = inpath
     output_path = outpath
 
@@ -280,6 +279,7 @@ def add_from_sql(inpath: str, outpath: str) -> None:
       ORDER BY
         item.itemID
     """
+    import yaml
 
     cursor.execute(items_query.format(excluded_type_tuple=excluded_type_tuple))
     current_item = 0
@@ -291,11 +291,8 @@ def add_from_sql(inpath: str, outpath: str) -> None:
         date_added = row[3]
         date_modified = row[4]
         client_date_modified = row[5]
-        logger.info(
-            "exporting item {current_item}/{items_count}: {key}".format(
-                current_item=current_item, items_count=items_count, key=item_key
-            )
-        )
+        logger.info("[%4d / %4d] Exporting item '%s'.",
+                    current_item, items_count, item_key)
 
         path = os.path.join(output_path, item_key)
         if not os.path.exists(path):
@@ -310,7 +307,7 @@ def add_from_sql(inpath: str, outpath: str) -> None:
             matches = re.search(r".*Citation Key: (\w+)", extra)
             if matches:
                 ref = matches.group(1)
-        logger.info("exporting under ref %s" % ref)
+        logger.info("Exporting under ref: '%s'.", ref)
         item = {
             "ref": ref,
             "type": item_type,
@@ -329,4 +326,5 @@ def add_from_sql(inpath: str, outpath: str) -> None:
         with open(os.path.join(path, "info.yaml"), "w+") as item_file:
             yaml.dump(item, item_file, default_flow_style=False)
 
-    logger.info("done")
+    logger.info("Finished exporting from '%s'.", input_path)
+    logger.info("Exported files can be found at '%s'.", output_path)
