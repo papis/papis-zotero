@@ -4,17 +4,19 @@ import os
 import re
 import shutil
 import sqlite3
-from typing import Any, Dict, Iterable, List, Optional
+from typing import Any, Dict, List
+
+from papis_zotero.utils import to_sql_tuple
 
 logger = logging.getLogger("papis.{}".format(__name__))
 
-# zotero item types to be excluded.
-# "attachment" are automatically excluded and will be treated as "files"
-excluded_types = ["note"]
+# Zotero item types to be excluded.
+ZOTERO_EXCLUDED_TYPES = ["attachment", "note"]
+ZOTERO_EXCLUDED_TYPES_SQL = to_sql_tuple(ZOTERO_EXCLUDED_TYPES)
 
-# dictionary of zotero attachments mime types to be included
-# mapped onto their respective extension to be used in papis
-included_attachments = {
+# dictionary of Zotero attachments mimetypes to be included
+# NOTE: mapped onto their respective extension to be used in papis
+ZOTERO_INCLUDED_MIMETYPE_MAP = {
     "application/vnd.ms-htmlhelp": "chm",
     "image/vnd.djvu": "djvu",
     "application/msword": "doc",
@@ -26,35 +28,22 @@ included_attachments = {
     "text/rtf": "rtf",
     "application/zip": "zip",
 }
+ZOTERO_INCLUDED_MIMETYPE_MAP_SQL = to_sql_tuple(ZOTERO_INCLUDED_MIMETYPE_MAP)
 
-# dictionary translating from zotero to papis type names
-translated_types = {"journalArticle": "article"}
+# dictionary translating from Zotero to papis type names
+ZOTERO_TO_PAPIS_TYPE_MAP = {"journalArticle": "article"}
 
 # dictionary translating from zotero to papis field names
-translated_fields = {"DOI": "doi"}
+ZOTERO_TO_PAPIS_FIELD_MAP = {
+    "abstractNote": "abstract",
+    "publicationTitle": "journal",
+    "DOI": "doi",
+    "itemType": "type",
+    "ISBN": "isbn",
+}
 
 # seperator between multiple tags
-tag_delimiter = ","
-
-# if no attachment is found, give info.yaml as content file
-# set to None if no file should be given in that case
-default_file: Optional[str] = None
-
-input_path: Optional[str] = None
-output_path: Optional[str] = None
-
-
-def get_tuple(elements: Iterable[str]) -> str:
-    """
-    Concatenate given strings to SQL tuple of strings
-    """
-    elements_tuple = "("
-    for element in elements:
-        if elements_tuple != "(":
-            elements_tuple += ","
-        elements_tuple += '"' + element + '"'
-    elements_tuple += ")"
-    return elements_tuple
+ZOTERO_TAG_DELIMITER = ","
 
 
 def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
@@ -75,7 +64,7 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     field_cursor.execute(item_field_query.format(itemID=item_id))
     fields = {}
     for field_row in field_cursor:
-        field_name = translated_fields.get(field_row[0], field_row[0])
+        field_name = ZOTERO_TO_PAPIS_FIELD_MAP.get(field_row[0], field_row[0])
         field_value = field_row[1]
         fields[field_name] = field_value
     return fields
@@ -92,31 +81,28 @@ def get_creators(connection: sqlite3.Connection, item_id: str) -> Dict[str, List
       creators,
       itemCreators
     WHERE
-      itemCreators.itemID = {itemID} AND
+      itemCreators.itemID = {item_id} AND
       creatorTypes.creatorTypeID = itemCreators.creatorTypeID AND
       creators.creatorID = itemCreators.creatorID
     ORDER BY
       creatorTypes.creatorType,
       itemCreators.orderIndex
-    """
+    """.format(item_id=item_id)
     creator_cursor = connection.cursor()
-    creator_cursor.execute(
-        item_creator_query.format(itemID=item_id)
-    )
-    creators: Dict[str, Any] = {}
+    creator_cursor.execute(item_creator_query)
 
+    creators: Dict[str, Any] = {}
     for creator_row in creator_cursor:
         creator_name = creator_row[0]
-        creator_name_list = creator_name + "_list"
+        creator_name_list = "{}_list".format(creator_name)
         given_name = creator_row[1]
         surname = creator_row[2]
 
         current_creators = creators.get(creator_name, "")
         if current_creators != "":
             current_creators += " and "
-        current_creators += "{surname}, {given_name}".format(
-            given_name=given_name, surname=surname
-        )
+
+        current_creators += "{}, {}".format(surname, given_name)
         creators[creator_name] = current_creators
 
         current_creators_list = creators.get(creator_name_list, [])
@@ -130,14 +116,8 @@ def get_creators(connection: sqlite3.Connection, item_id: str) -> Dict[str, List
 
 def get_files(connection: sqlite3.Connection,
               item_id: str,
-              item_key: str) -> Dict[str, List[str]]:
-    global input_path
-    if input_path is None:
-        raise ValueError("Input path is not set")
-
-    if output_path is None:
-        raise ValueError("Output path is not set")
-
+              item_key: str,
+              input_path: str, output_path: str) -> Dict[str, List[str]]:
     item_attachment_query = """
     SELECT
       items.key,
@@ -147,41 +127,35 @@ def get_files(connection: sqlite3.Connection,
       itemAttachments,
       items
     WHERE
-      itemAttachments.parentItemID = {itemID} AND
+      itemAttachments.parentItemID = {item_id} AND
       itemAttachments.contentType IN {mimetypes} AND
       items.itemID = itemAttachments.itemID
-    """
-    mimetypes = get_tuple(included_attachments.keys())
+    """.format(item_id=item_id, mimetypes=ZOTERO_INCLUDED_MIMETYPE_MAP_SQL)
+
     attachment_cursor = connection.cursor()
-    attachment_cursor.execute(
-        item_attachment_query.format(itemID=item_id, mimetypes=mimetypes)
-    )
+    attachment_cursor.execute(item_attachment_query)
+
     files = []
     for attachement_row in attachment_cursor:
         key = attachement_row[0]
         path = attachement_row[1]
         mime = attachement_row[2]
-        # extension = included_attachments[mime]
+
         try:
             # NOTE: a single file is assumed in the attachment's folder
             # to avoid using path, which may contain invalid characters
-            import_path = glob.glob(input_path + "/storage/" + key + "/*.*")[0]
-            extension = os.path.splitext(import_path)[1]
-            local_path = os.path.join(
-                output_path, item_key, key + "." + extension
-            )
-            shutil.copyfile(import_path, local_path)
-            files.append(key + "." + extension)
-        except Exception:
-            print(
-                "failed to export attachment {key}: {path} ({mime})".format(
-                    key=key, path=path, mime=mime
-                )
-            )
-            pass
+            import_path = glob.glob(os.path.join(input_path, "storage", key, "*.*"))[0]
 
-    if files == [] and default_file:
-        files.append(default_file)
+            extension = os.path.splitext(import_path)[1]
+            file_name = "{}.{}".format(key, extension)
+            local_path = os.path.join(output_path, item_key, file_name)
+
+            shutil.copyfile(import_path, local_path)
+            files.append(file_name)
+        except Exception:
+            logger.error("Failed to export attachment '%s': '%s' (%s).",
+                         key, path, mime)
+
     return {"files": files}
 
 
@@ -193,18 +167,14 @@ def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
       tags,
       itemTags
     WHERE
-      itemTags.itemID = {itemID} AND
+      itemTags.itemID = {item_id} AND
       tags.tagID = itemTags.tagID
-    """
-    tag_cursor = connection.cursor()
-    tag_cursor.execute(item_tag_query.format(itemID=item_id))
-    tags = ""
-    for tag_row in tag_cursor:
-        if tags != "":
-            tags += tag_delimiter + " "
-        tags += "{tag}".format(tag=tag_row[0])
+    """.format(item_id=item_id)
 
-    return {"tags": tags}
+    tag_cursor = connection.cursor()
+    tag_cursor.execute(item_tag_query)
+
+    return {"tags": ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in tag_cursor)}
 
 
 def get_collections(connection: sqlite3.Connection,
@@ -221,31 +191,35 @@ def get_collections(connection: sqlite3.Connection,
     """
     collection_cursor = connection.cursor()
     collection_cursor.execute(item_collection_query.format(itemID=item_id))
-    collections = []
-    for collection_row in collection_cursor:
-        collections.append(collection_row[0])
 
-    return {"project": collections}
+    return {"project": [row[0] for row in collection_cursor]}
 
 
-def add_from_sql(inpath: str, outpath: str) -> None:
+def add_from_sql(input_path: str, output_path: str) -> None:
     """
     :param inpath: path to zotero SQLite database "zoter.sqlite" and
         "storage" to be imported
     :param outpath: path where all items will be exported to created if not
         existing
     """
-    global input_path
-    global output_path
+    import yaml
 
-    input_path = inpath
-    output_path = outpath
+    if not os.path.exists(input_path):
+        raise FileNotFoundError(
+            "[Errno 2] No such file or directory: '{}'".format(input_path))
 
-    connection = sqlite3.connect(os.path.join(input_path, "zotero.sqlite"))
+    if not os.path.exists(output_path):
+        raise FileNotFoundError(
+            "[Errno 2] No such file or directory: '{}'".format(output_path))
+
+    zotero_sqlite_file = os.path.join(input_path, "zotero.sqlite")
+    if not os.path.exists(zotero_sqlite_file):
+        raise FileNotFoundError(
+            "No 'zotero.sqlite' file found in '{}'".format(input_path))
+
+    connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
 
-    excluded_types.append("attachment")
-    excluded_type_tuple = get_tuple(excluded_types)
     items_count_query = """
       SELECT
         COUNT(item.itemID)
@@ -254,11 +228,12 @@ def add_from_sql(inpath: str, outpath: str) -> None:
         itemTypes itemType
       WHERE
         itemType.itemTypeID = item.itemTypeID AND
-        itemType.typeName NOT IN {excluded_type_tuple}
+        itemType.typeName NOT IN {excluded}
       ORDER BY
         item.itemID
-    """
-    cursor.execute(items_count_query.format(excluded_type_tuple=excluded_type_tuple))
+    """.format(excluded=ZOTERO_EXCLUDED_TYPES_SQL)
+
+    cursor.execute(items_count_query)
     for row in cursor:
         items_count = row[0]
 
@@ -275,18 +250,17 @@ def add_from_sql(inpath: str, outpath: str) -> None:
         itemTypes itemType
       WHERE
         itemType.itemTypeID = item.itemTypeID AND
-        itemType.typeName NOT IN {excluded_type_tuple}
+        itemType.typeName NOT IN {excluded}
       ORDER BY
         item.itemID
-    """
-    import yaml
+    """.format(excluded=ZOTERO_EXCLUDED_TYPES_SQL)
+    cursor.execute(items_query)
 
-    cursor.execute(items_query.format(excluded_type_tuple=excluded_type_tuple))
     current_item = 0
     for row in cursor:
         current_item += 1
         item_id = row[0]
-        item_type = translated_types.get(row[1], row[1])
+        item_type = ZOTERO_TO_PAPIS_TYPE_MAP.get(row[1], row[1])
         item_key = row[2]
         date_added = row[3]
         date_modified = row[4]
@@ -303,10 +277,10 @@ def add_from_sql(inpath: str, outpath: str) -> None:
         extra = fields.get("extra", None)
         ref = item_key
         if extra:
-            # try to convert
             matches = re.search(r".*Citation Key: (\w+)", extra)
             if matches:
                 ref = matches.group(1)
+
         logger.info("Exporting under ref: '%s'.", ref)
         item = {
             "ref": ref,
@@ -319,7 +293,8 @@ def add_from_sql(inpath: str, outpath: str) -> None:
         item.update(get_creators(connection, item_id))
         item.update(get_tags(connection, item_id))
         item.update(get_collections(connection, item_id))
-        item.update(get_files(connection, item_id, item_key))
+        item.update(get_files(connection, item_id, item_key,
+                              input_path=input_path, output_path=output_path))
 
         item.update({"ref": ref})
 

@@ -1,3 +1,4 @@
+import logging
 import os
 import http.server
 from typing import Optional
@@ -6,21 +7,20 @@ import click
 
 import papis_zotero.server
 
+logger = logging.getLogger("papis.{}".format(__name__))
+
 
 @click.group("zotero")
 @click.help_option("-h", "--help")
 def main() -> None:
-    """
-    Zotero interface for papis.
-    """
-    pass
+    """Zotero interface for papis."""
 
 
 @main.command("serve")
 @click.help_option("-h", "--help")
 @click.option("--port",
               help="Port to listen to",
-              default=papis_zotero.server.zotero_port,
+              default=papis_zotero.server.ZOTERO_PORT,
               type=int)
 @click.option("--address",
               help="Address to bind",
@@ -33,8 +33,23 @@ def serve(address: str, port: int) -> None:
                    "https://github.com/papis/papis-zotero/issues.")
 
     server_address = (address, port)
-    httpd = http.server.HTTPServer(server_address,
-                                   papis_zotero.server.PapisRequestHandler)
+    try:
+        httpd = http.server.HTTPServer(
+            server_address,
+            papis_zotero.server.PapisRequestHandler
+        )
+    except OSError:
+        logger.error(
+            "Address '%s:%s' is already in use. This may be because you "
+            "have the Zotero application open.", address, port)
+        logger.error("papis zotero serve requires to be the only one "
+                     "listening on that port. Zotero must quit before this "
+                     "command can be used!")
+        return
+
+    logger.info("Starting server in address https://%s:%s.", address, port)
+    logger.info("Press Ctrl-C to exit.")
+
     httpd.serve_forever()
 
 
@@ -75,9 +90,14 @@ def do_importer(from_bibtex: Optional[str],
         os.makedirs(outfolder)
 
     if from_bibtex is not None:
+        import papis_zotero.bibtex
         papis_zotero.bibtex.add_from_bibtex(from_bibtex, outfolder, link)
     elif from_sql is not None:
-        papis_zotero.sql.add_from_sql(from_sql, outfolder)
+        import papis_zotero.sql
+        try:
+            papis_zotero.sql.add_from_sql(from_sql, outfolder)
+        except Exception as exc:
+            logger.error("Failed to import from file: %s", from_sql, exc_info=exc)
     else:
         logger.error("Either '--from-bibtex' or '--from-sql-folder' should be "
                      "passed to import from Zotero.")
