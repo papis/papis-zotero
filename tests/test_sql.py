@@ -5,7 +5,7 @@ import tempfile
 import papis_zotero.sql
 
 
-def test_simple():
+def test_simple() -> None:
     sqlpath = os.path.join(os.path.dirname(__file__), "data", "Zotero")
     libdir = tempfile.mkdtemp()
     papis_zotero.sql.add_from_sql(sqlpath, libdir)

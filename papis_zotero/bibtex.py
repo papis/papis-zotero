@@ -1,5 +1,7 @@
 import os
 import logging
+from typing import Optional
+
 import tqdm
 import colorama
 
@@ -20,7 +22,9 @@ info_template = """{c.Back.BLACK}
 """
 
 
-def add_from_bibtex(bib_file, out_folder=None, link=False):
+def add_from_bibtex(bib_file: str,
+                    out_folder: Optional[str] = None,
+                    link: bool = False) -> None:
 
     if out_folder is not None:
         papis.config.set_lib_from_name(out_folder)
@@ -47,9 +51,9 @@ def add_from_bibtex(bib_file, out_folder=None, link=False):
                 ref=entry.get("ref"),
             ))
 
-            pdf_file = None
-            if "file" in entry.keys():
-                pdf_file = entry.get("file").split(":")[1]
+            pdf_file = entry.get("file")
+            if pdf_file is not None:
+                pdf_file = pdf_file.split(":")[1]
                 pdf_file = os.path.join(os.path.dirname(bib_file), pdf_file)
                 logger.info("\tINFO: File field detected (%s)" % pdf_file)
                 if not os.path.exists(pdf_file):
