@@ -24,50 +24,38 @@ import papis_zotero.utils
 
 logger = logging.getLogger("papis.{}".format(__name__))
 
-connector_api_version = 2
-zotero_version = "5.0.25"
-zotero_port = 23119
-
-papis_translation = {
-    "abstractNote": "abstract",
-    "publicationTitle": "journal",
-    "DOI": "doi",
-    "itemType": "type",
-    "ISBN": "isbn",
-}
+ZOTERO_CONNECTOR_API_VERSION = 2
+ZOTERO_VERSION = "5.0.25"
+ZOTERO_PORT = 23119
 
 
 def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
+    from papis_zotero.sql import ZOTERO_TO_PAPIS_FIELD_MAP
     data = {}
 
-    for key in papis_translation.keys():
-        if item.get(key):
-            data[papis_translation[key]] = item.get(key)
-            del item[key]
+    # NOTE: these are handled elsewhere
+    item.pop("id", None)
+    item.pop("attachments", None)
 
-    # Maybe zotero has good tags
-    if isinstance(item.get("tags"), list):
-        try:
-            data["tags"] = " ".join(item["tags"])
-        except Exception:
-            pass
-        del item["tags"]
+    # translate known zotero keys
+    for key in ZOTERO_TO_PAPIS_FIELD_MAP:
+        value = item.pop(key, None)
+        if value is not None:
+            data[ZOTERO_TO_PAPIS_FIELD_MAP[key]] = value
 
-    if item.get("id"):
-        del item["id"]
+    # check zotero tags
+    tags = item.pop("tags", None)
+    if isinstance(tags, list):
+        data["tags"] = " ".join(tags)
 
-    if item.get("attachments"):
-        del item["attachments"]
-
-    # still get all information from zotero
     data.update(item)
 
-    # and also get all infromation from crossref
+    # try to get information from Crossref as well
     doi = data.get("doi")
     if doi is not None:
         crossref_data = papis.crossref.doi_to_data(str(doi))
-        if crossref_data.get("title"):
-            del crossref_data["title"]
+        crossref_data.pop("title", None)
+
         logger.info("Updating document with data from Crossref.")
         data.update(crossref_data)
 
@@ -75,18 +63,17 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 
 
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
-
     def log_message(self, fmt: str, *args: Any) -> None:
         logger.info(fmt, args)
 
     def set_zotero_headers(self) -> None:
         self.send_header(
             "X-Zotero-Version",
-            zotero_version
+            ZOTERO_VERSION
         )
         self.send_header(
             "X-Zotero-Connector-API-Version",
-            str(connector_api_version)
+            str(ZOTERO_CONNECTOR_API_VERSION)
         )
         self.end_headers()
 
