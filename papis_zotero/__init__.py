@@ -1,5 +1,6 @@
 import os
 import http.server
+from typing import Optional
 
 import click
 
@@ -8,7 +9,7 @@ import papis_zotero.server
 
 @click.group("zotero")
 @click.help_option("-h", "--help")
-def main():
+def main() -> None:
     """
     Zotero interface for papis.
     """
@@ -24,7 +25,7 @@ def main():
 @click.option("--address",
               help="Address to bind",
               default="localhost")
-def serve(address, port):
+def serve(address: str, port: int) -> None:
     """Start a ``zotero-connector`` server."""
 
     logger.warning("The 'zotero-connector' server is experimental. "
@@ -60,8 +61,12 @@ def serve(address, port):
               required=True)
 @click.option("--link",
               help="Wether to link the pdf files or copy them",
-              default=None)
-def do_importer(from_bibtex, from_sql, outfolder, link):
+              is_flag=True,
+              default=False)
+def do_importer(from_bibtex: Optional[str],
+                from_sql: Optional[str],
+                outfolder: str,
+                link: bool) -> None:
     """Import zotero libraries into papis libraries."""
     import papis_zotero.bibtex
     import papis_zotero.sql

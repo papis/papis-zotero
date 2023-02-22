@@ -4,6 +4,8 @@ import os
 import re
 import shutil
 import sqlite3
+from typing import Any, Dict, Iterable, List, Optional
+
 import yaml
 
 # zotero item types to be excluded.
@@ -36,10 +38,13 @@ tag_delimiter = ","
 
 # if no attachment is found, give info.yaml as content file
 # set to None if no file should be given in that case
-default_file = None
+default_file: Optional[str] = None
+
+input_path: Optional[str] = None
+output_path: Optional[str] = None
 
 
-def get_tuple(elements):
+def get_tuple(elements: Iterable[str]) -> str:
     """
     Concatenate given strings to SQL tuple of strings
     """
@@ -52,7 +57,7 @@ def get_tuple(elements):
     return elements_tuple
 
 
-def get_fields(connection, item_id):
+def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     item_field_query = """
     SELECT
       fields.fieldName,
@@ -76,7 +81,7 @@ def get_fields(connection, item_id):
     return fields
 
 
-def get_creators(connection, item_id):
+def get_creators(connection: sqlite3.Connection, item_id: str) -> Dict[str, List[str]]:
     item_creator_query = """
     SELECT
       creatorTypes.creatorType,
@@ -98,7 +103,7 @@ def get_creators(connection, item_id):
     creator_cursor.execute(
         item_creator_query.format(itemID=item_id)
     )
-    creators = {}  # type: ignore
+    creators: Dict[str, Any] = {}
 
     for creator_row in creator_cursor:
         creator_name = creator_row[0]
@@ -123,8 +128,16 @@ def get_creators(connection, item_id):
     return creators
 
 
-def get_files(connection, item_id, item_key):
-    global inputPath
+def get_files(connection: sqlite3.Connection,
+              item_id: str,
+              item_key: str) -> Dict[str, List[str]]:
+    global input_path
+    if input_path is None:
+        raise ValueError("Input path is not set")
+
+    if output_path is None:
+        raise ValueError("Output path is not set")
+
     item_attachment_query = """
     SELECT
       items.key,
@@ -152,10 +165,10 @@ def get_files(connection, item_id, item_key):
         try:
             # NOTE: a single file is assumed in the attachment's folder
             # to avoid using path, which may contain invalid characters
-            import_path = glob.glob(inputPath + "/storage/" + key + "/*.*")[0]
+            import_path = glob.glob(input_path + "/storage/" + key + "/*.*")[0]
             extension = os.path.splitext(import_path)[1]
             local_path = os.path.join(
-                outputPath, item_key, key + "." + extension
+                output_path, item_key, key + "." + extension
             )
             shutil.copyfile(import_path, local_path)
             files.append(key + "." + extension)
@@ -172,7 +185,7 @@ def get_files(connection, item_id, item_key):
     return {"files": files}
 
 
-def get_tags(connection, item_id):
+def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     item_tag_query = """
     SELECT
       tags.name
@@ -194,7 +207,8 @@ def get_tags(connection, item_id):
     return {"tags": tags}
 
 
-def get_collections(connection, item_id):
+def get_collections(connection: sqlite3.Connection,
+                    item_id: str) -> Dict[str, List[str]]:
     item_collection_query = """
       SELECT
         collections.collectionName
@@ -214,22 +228,21 @@ def get_collections(connection, item_id):
     return {"project": collections}
 
 
-def add_from_sql(input_path, output_path):
+def add_from_sql(inpath: str, outpath: str) -> None:
     """
-
-    :param input_path: path to zotero SQLite database "zoter.sqlite" and
+    :param inpath: path to zotero SQLite database "zoter.sqlite" and
         "storage" to be imported
-    :param output_path: path where all items will be exported to created if not
+    :param outpath: path where all items will be exported to created if not
         existing
     """
-    global inputPath
-    global outputPath
+    global input_path
+    global output_path
 
     logger = logging.getLogger("papis_zotero:importer:sql")
-    inputPath = input_path
-    outputPath = output_path
+    input_path = inpath
+    output_path = outpath
 
-    connection = sqlite3.connect(os.path.join(inputPath, "zotero.sqlite"))
+    connection = sqlite3.connect(os.path.join(input_path, "zotero.sqlite"))
     cursor = connection.cursor()
 
     excluded_types.append("attachment")
@@ -284,7 +297,7 @@ def add_from_sql(input_path, output_path):
             )
         )
 
-        path = os.path.join(outputPath, item_key)
+        path = os.path.join(output_path, item_key)
         if not os.path.exists(path):
             os.makedirs(path)
 

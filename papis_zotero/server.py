@@ -13,6 +13,8 @@ import tempfile
 import urllib.request
 import urllib.error
 
+from typing import Any, Dict
+
 import papis.api
 import papis.config
 import papis.crossref
@@ -36,7 +38,7 @@ papis_translation = {
 }
 
 
-def zotero_data_to_papis_data(item):
+def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     data = {}
 
     for key in papis_translation.keys():
@@ -62,8 +64,9 @@ def zotero_data_to_papis_data(item):
     data.update(item)
 
     # and also get all infromation from crossref
-    if data.get("doi"):
-        crossref_data = papis.crossref.doi_to_data(data["doi"])
+    doi = data.get("doi")
+    if doi is not None:
+        crossref_data = papis.crossref.doi_to_data(str(doi))
         if crossref_data.get("title"):
             del crossref_data["title"]
         logger.info("Updating also from crossref")
@@ -74,22 +77,25 @@ def zotero_data_to_papis_data(item):
 
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
-    def log_message(self, fmt, *args):
-        global logger
+    def log_message(self, fmt: str, *args: Any) -> None:
         logger.info(fmt % args)
-        return
 
-    def set_zotero_headers(self):
-        self.send_header("X-Zotero-Version", zotero_version)
-        self.send_header("X-Zotero-Connector-API-Version",
-                         connector_api_version)
+    def set_zotero_headers(self) -> None:
+        self.send_header(
+            "X-Zotero-Version",
+            zotero_version
+        )
+        self.send_header(
+            "X-Zotero-Connector-API-Version",
+            str(connector_api_version)
+        )
         self.end_headers()
 
-    def read_input(self):
+    def read_input(self) -> bytes:
         length = int(self.headers["content-length"])
         return self.rfile.read(length)
 
-    def pong(self, POST=True):  # noqa: N803
+    def pong(self, POST: bool = True) -> None:  # noqa: N803
         global logger
         logger.info("pong!")
         # Pong must respond to ping on both GET and POST
@@ -119,7 +125,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.wfile.write(bytes(response, "utf8"))
 
-    def papis_collection(self):
+    def papis_collection(self) -> None:
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.set_zotero_headers()
@@ -138,7 +144,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         })
         self.wfile.write(bytes(response, "utf8"))
 
-    def add(self):
+    def add(self) -> None:
         logger.info("Adding paper from zotero connector")
         rawinput = self.read_input()
         data = json.loads(rawinput.decode("utf8"))
@@ -190,13 +196,12 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         # return the JSON data back
         self.wfile.write(rawinput)
 
-    def snapshot(self):
+    def snapshot(self) -> None:
         logger.warning("Snapshot not implemented")
         self.send_response(201)
         self.set_zotero_headers()
-        return
 
-    def do_POST(self):      # noqa: N802
+    def do_POST(self) -> None:      # noqa: N802
         if self.path == "/connector/ping":
             self.pong()
         elif self.path == "/connector/getSelectedCollection":
@@ -205,8 +210,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             self.snapshot()
         elif self.path == "/connector/saveItems":
             self.add()
-        return
 
-    def do_GET(self):       # noqa: N802
+    def do_GET(self) -> None:       # noqa: N802
         if self.path == "/connector/ping":
             self.pong(POST=False)

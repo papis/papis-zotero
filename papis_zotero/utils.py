@@ -2,7 +2,7 @@ import os
 import re
 
 
-def is_pdf(filepath):
+def is_pdf(filepath: str) -> bool:
     if not os.path.exists(filepath):
         return False
 
