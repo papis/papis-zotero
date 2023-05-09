@@ -72,7 +72,10 @@ Now you can use the script through
 
 .. code:: bash
 
-  papis zotero import --from-sql YOUR-SQL-FILE
+  papis zotero import --from-sql-folder YOUR-SQL-FOLDER
+
+where ``YOUR-SQL-FOLDER`` is the folder containing the ``zotero.sqlite``
+folder.
 
 This script by default will create a directory named ``Documents`` (in your
 current directory) where papis documents are stored. You can add these document
