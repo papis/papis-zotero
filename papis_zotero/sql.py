@@ -16,16 +16,19 @@ excludedTypes = ["note"]
 
 # dictionary of zotero attachments mime types to be included
 # mapped onto their respective extension to be used in papis
-includedAttachments = {"application/vnd.ms-htmlhelp":  "chm",
-                       "image/vnd.djvu": "djvu",
-                       "application/msword":  "doc",
-                       "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
-                       "application/epub+zip": "epub",
-                       "application/octet-stream":  "fb2",
-                       "application/x-mobipocket-ebook": "mobi",
-                       "application/pdf":  "pdf",
-                       "text/rtf":  "rtf",
-                       "application/zip":  "zip"}
+includedAttachments = {
+    "application/vnd.ms-htmlhelp": "chm",
+    "image/vnd.djvu": "djvu",
+    "application/msword": "doc",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    "docx",
+    "application/epub+zip": "epub",
+    "application/octet-stream": "fb2",
+    "application/x-mobipocket-ebook": "mobi",
+    "application/pdf": "pdf",
+    "text/rtf": "rtf",
+    "application/zip": "zip"
+}
 
 # dictionary translating from zotero to papis type names
 translatedTypes = {"journalArticle": "article"}
@@ -97,9 +100,7 @@ def getCreators(connection, itemId):
       itemCreators.orderIndex
     """
     creatorCursor = connection.cursor()
-    creatorCursor.execute(
-        itemCreatorQuery.format(itemID=itemId)
-    )
+    creatorCursor.execute(itemCreatorQuery.format(itemID=itemId))
     creators = {}  # type: ignore
 
     for creatorRow in creatorCursor:
@@ -111,15 +112,15 @@ def getCreators(connection, itemId):
         currentCreators = creators.get(creatorName, "")
         if currentCreators != "":
             currentCreators += " and "
-        currentCreators += "{surname}, {givenName}".format(
-          givenName=givenName, surname=surname
-        )
+        currentCreators += "{surname}, {givenName}".format(givenName=givenName,
+                                                           surname=surname)
         creators[creatorName] = currentCreators
 
         currentCreatorsList = creators.get(creatorNameList, [])
-        currentCreatorsList.append(
-            {"given_name": givenName, "surname": surname}
-        )
+        currentCreatorsList.append({
+            "given_name": givenName,
+            "surname": surname
+        })
         creators[creatorNameList] = currentCreatorsList
 
     return creators
@@ -143,8 +144,7 @@ def getFiles(connection, itemId, itemKey):
     mimeTypes = getTuple(includedAttachments.keys())
     attachmentCursor = connection.cursor()
     attachmentCursor.execute(
-        itemAttachmentQuery.format(itemID=itemId, mimeTypes=mimeTypes)
-    )
+        itemAttachmentQuery.format(itemID=itemId, mimeTypes=mimeTypes))
     files = []
     for attachmentRow in attachmentCursor:
         key = attachmentRow[0]
@@ -156,17 +156,13 @@ def getFiles(connection, itemId, itemKey):
             # to avoid using path, which may contain invalid characters
             importPath = glob.glob(inputPath + "/storage/" + key + "/*.*")[0]
             extension = os.path.splitext(importPath)[1]
-            localPath = os.path.join(
-                outputPath, itemKey, key + "." + extension
-            )
+            localPath = os.path.join(outputPath, itemKey,
+                                     key + "." + extension)
             shutil.copyfile(importPath, localPath)
             files.append(key + "." + extension)
         except:
-            print(
-              "failed to export attachment {key}: {path} ({mime})".format(
-                key=key, path=path, mime=mime
-              )
-            )
+            print("failed to export attachment {key}: {path} ({mime})".format(
+                key=key, path=path, mime=mime))
             pass
 
     if files == [] and defaultFile:
@@ -216,8 +212,8 @@ def getCollections(connection, itemId):
     return {"project": collections}
 
 
-
 ###############################################################################
+
 
 def add_from_sql(input_path, output_path):
     """
@@ -283,11 +279,8 @@ def add_from_sql(input_path, output_path):
         dateAdded = row[3]
         dateModified = row[4]
         clientDateModified = row[5]
-        logger.info(
-            "exporting item {currentItem}/{itemsCount}: {key}".format(
-                currentItem=currentItem, itemsCount=itemsCount, key=itemKey
-            )
-        )
+        logger.info("exporting item {currentItem}/{itemsCount}: {key}".format(
+            currentItem=currentItem, itemsCount=itemsCount, key=itemKey))
 
         path = os.path.join(outputPath, itemKey)
         if not os.path.exists(path):
@@ -303,10 +296,13 @@ def add_from_sql(input_path, output_path):
             if matches:
                 ref = matches.group(1)
         logger.info("exporting under ref %s" % ref)
-        item = {"ref": ref, "type": itemType
-                , "created": dateAdded
-                , "modified": dateModified
-                , "modified.client": clientDateModified}
+        item = {
+            "ref": ref,
+            "type": itemType,
+            "created": dateAdded,
+            "modified": dateModified,
+            "modified.client": clientDateModified
+        }
         item.update(fields)
         item.update(getCreators(connection, itemId))
         item.update(getTags(connection, itemId))

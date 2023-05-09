@@ -124,14 +124,9 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         return
 
     def set_zotero_headers(self):
-        self.send_header(
-            "X-Zotero-Version",
-            zotero_version
-        )
-        self.send_header(
-            "X-Zotero-Connector-API-Version",
-            connector_api_version
-        )
+        self.send_header("X-Zotero-Version", zotero_version)
+        self.send_header("X-Zotero-Connector-API-Version",
+                         connector_api_version)
         self.end_headers()
 
     def read_input(self):
@@ -164,13 +159,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.set_zotero_headers()
-            response = json.dumps(
-                {
-                    "prefs": {
-                        "automaticSnapshots": True
-                    }
-                }
-            )
+            response = json.dumps({"prefs": {"automaticSnapshots": True}})
 
         self.wfile.write(bytes(response, "utf8"))
 
@@ -179,20 +168,18 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.send_header("Content-Type", "application/json")
         self.set_zotero_headers()
         papis_library = papis.api.get_lib_name()
-        response = json.dumps(
-            {
-                "libraryID": 1,
-                "libraryName": papis_library,
-                # I'm not aware of a read-only papis mode
-                "libraryEditable": True,
-                # collection-level parameters
-                "editable": True,
-                # collection-level
-                "id": None,
-                # collection if collection, else library
-                "name": papis_library
-            }
-        )
+        response = json.dumps({
+            "libraryID": 1,
+            "libraryName": papis_library,
+            # I'm not aware of a read-only papis mode
+            "libraryEditable": True,
+            # collection-level parameters
+            "editable": True,
+            # collection-level
+            "id": None,
+            # collection if collection, else library
+            "name": papis_library
+        })
         self.wfile.write(bytes(response, "utf8"))
 
     def add(self):
@@ -205,9 +192,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             if item.get('attachments') and len(item.get('attachments')) > 0:
                 for attachment in item.get('attachments'):
                     mime = str(attachment.get('mimeType'))
-                    logger.info(
-                        "Checking attachment (mime {0})".format(mime)
-                    )
+                    logger.info("Checking attachment (mime {0})".format(mime))
                     if re.match(r'.*pdf.*', mime):
                         url = attachment.get('url')
                         logger.info("Downloading pdf '{0}'".format(url))
@@ -216,8 +201,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                         except urllib.error.HTTPError:
                             logger.error(
                                 'Error downloading pdf, probably you do not'
-                                'have the rights for the journal.'
-                            )
+                                'have the rights for the journal.')
                             continue
 
                         pdfpath = tempfile.mktemp(suffix='.pdf')
@@ -231,8 +215,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                         else:
                             logger.error(
                                 'File retrieved does not appear to be a pdf'
-                                'So no file will be saved...'
-                            )
+                                'So no file will be saved...')
             else:
                 logger.warning("Document has no attachments")
 
@@ -240,10 +223,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             if len(files) == 0:
                 logger.warning('Not adding any attachments...')
             logger.info("Adding paper")
-            papis.commands.add.run(
-                files,
-                data=papis_item
-            )
+            papis.commands.add.run(files, data=papis_item)
 
         self.send_response(201)  # Created
         self.set_zotero_headers()

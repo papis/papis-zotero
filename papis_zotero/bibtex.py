@@ -12,7 +12,6 @@ import colorama
 
 logger = logging.getLogger('zotero:bibtex')
 
-
 info_template = """{c.Back.BLACK}
 {c.Fore.RED}||
 {c.Fore.RED}||{c.Fore.YELLOW}    ref: {c.Fore.GREEN}{ref}
@@ -42,12 +41,13 @@ def add_from_bibtex(bib_file, out_folder=None, link=False):
             if 'ref' in entry.keys():
                 entry['ref'] = entry['ref'].replace('?', '')
 
-            print(info_template.format(
-                c=colorama,
-                author=entry.get('author'),
-                title=entry.get('title'),
-                ref=entry.get('ref'),
-            ))
+            print(
+                info_template.format(
+                    c=colorama,
+                    author=entry.get('author'),
+                    title=entry.get('title'),
+                    ref=entry.get('ref'),
+                ))
 
             pdf_file = None
             if 'file' in entry.keys():
@@ -55,13 +55,11 @@ def add_from_bibtex(bib_file, out_folder=None, link=False):
                 pdf_file = os.path.join(os.path.dirname(bib_file), pdf_file)
                 logger.info('\tINFO: File field detected (%s)' % pdf_file)
                 if not os.path.exists(pdf_file):
-                    logger.warning(
-                        colorama.Back.YELLOW + colorama.Fore.BLACK +
-                        ('Path (%s)' % pdf_file) +
-                        colorama.Back.RED +
-                        ' not found! Ignoring it' +
-                        colorama.Style.RESET_ALL
-                    )
+                    logger.warning(colorama.Back.YELLOW + colorama.Fore.BLACK +
+                                   ('Path (%s)' % pdf_file) +
+                                   colorama.Back.RED +
+                                   ' not found! Ignoring it' +
+                                   colorama.Style.RESET_ALL)
                     del entry['file']
                     pdf_file = None
 
