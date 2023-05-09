@@ -12,7 +12,7 @@ setup(
     license='GPLv3',
     url='https://github.com/papis/papis-zotero',
     install_requires=[
-        "papis==0.10",
+        "papis==0.13",
     ],
     classifiers=[
         'Environment :: Console',
