@@ -20,7 +20,8 @@ ZOTERO_INCLUDED_MIMETYPE_MAP = {
     "application/vnd.ms-htmlhelp": "chm",
     "image/vnd.djvu": "djvu",
     "application/msword": "doc",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+    "docx",
     "application/epub+zip": "epub",
     "application/octet-stream": "fb2",
     "application/x-mobipocket-ebook": "mobi",
@@ -70,7 +71,8 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     return fields
 
 
-def get_creators(connection: sqlite3.Connection, item_id: str) -> Dict[str, List[str]]:
+def get_creators(connection: sqlite3.Connection,
+                 item_id: str) -> Dict[str, List[str]]:
     item_creator_query = """
     SELECT
       creatorTypes.creatorType,
@@ -106,17 +108,16 @@ def get_creators(connection: sqlite3.Connection, item_id: str) -> Dict[str, List
         creators[creator_name] = current_creators
 
         current_creators_list = creators.get(creator_name_list, [])
-        current_creators_list.append(
-            {"given_name": given_name, "surname": surname}
-        )
+        current_creators_list.append({
+            "given_name": given_name,
+            "surname": surname
+        })
         creators[creator_name_list] = current_creators_list
 
     return creators
 
 
-def get_files(connection: sqlite3.Connection,
-              item_id: str,
-              item_key: str,
+def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
               input_path: str, output_path: str) -> Dict[str, List[str]]:
     item_attachment_query = """
     SELECT
@@ -144,7 +145,8 @@ def get_files(connection: sqlite3.Connection,
         try:
             # NOTE: a single file is assumed in the attachment's folder
             # to avoid using path, which may contain invalid characters
-            import_path = glob.glob(os.path.join(input_path, "storage", key, "*.*"))[0]
+            import_path = glob.glob(
+                os.path.join(input_path, "storage", key, "*.*"))[0]
 
             extension = os.path.splitext(import_path)[1]
             file_name = "{}.{}".format(key, extension)
@@ -153,8 +155,8 @@ def get_files(connection: sqlite3.Connection,
             shutil.copyfile(import_path, local_path)
             files.append(file_name)
         except Exception:
-            logger.error("Failed to export attachment '%s': '%s' (%s).",
-                         key, path, mime)
+            logger.error("Failed to export attachment '%s': '%s' (%s).", key,
+                         path, mime)
 
     return {"files": files}
 
@@ -174,7 +176,9 @@ def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     tag_cursor = connection.cursor()
     tag_cursor.execute(item_tag_query)
 
-    return {"tags": ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in tag_cursor)}
+    return {
+        "tags": ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in tag_cursor)
+    }
 
 
 def get_collections(connection: sqlite3.Connection,
@@ -265,8 +269,8 @@ def add_from_sql(input_path: str, output_path: str) -> None:
         date_added = row[3]
         date_modified = row[4]
         client_date_modified = row[5]
-        logger.info("[%4d / %4d] Exporting item '%s'.",
-                    current_item, items_count, item_key)
+        logger.info("[%4d / %4d] Exporting item '%s'.", current_item,
+                    items_count, item_key)
 
         path = os.path.join(output_path, item_key)
         if not os.path.exists(path):
@@ -288,13 +292,17 @@ def add_from_sql(input_path: str, output_path: str) -> None:
             "created": date_added,
             "modified": date_modified,
             "modified.client": client_date_modified,
-            }
+        }
         item.update(fields)
         item.update(get_creators(connection, item_id))
         item.update(get_tags(connection, item_id))
         item.update(get_collections(connection, item_id))
-        item.update(get_files(connection, item_id, item_key,
-                              input_path=input_path, output_path=output_path))
+        item.update(
+            get_files(connection,
+                      item_id,
+                      item_key,
+                      input_path=input_path,
+                      output_path=output_path))
 
         item.update({"ref": ref})
 

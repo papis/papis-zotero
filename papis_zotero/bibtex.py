@@ -14,7 +14,6 @@ import papis.utils
 
 logger = logging.getLogger("papis.{}".format(__name__))
 
-
 BIBTEX_INFO_TEMPLATE = """{c.Back.BLACK}
 {c.Fore.RED}||
 {c.Fore.RED}||{c.Fore.YELLOW}    ref: {c.Fore.GREEN}{ref}
@@ -61,7 +60,6 @@ def add_from_bibtex(bib_file: str,
                     "{c.Style.RESET_ALL}", pdf_file)
                 pdf_file = None
 
-        papis.commands.add.run(
-            [pdf_file] if pdf_file is not None else [],
-            data=entry,
-            link=link)
+        papis.commands.add.run([pdf_file] if pdf_file is not None else [],
+                               data=entry,
+                               link=link)
