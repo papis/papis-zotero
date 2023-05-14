@@ -63,18 +63,14 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 
 
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
+
     def log_message(self, fmt: str, *args: Any) -> None:
         logger.info(fmt, args)
 
     def set_zotero_headers(self) -> None:
-        self.send_header(
-            "X-Zotero-Version",
-            ZOTERO_VERSION
-        )
-        self.send_header(
-            "X-Zotero-Connector-API-Version",
-            str(ZOTERO_CONNECTOR_API_VERSION)
-        )
+        self.send_header("X-Zotero-Version", ZOTERO_VERSION)
+        self.send_header("X-Zotero-Connector-API-Version",
+                         str(ZOTERO_CONNECTOR_API_VERSION))
         self.end_headers()
 
     def read_input(self) -> bytes:
@@ -147,8 +143,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                         except urllib.error.HTTPError:
                             logger.error(
                                 "Error downloading PDF. You probably do not"
-                                "have the rights to access the journal."
-                            )
+                                "have the rights to access the journal.")
                             continue
 
                         pdfpath = tempfile.mktemp(suffix=".pdf")
@@ -162,17 +157,13 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                         else:
                             logger.error(
                                 "File retrieved does not appear to be a PDF. "
-                                "Skipping!"
-                            )
+                                "Skipping!")
             else:
                 logger.info("Document has no attachments.")
 
             papis_item = zotero_data_to_papis_data(item)
             logger.info("Adding paper to papis.")
-            papis.commands.add.run(
-                files,
-                data=papis_item
-            )
+            papis.commands.add.run(files, data=papis_item)
 
         self.send_response(201)  # Created
         self.set_zotero_headers()
@@ -184,7 +175,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(201)
         self.set_zotero_headers()
 
-    def do_POST(self) -> None:      # noqa: N802
+    def do_POST(self) -> None:  # noqa: N802
         if self.path == "/connector/ping":
             self.pong()
         elif self.path == "/connector/getSelectedCollection":
@@ -194,6 +185,6 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         elif self.path == "/connector/saveItems":
             self.add()
 
-    def do_GET(self) -> None:       # noqa: N802
+    def do_GET(self) -> None:  # noqa: N802
         if self.path == "/connector/ping":
             self.pong(POST=False)
