@@ -7,7 +7,6 @@ into papis.
 
 import http.server
 import json
-import logging
 import re
 import tempfile
 import urllib.request
@@ -19,10 +18,11 @@ import papis.api
 import papis.config
 import papis.crossref
 import papis.document
+import papis.logging
 
 import papis_zotero.utils
 
-logger = logging.getLogger("papis.{}".format(__name__))
+logger = papis.logging.get_logger(__name__)
 
 ZOTERO_CONNECTOR_API_VERSION = 2
 ZOTERO_VERSION = "5.0.25"
