@@ -4,6 +4,7 @@ from typing import Optional
 
 import click
 
+import papis.config
 import papis.logging
 import papis_zotero.server
 
@@ -69,17 +70,20 @@ def serve(address: str, port: int) -> None:
 @click.option("-o",
               "--outfolder",
               help="Folder to save the imported library",
-              type=str,
-              required=True)
+              default=None,
+              type=str)
 @click.option("--link",
               help="Wether to link the pdf files or copy them",
               is_flag=True,
               default=False)
 def do_importer(from_bibtex: Optional[str], from_sql: Optional[str],
-                outfolder: str, link: bool) -> None:
+                outfolder: Optional[str], link: bool) -> None:
     """Import zotero libraries into papis libraries."""
     import papis_zotero.bibtex
     import papis_zotero.sql
+
+    if outfolder is None:
+        outfolder = papis.config.get_lib_dirs()[0]
 
     if not os.path.exists(outfolder):
         os.makedirs(outfolder)
