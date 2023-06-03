@@ -188,7 +188,8 @@ def get_collections(connection: sqlite3.Connection,
     cursor = connection.cursor()
     cursor.execute(item_collection_query, (item_id,))
 
-    return {"project": [name for name, in cursor]}
+    project = [name for name, in cursor]
+    return {"project": project} if project else {}
 
 
 def add_from_sql(input_path: str, output_path: str) -> None:
