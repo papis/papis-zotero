@@ -18,7 +18,7 @@ def test_simple(tmp_library: TemporaryLibrary) -> None:
     assert len(folders) == 5
     assert len(glob.glob(tmp_library.libdir + "/**/*.pdf")) == 4
 
-    doc = papis.document.from_folder(os.path.join(tmp_library.libdir, folders[0]))
+    doc = papis.document.from_folder(os.path.join(tmp_library.libdir, "IH8J2JJP"))
 
     info_name = os.path.join(os.path.dirname(__file__), "resources", "sql_out.yaml")
     with open(info_name, encoding="utf-8") as fd:
