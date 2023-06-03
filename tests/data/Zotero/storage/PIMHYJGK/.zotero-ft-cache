@@ -1,0 +1,2047 @@
+arXiv:math/0702079v3 [math.AP] 27 Nov 2007
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´KELYHIDI JR.
+Abstract. In this paper we propose a new point of view on weak solutions of the Euler equations, describing the motion of an ideal incompressible ﬂuid in Rn with n ≥ 2. We give a reformulation of the Euler equations as a diﬀerential inclusion, and in this way we obtain transparent proofs of several celebrated results of V. Scheﬀer and A. Shnirelman concerning the non-uniqueness of weak solutions and the existence of energy–decreasing solutions. Our results are stronger because they work in any dimension and yield bounded velocity and pressure.
+
+1. Introduction
+
+Consider the Euler equations in n space dimensions, describing the motion of an ideal incompressible ﬂuid,
+
+∂tv + div (v ⊗ v) + ∇p − f = 0 div v = 0 .
+
+(1)
+
+Classical (i.e. suﬃciently smooth) solutions of the Cauchy problem exist
+locally in time for suﬃciently regular initial data and driving forces (see
+Chapter 3.2 in [16]). In two dimensions such existence results are available
+also for global solutions (e.g. Chapters 3.3 and 8.2 in [16] and the references
+therein). Classical solutions of Euler’s equations with f = 0 conserve the energy, that is t → |v(x, t)|2 dx is a constant function. Hence the energy space for (1) is L∞ t (L2x).
+A recurrent issue in the modern theory of PDEs is that one needs to go
+beyond classical solutions, in particular down to the energy space (see for instance [6, 8, 16, 25]). A divergence–free vector ﬁeld v ∈ L2loc is a weak solution of (1) if
+
+v∂tϕ + v ⊗ v, ∇ϕ + ϕ · f dx dt = 0
+
+(2)
+
+for every test function ϕ ∈ Cc∞(Rnx ×Rt, Rn) with div ϕ = 0. It is well–known that then the pressure is determined up to a function depending only on time (see [28]). In the case of Euler strong motivation for considering weak solutions comes also from mathematical physics, especially the theory of turbulence laid down by Kolmogorov in 1941 [3, 11]. A celebrated criterion of Onsager related to Kolmogorov’s theory says, roughly speaking, that dissipative weak solutions cannot have a H¨older exponent greater than 1/3
+1
+
+2
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+(see [4, 9, 10, 19]). It is therefore of interest to construct weak solutions with limited regularity.
+Weak solutions are not unique. In a well–known paper [21] Scheﬀer constructed a surprising example of a weak solution to (1) with compact support in space and time when f = 0 and n = 2. Scheﬀer’s proof is very long and complicated and a simpler construction was later given by Shnirelman in [22]. However, Shnirelman’s proof is still quite diﬃcult. In this paper we obtain a short and elementary proof of the following theorem.
+
+Theorem 1.1. Let f = 0. There exists v ∈ L∞(Rnx × Rt; Rn) and p ∈ L∞(Rnx × Rt) solving (1) in the sense of distributions, such that v is not identically zero, and supp v and supp p are compact in space-time Rnx × Rt.
+In mathematical physics weak solutions to the Euler equations that dissipate energy underlie the Kolmogorov theory of turbulence. In another groundbreaking paper [23] Shnirelman proved the existence of L2 distributional solutions with f = 0 and energy which decreases in time. His methods are completely unrelated to those in [21] and [22]. In contrast, the following extension of his existence theorem is a simple corollary of our construction.
+
+Theorem 1.2. There exists (v, p) as in Theorem 1.1 such that, in addition: • |v(x, t)|2 dx = 1 for almost every t ∈] − 1, 1[, • v(x, t) = 0 for |t| > 1.
+
+Our method has several interesting features. First of all, our approach ﬁts
+
+nicely in the well–known framework of L. Tartar for the analysis of oscil-
+
+lations in linear partial diﬀerential systems coupled with nonlinear point-
+
+wise constraints [7, 15, 26, 27]. Roughly speaking, Tartar’s framework
+
+amounts to a plane–wave analysis localized in physical space, in contrast
+
+with Shnirelman’s method in [22], which is based rather on a wave analy-
+
+sis in Fourier space. In combination with Gromov’s convex integration or
+
+with Baire category arguments, Tartar’s approach leads to a well under-
+
+stood mechanism for generating irregular oscillatory solutions to diﬀerential
+
+inclusions (see [14, 15, 17]).
+
+Secondly, the velocity ﬁeld we construct belongs to the energy space
+
+L∞ t (L2x). This was not the case for the solutions in [21, 22], and it was a natural question whether weak solutions in the energy space were unique.
+
+Our ﬁrst theorem shows that even higher summability assumptions of v do
+
+not rule out such pathologies. The pressure in [21, 22] is only a distribution
+
+solving (1). In our construction p is actually the potential–theoretic solution
+
+of
+
+− ∆p = ∂x2ixj (vivj ) − ∂xi fi .
+
+(3)
+
+However, being bounded, it has slightly better regularity than the BM O
+
+given by the classical estimates for (3).
+
+Next, our point of view reveals connections between the apparently un-
+
+related constructions of Scheﬀer and Shnirelman. Shnirelman considers se-
+
+quences of driving forces fk converging to 0 in some negative Sobolev space.
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+3
+
+In particular he shows that for a suitable choice of fk the corresponding solutions of (1) converge in L2 to a nonzero solution of (1) with f = 0. Scheﬀer builds his solution by iterating a certain piecewise constant construction at small scales. On the one hand both our proof and Scheﬀer’s proof are based on oscillations localized in physical space. On the other hand, our proof gives as an easy byproduct the following approximation result in Shnirelman’s spirit.
+Theorem 1.3. All the solutions (v, p) constructed in the proofs of Theorem 1.1 and in Theorem 1.2 have the following property. There exist three sequences {vk}, {fk}, {pk} ⊂ Cc∞ solving (1) such that
+• fk converges to 0 in H−1, • vk ∞ + pk ∞ is uniformly bounded, • (vk, pk) → (v, p) in Lq for every q < ∞.
+Our results give interesting information on which kind of additional (entropy) condition could restore uniqueness of solutions. As already remarked, belonging to the energy space is not suﬃcient. In fact, in view of our method of construction, there is strong evidence that neither energy–decreasing nor energy–preserving solutions are unique. In a forthcoming paper we plan to investigate this issue, and also the class of initial data for which our method yields energy–decreasing solutions.
+The rest of the paper is organized as follows. In Section 2 we carry out the plane wave analysis of the Euler equations in the spirit of Tartar, and we formulate the core of our construction (Proposition 2.2). In Section 3 we prove Proposition 2.2. In Section 4 we show how our main results follow from the Proposition. We emphasize that the concluding argument in Section 4 appeals to the – by now standard – methods for solving diﬀerential inclusions, either by appealing to the Baire category theorem [1, 2, 5, 13], or by the more explicit convex integration method [12, 17, 18]. In our opinion, the Baire category argument developed in [14] and used in Section 4 is, for the purposes of this paper, the most eﬃcient and elegant tool. However, we include in Section 5 an alternative proof which follows the convex integration approach, as it makes easier to ”visualize” the solutions constructed in this paper.
+In fact we believe that for n ≥ 3 a suitable modiﬁcation of the original approach of Gromov (see [12]) would also work, yielding solutions which are even continuous (work in progress).
+
+2. Plane wave analysis of Euler’s equations
+
+We start by brieﬂy explaining Tartar’s framework [26]. One considers
+
+nonlinear PDEs that can be expressed as a system of linear PDEs (conser-
+
+vation laws)
+
+m
+
+Ai∂iz = 0
+
+(4)
+
+i=1
+
+4
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+coupled with a pointwise nonlinear constraint (constitutive relations)
+
+z(x) ∈ K ⊂ Rd a.e.,
+
+(5)
+
+where z : Ω ⊂ Rm → Rd is the unknown state variable. The idea is then to consider plane wave solutions to (4), that is, solutions of the form
+
+z(x) = ah(x · ξ),
+
+(6)
+
+where h : R → R. The wave cone Λ is given by the states a ∈ Rd such that for any choice of the proﬁle h the function (6) solves (4), that is,
+
+m
+
+Λ := a ∈ Rd : ∃ξ ∈ Rm \ {0} with
+
+ξiAia = 0 .
+
+(7)
+
+i=1
+
+The oscillatory behavior of solutions to the nonlinear problem is then deter-
+
+mined by the compatibility of the set K with the cone Λ.
+
+The Euler equations can be naturally rewritten in this framework. The
+
+domain is Rm = Rn+1, and the state variable z is deﬁned as z = (v, u, q),
+
+where
+
+q
+
+=p+
+
+1 n
+
+|v|2
+
+,
+
+and
+
+u=v⊗v−
+
+1 n
+
+|v|2
+
+In,
+
+so that u is a symmetric n × n matrix with vanishing trace and In denotes the n × n identity matrix. From now on the linear space of symmetric n × n
+
+matrices will be denoted by Sn and the subspace of trace–free symmetric
+
+matrices by S0n. The following lemma is straightforward.
+
+Lemma 2.1. Suppose v ∈ L∞(Rnx × Rt; Rn), u ∈ L∞(Rnx × Rt; S0n), and q ∈ L∞(Rnx × Rt) solve
+
+∂tv + div u + ∇q = 0, div v = 0,
+
+(8)
+
+in the sense of distributions. If in addition
+
+u
+
+=
+
+v
+
+⊗
+
+v
+
+−
+
+1 n
+
+|v|2
+
+In
+
+a.e. in Rnx × Rt,
+
+(9)
+
+then
+
+v
+
+and
+
+p :=
+
+q−
+
+1 n
+
+|v|2
+
+are
+
+a
+
+solution
+
+to
+
+(1)
+
+with
+
+f
+
+≡ 0.
+
+Conversely,
+
+if
+
+v
+
+and
+
+p
+
+solve
+
+(1)
+
+distributionally,
+
+then
+
+v,
+
+u
+
+:=
+
+v⊗v−
+
+1 n
+
+|v|2In
+
+and
+
+q
+
+:=
+
+p+
+
+1 n
+
+|v|2
+
+solve (8) and (9).
+
+Consider the (n + 1) × (n + 1) symmetric matrix in block form
+
+U=
+
+u + qIn v
+
+v 0
+
+,
+
+(10)
+
+where In is the n × n identity matrix. Notice that by introducing new coordinates y = (x, t) ∈ Rn+1 the equation (8) becomes simply
+
+divyU = 0.
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+5
+
+Here, as usual, a divergence–free matrix ﬁeld is a matrix of functions with rows that are divergence–free vectors. Therefore the wave cone corresponding to (8) is given by
+
+Λ=
+
+(v, u, q) ∈ Rn × S0n × R : det
+
+u + qIn v
+
+v 0
+
+=0
+
+.
+
+Remark 1. A simple linear algebra computation shows that for every v ∈ Rn and u ∈ S0n there exists q ∈ R such that (v, u, q) ∈ Λ, revealing that the wave cone is very large. Indeed, let V ⊥ ⊂ Rn be the linear space orthogonal to v and consider on V ⊥ the quadratic form ξ → ξ · uξ. Then, det U = 0 if and
+only if −q is an eigenvalue of this quadratic form.
+
+In order to exploit this fact for constructing irregular solutions to the nonlinear system, one needs plane wave–like solutions to (8) which are localized in space. Clearly an exact plane–wave as in (6) has compact support only if it is identically zero. Therefore this can only be done by introducing an error in the range of the wave, deviating from the line spanned by the wave state a ∈ Rd. However, this error can be made arbitrarily small. This is the content of the following proposition, which is the building block of our construction.
+
+Proposition 2.2 (Localized plane waves). Let a = (v0, u0, q0) ∈ Λ with v0 = 0, and denote by σ the line segment in Rn × S0n × R joining the points −a and a. For every ε > 0 there exists a smooth solution (v, u, q) of (8) with the properties:
+• the support of (v, u, q) is contained in B1(0) ⊂ Rnx × Rt, • the image of (v, u, q) is contained in the ε–neighborhood of σ, • |v(x, t)| dx dt ≥ α|v0|,
+where α > 0 is a dimensional constant.
+
+3. Localized plane waves
+
+For the proof of Proposition 2.2 there are two main points. Firstly, we appeal to a particular large group of symmetries of the equations in order to reduce the problem to some special Λ-directions. Secondly, to achieve a cut-oﬀ which preserves the linear equations (8), we introduce a suitable potential.
+
+Deﬁnition 3.1. We denote by M the set of symmetric (n + 1) × (n + 1) matrices A such that A(n+1)(n+1) = 0. Clearly, the map
+
+Rn × S0n × R ∋ (v, u, q)
+
+→
+
+U=
+
+u + qIn v
+
+v 0
+
+∈M
+
+(11)
+
+is a linear isomorphism.
+
+As already observed, in the variables y = (x, t) ∈ Rn+1, the equation (8) is equivalent to div U = 0. Therefore Proposition 2.2 follows immediately from
+
+6
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+Proposition 3.2. Let U ∈ M be such that det U = 0 and U en+1 = 0, and consider the line segment σ with endpoints −U and U . Then there exists a constant α > 0 such that for any ε > 0 there exists a smooth divergence–free matrix ﬁeld U : Rn+1 → M with the properties
+(p1) supp U ⊂ B1(0), (p2) dist (U (y), σ) < ε for all y ∈ B1(0), (p3) |U (y)en+1|dy ≥ α|U en+1|,
+where α > 0 is a dimensional constant.
+
+The proof of Proposition 3.2 relies on two lemmas. The ﬁrst deals with the symmetries of the equations.
+
+Lemma 3.3 (The Galilean group). Let G be the subgroup of GLn+1(R) deﬁned by
+
+A ∈ R(n+1)×(n+1) : det A = 0, Aen+1 = en+1 .
+
+(12)
+
+For every divergence–free map U : Rn+1 → M and every A ∈ G the map
+
+V (y) := At · U (A−ty) · A
+
+is also a divergence–free map V : Rn+1 → M.
+
+The second deals with the potential.
+
+Lemma 3.4 (Potential in the general case). Let Eikjl ∈ C∞(Rn+1) be functions for i, j, k, l = 1, . . . , n + 1 so that the tensor E is skew–symmetric in
+
+ij and kl, that is
+
+Eikjl = −Eiljk = −Ejkil = Ejlki .
+
+(13)
+
+Then
+
+Uij
+
+=
+
+L(E)
+
+=
+
+1 2
+
+∂k2l(Ekilj + Ekjli)
+
+k,l
+
+(14)
+
+is symmetric and divergence–free. If in addition
+
+E((nn++11))ij = 0
+
+for every i and j,
+
+(15)
+
+then U takes values in M.
+
+Remark 2. A suitable potential in the case n = 2 can be obtained in a more direct way. Indeed, let w ∈ C∞(R3, R3) be a divergence–free vector ﬁeld and consider the map U : R3 → M given by
+
+ ∂2w1
+
+U
+
+=
+
+
+
+1 21 2
+
+∂2w2 ∂2w3
+
+−
+
+1 2
+
+∂1w1
+
+1 2
+
+∂2
+
+w2
+
+−
+
+1 2
+
+∂1w1
+
+−∂1w2
+
+−
+
+1 2
+
+∂1w3
+
+−21 ∂212∂w13w3
+
+ .
+
+0
+
+(16)
+
+Then it can be readily checked that U is divergence–free. Moreover, w is the
+curl of a vector ﬁeld ω. However, this is just a particular case of Lemma 3.4. Indeed, given E as in the Lemma deﬁne the tensor Dikj = l ∂lEikjl. Note
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+7
+
+that D is skew–symmetric in ij and for each ij, the vector (Dikj)k=1,...,n+1 is divergence–free. Moreover,
+
+Uij
+
+=
+
+1 2
+
+∂k(Dki j + Dkji) .
+
+k
+
+Then the vector ﬁeld w above is simply the special choice where D1k2 = −D2k1 = wk and all other D’s are zero, and a corresponding relation can be found for E and ω.
+
+The proofs of the two Lemmas will be postponed until the end of the section and we now come to the proof of the Proposition.
+
+Proof of Proposition 3.2. Step 1. First we treat the case when U ∈ M is
+
+such that
+
+U e1 = 0, U en+1 = 0.
+
+(17)
+
+Let
+
+Eij11
+
+=
+
+−E1ji1
+
+=
+
+−Ei11j
+
+=
+
+E11ij
+
+=
+
+U
+
+ij
+
+sin(N y1) N2
+
+(18)
+
+and all the other entries equal to 0. Note that by our assumption U ij = 0 whenever one index is 1 or both of them are n + 1. This ensures that the
+
+tensor E is well deﬁned and satisﬁes the properties of Lemma 3.4.
+
+We remark that in the case n = 2 the matrix U takes necessarily the form
+
+0 0 0
+
+U =0 a b
+
+(19)
+
+0b 0
+
+with b = 0, and we can use the potential of Remark 2 by simply setting
+
+w
+
+=
+
+1 N
+
+(0,
+
+a
+
+cos(N
+
+y1),
+
+2b
+
+cos(N
+
+y1))
+
+,
+
+ω
+
+=
+
+1 N2
+
+(0,
+
+2b
+
+sin(N
+
+y1
+
+),
+
+−a
+
+sin(N
+
+y1))
+
+.
+
+We come back to the general case. Let E be deﬁned as in (18), ﬁx a
+
+smooth cutoﬀ function ϕ such that
+
+• |ϕ| ≤ 1,
+• ϕ = 1 on B1/2(0), • supp (ϕ) ⊂ B1(0),
+
+and consider the map
+
+U = L(ϕE).
+
+Clearly, U is smooth and supported in B1(0). By Lemma 3.4, U is M–valued and divergence–free. Moreover
+
+U (y) = U sin(N y1) for y ∈ B1/2(0), and in particular
+
+|U (y)en+1|dy ≥ |U en+1|
+
+| sin(N y1)| dy ≥ 2α|U en+1|,
+
+B1/2 (0)
+
+8
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+for some positive dimensional constant α = α(n) for suﬃciently large N . Finally, observe that
+U − ϕU˜ = L(ϕE) − ϕL(E)
+
+is a sum of products of ﬁrst–order derivatives of ϕ with ﬁrst–order derivatives of components of E and of second–order derivatives of ϕ with components of E. Thus,
+
+U − ϕU˜
+
+∞
+
+≤
+
+C
+
+ϕ
+
+C2
+
+E
+
+C1
+
+≤
+
+C′ N
+
+ϕ
+
+C2 ,
+
+and by choosing N suﬃciently large we obtain U − ϕU˜ ∞ < ε. On the other hand, since |ϕ| ≤ 1 and U˜ takes values in σ, the image of ϕU˜ is also contained in σ. This shows that the image of U is contained in the ε–neighborhood of σ.
+
+Step 2. We treat the general case by reducing to the situation above. Let U ∈ M be as in the Proposition, so that
+
+U f = 0, U en+1 = 0,
+where f ∈ Rn+1 \ {0} is such that {f, en+1} are linearly independent. Let f1, . . . , fn+1 be a basis for Rn+1 such that f1 = f and fn+1 = en+1 and consider the matrix A such that
+
+Aei = fi for i = 1, . . . , n + 1. Then A ∈ G (cf. with the deﬁnition of G given in Lemma 3.3), and the map
+
+T : X → (A−1)tXA−1
+
+(20)
+
+is a linear isomorphism of Rn+1. Set
+
+V = AtU A,
+
+(21)
+
+so that V ∈ M satisﬁes
+
+V e1 = 0, V en+1 = 0.
+Given ε > 0, using Step 1 we construct a smooth map V : Rn+1 → M supported in B1(0) with the image lying in the T −1ε–neighborhood of the line segment τ with endpoints −V and V , and such that
+
+V (y) = V sin(N y1). Let U be the M–valued map
+U (y) = (A−1)tV (Aty)A−1.
+
+By our discussion above the isomorphism T : X → (A−1)tXA−1 maps the line segment τ onto σ. Therefore:
+• U is supported in A−t(B1(0)) and it is smooth, • U is divergence–free thanks to Lemma 3.3, • U takes values in an ε–neighborhood of the segment σ,
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+9
+
+and furthermore
+
+|U (y)en+1|dy =
+
+|A−tV (Aty)en+1|dy
+
+A−t (B1 (0))
+
+A−t (B1 (0))
+
+=
+
+B1 (0)
+
+|A−tV
+
+(z)en+1|
+
+|
+
+dz det At|
+
+≥
+
+2α|A−tV en+1| | det A|
+
+=
+
+|
+
+2α det A|
+
+|U
+
+en+1
+
+|.
+
+(22)
+
+To complete the proof we appeal to a standard covering/rescaling argument.
+That is, we can ﬁnd a ﬁnite number of points yk ∈ B1(0) and radii rk > 0 so that the rescaled and translated sets A−t(Brk (yk)) are pairwise disjoint, all contained in B1(0), and
+
+A−t(Brk (yk))
+
+≥
+
+1 2
+
+|B1(0)|.
+
+(23)
+
+k
+
+Let
+
+Uk (y )
+
+=
+
+U
+
+(
+
+y−yk rk
+
+)
+
+and
+
+U˜
+
+=
+
+k Uk. Then U˜ : Rn+1 → M is smooth,
+
+clearly satisﬁes (p1) and (p2), and
+
+|U˜ (y)en+1|dy =
+
+|Uk (y )en+1 |dy
+k A−tBrk (yk)
+
+(22)
+≥
+
+k
+
+2α|U
+
+en+1
+
+||
+
+det
+
+A|−1
+
+|Brk (yk)| |B1(0)|
+
+=
+
+2α|U en+1|
+
+k A−t(Brk (yk)) |B1(0)|
+
+(23)
+≥ α|U en+1|.
+
+This completes the proof.
+
+Proof of Lemma 3.3. First of all we check that whenever B ∈ M, then AtBA ∈ M for all A ∈ G. Indeed, AtBA is symmetric, and since A satisﬁes
+Aen+1 = en+1, we have
+
+(AtBA)(n+1)(n+1) = en+1 · AtBAen+1 = Aen+1 · BAen+1 = en+1 · Ben+1 = B(n+1)(n+1) = 0.
+
+(24)
+
+Now, let A, U and V be as in the statement. The argument above shows
+that V is M–valued. It remains to check that if U is divergence–free, then V is also divergence–free. To this end let φ ∈ Cc∞(Rn+1; Rn+1) be a compactly supported test function and consider φ˜ ∈ Cc∞(Rn+1; Rn+1) deﬁned by
+
+φ˜(x) = Aφ(Atx).
+
+10
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+Then ∇φ˜(x) = A∇φ(Atx)At, and by a change of variables we obtain
+
+tr V(y)∇φ(y) dy = tr AtU(A−ty)A∇φ(y) dy
+
+= tr U(A−ty)A∇φ(y)At dy
+
+= tr U(x)A∇φ(Atx)At (det A)−1dx
+
+=(det A)−1 tr U(x)∇φ˜(x) dx = 0, since U is divergence–free. But this implies that V is also divergence-free.
+
+Proof of Lemma 3.4. First of all, U is clearly symmetric and U(n+1)(n+1) = 0. Hence U takes values in M. To see that U is divergence–free, we calculate
+
+∂j Uij
+
+=
+
+1 2
+
+∂j3kl(Ekilj + Ekjli)
+
+j
+
+k,l
+
+=
+
+1 2
+
+∂l
+
+∂j2k Ekilj
+
++
+
+1 2
+
+∂k
+
+l
+
+jk
+
+k
+
+∂j2lEkjli
+jl
+
+(1=3) 0 .
+
+This completes the proof of the lemma.
+
+4. Proof of the main results
+For clarity we now state the precise form of our main result. Theorems 1.1, 1.2 and 1.3 are direct corollaries.
+Theorem 4.1. Let Ω ⊂ Rnx × Rt be a bounded open domain. There exists (v, p) ∈ L∞(Rnx × Rt) solving the Euler equations
+∂tv + div (v ⊗ v) + ∇p = 0 div v = 0 ,
+such that • |v(x, t)| = 1 for a.e. (x, t) ∈ Ω, • v(x, t) = 0 and p(x, t) = 0 for a.e. (x, t) ∈ (Rnx × Rt) \ Ω.
+Moreover, there exists a sequence of functions (vk, pk, fk) ∈ Cc∞(Ω) such that
+∂tvk + div (vk ⊗ vk) + ∇pk = fk div vk = 0 ,
+and • fk converges to 0 in H−1, • vk ∞ + pk ∞ is uniformly bounded, • (vk, pk) → (v, p) in Lq for every q < ∞.
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+11
+
+We remark that the statements of Theorem 1.1 and Theorem 1.3 are just subsets of the statement of Theorem 4.1. As for Theorem 1.2, note that it suﬃces to choose, for instance, Ω = Br(0)×] − 1, 1[, where Br(0) is the ball of Rn with volume 1.
+We recall from Lemma 2.1 that for the ﬁrst half of the theorem it suﬃces to prove that there exist
+(v, u, q) ∈ L∞(Rnx × Rt; Rn × S0n × R)
+with support in Ω, such that |v| = 1 a.e. in Ω and (8) and (9) are satisﬁed. In Proposition 2.2 we constructed compactly supported solutions (v, u, q) to (8). The point is thus to ﬁnd solutions which satisfy in addition the pointwise constraint (9). The main idea is to consider the sets
+
+K=
+
+(v, u)
+
+∈
+
+Rn × S0n
+
+:
+
+u
+
+=
+
+v⊗v−
+
+1 n
+
+|v|2
+
+In
+
+,
+
+|v| = 1
+
+,
+
+(25)
+
+and
+
+U = int (Kco × [−1, 1]),
+
+(26)
+
+where int denotes the topological interior of the set in Rn × S0n × R, and Kco denotes the convex hull of K. Thus, a triple (v, u, q) solving (8) and taking values in the convex extremal points of U is indeed a solution to (9). We will prove that 0 ∈ U, and therefore there exist plane waves taking values in U. The goal is to add them so to get an inﬁnite sum
+
+∞
+(v, u, q) = (vi, ui, qi)
+i=1
+
+with the properties that
+
+• the partial sums ki=0(vi, ui, qi) take values in U , • (v, u, q) is supported in Ω, • (v, u, q) takes values in the convex extremal points of U a.e. in Ω, • (v, u, q) solves the linear partial diﬀerential equations (8).
+
+There are two important reasons why this construction is possible. First of all, since the wave cone Λ is very large, we can always get closer and closer to the extremal point of U with the sequence (vk, uk, pk). Secondly, because the waves are localized in space–time, by choosing the supports smaller and smaller we can achieve strong convergence of the sequence. In view of Lemma 2.1 this gives the solution of Euler that we we are looking for. The partial sums give the approximating sequence of the theorem.
+
+This sketch of the proof is philosophically closer to the method of convex integration, where the diﬃculty is to ensure strong convergence of the partial sums. The Baire category argument avoids this diﬃculty by introducing a metric for the space of solutions to (8) with values in U, and proving that in its closure a generic element takes values in the convex extreme points. An interesting corollary of the Baire category argument is that, within the class of solutions to the Euler equations with driving force in some particular
+
+12
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+bounded subset of H−1, the typical (in the sense of category) element has the properties of Theorem 4.1 .
+We split the proof of Theorem 4.1 into several lemmas and a short concluding argument, which is given at the beginning of Section 4.3. For the purpose of this section, we could have presented a shorter proof, avoiding Lemma 4.3 and without giving the explicit bound (30) of Lemma 4.6. However, these statements will be needed in the convex integration proof of Section 5.
+
+4.1. The geometric setup.
+
+Lemma 4.2. Let K and U be deﬁned as in (25) and (26), i.e.
+
+K=
+
+(v, u)
+
+∈
+
+Sn−1
+
+×
+
+S0n
+
+:
+
+u
+
+=
+
+v
+
+⊗v
+
+−
+
+In n
+
+.
+
+Then 0 ∈ int Kco and hence 0 ∈ U .
+
+Proof. Let µ be the Haar measure on Sn−1 and consider the linear map
+
+T : C(Sn−1) → Rn × S0n, Clearly, if
+
+φ→
+Sn−1
+
+v,
+
+v
+
+⊗
+
+v
+
+−
+
+In n
+
+φ(v) dµ .
+
+φ ≥ 0 and
+
+φ dµ = 1 ,
+
+(27)
+
+Sn−1
+
+then T (φ) ∈ Kco. Notice that
+
+T (1) =
+
+v, v ⊗ v − In
+
+Sn−1
+
+n
+
+dµ = 0,
+
+and hence 0 ∈ Kco. Moreover, whenever ψ ∈ C(Sn−1) is such that
+
+α = 1−
+
+ψ dµ ≥ ψ C(Sn−1),
+
+Sn−1
+
+(28)
+
+φ = α + ψ satisﬁes (27) and hence T (ψ) = T (φ) ∈ Kco. Since (28) holds
+
+whenever ψ C(Sn−1) < 1/2, it suﬃces to show that T is surjective to prove that Kco contains a neighborhood of 0.
+The surjectivity of T follows from orthogonality in L2(Sn−1). Indeed,
+
+letting φ = vi for each i, we obtain
+
+T (φ) = β1(ei, 0), where β1 =
+
+v12dµ.
+
+Sn−1
+
+Furthermore, setting φ = vivj with i = j, we obtain
+
+T (φ) = β2 0, ei ⊗ ej + ej ⊗ ei , where β2 =
+
+v12v22dµ.
+
+Sn−1
+
+Finally,
+
+setting
+
+φ
+
+=
+
+vi2
+
+−
+
+1 n
+
+we
+
+obtain
+
+T (φ) = β3
+
+0,
+
+ei
+
+⊗
+
+ei
+
+−
+
+(n
+
+1 −
+
+1)
+
+ej ⊗ ej ,
+
+j=i
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+13
+
+where
+
+β3 =
+
+Sn−1
+
+v12
+
+−
+
+1 n
+
+2
+dµ.
+
+This shows that elements, hence
+
+the image of T a basis for Rn
+
+contains × S0n.
+
+n+
+
+1 2
+
+n(n+1)−1
+
+linearly
+
+independent
+
+Lemma 4.3. There exists a dimensional constant C > 0 such that for any (v, u, q) ∈ U there exists (v¯, u¯) ∈ Rn × S0n such that (v¯, u¯, 0) ∈ Λ, the line segment with endpoints (v, u, q) ± (v¯, u¯, 0) is contained in U, and
+
+|v¯| ≥ C(1 − |v|2).
+
+Proof. Let z = (v, u) ∈ int Kco. By Carath´eodory’s theorem (v, u) lies in the interior of a simplex in Rn × S0n spanned by elements of K. In other words
+N +1
+z = λizi,
+i=1
+
+where λi ∈ ]0, 1[ , zi = (vi, ui) ∈ K,
+
+N +1 i=1
+
+λi
+
+=
+
+1,
+
+and
+
+N
+
+=
+
+n(n + 3)/2 − 1
+
+is
+
+the dimension of Rn × S0n. Assume that the coeﬃcients are ordered so that
+
+λ1 = maxi λi. Then for any j > 1
+
+z
+
+±
+
+1 2
+
+λj
+
+(zj
+
+− z1)
+
+∈
+
+int
+
+K co.
+
+Indeed,
+
+z
+
+±
+
+1 2
+
+λj
+
+(zj
+
+− z1) =
+
+µizi,
+
+i
+
+where
+
+µ1
+
+= λ1 ∓
+
+1 2
+
+λj
+
+,
+
+µj
+
+=
+
+λj
+
+±
+
+1 2
+
+λj
+
+and
+
+µi
+
+= λi
+
+for
+
+i
+
+∈/
+
+{1, j}.
+
+It
+
+is
+
+easy
+
+to
+
+see that µi ∈ ]0, 1[ for all i = 1 . . . N + 1.
+
+On the other hand z − z1 =
+
+N +1 i=2
+
+λi(zi
+
+−
+
+z1),
+
+so
+
+that
+
+in
+
+particular
+
+|v
+
+−
+
+v1|
+
+≤
+
+N
+
+max
+i=2...N +1
+
+λi|vi
+
+−
+
+v1|
+
+Let j > 1 be such that λj|vj − v1| = maxi=2...N+1 λi|vi − v1|, and let
+
+(v¯, u¯)
+
+=
+
+1 2
+
+λj
+
+(zj
+
+−
+
+z1).
+
+The line segment with endpoints (v, u) ± (v¯, u¯) is contained in the interior of Kco and hence also the line segment (v, u, q) ± (v¯, u¯, 0) is contained in U .
+Furthermore
+
+1 4N
+
+(1
+
+−
+
+|v|2)
+
+≤
+
+1 2N
+
+(1
+
+−
+
+|v|)
+
+≤
+
+1 2N
+
+(|v
+
+−
+
+v1|)
+
+≤
+
+|v¯|.
+
+14
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+Finally, we show that (v¯, u¯, 0) ∈ Λ. This amounts to showing that whenever a, b ∈ Sn−1, the matrix
+
+a
+
+⊗
+
+a
+
+−
+
+In n
+
+a
+
+a 0
+
+−
+
+b
+
+⊗
+
+b
+
+−
+
+In n
+
+b
+
+b 0
+
+has zero determinant and hence lies in the wave cone Λ deﬁned in (7). Let
+
+P ∈ GLn(R) with P a = e1 and P b = e2. Note that
+
+P0 01
+
+a⊗a a a0
+
+Pt 0
+
+0 1
+
+=
+
+Pa ⊗ Pa Pa
+
+Pa 1
+
+,
+
+so that it suﬃces to check the determinant of
+
+e1 ⊗ e1 e1
+
+e1 0
+
+−
+
+e2 ⊗ e2 e2
+
+e2 0
+
+.
+
+Since e1 + e2 − en+1 is in the kernel of this matrix, it has indeed determinant zero. This completes the proof.
+
+4.2. The functional setup. We deﬁne the complete metric space X as follows. Let
+X0 := (v, u, q) ∈ C∞(Rnx × Rt) : (i), (ii) and (iii) below hold
+(i) supp (v, u, q) ⊂ Ω, (ii) (v, u, q) solves (8) in Rnx × Rt, (iii) (v(x, t), u(x, t), q(x, t)) ∈ U for all (x, t) ∈ Rnx × Rt. We equip X0 with the topology of L∞-weak* convergence of (v, u, q) and we let X be the closure of X0 in this topology.
+Lemma 4.4. The set X with the topology of L∞ weak* convergence is a nonempty compact metrizable space. Moreover, if (v, u, q) ∈ X is such that
+
+|v(x, t)| = 1 for almost every (x, t) ∈ Ω,
+
+then
+
+v
+
+and
+
+p
+
+:=
+
+q
+
+−
+
+1 n
+
+|v|2
+
+is a weak solution
+
+of
+
+(1) in Rnx × Rt
+
+such that
+
+v(x, t) = 0 and p(x, t) = 0 for all (x, t) ∈ Rnx × Rt \ Ω.
+
+Proof. In Lemma 4.2 we showed that 0 ∈ U, hence X is nonempty. Moreover, X is a bounded and closed subset of L∞(Ω), hence with the weak* topology
+it becomes a compact metrizable space. Since U is a compact convex set, any (v, u, q) ∈ X satisﬁes
+
+supp (v, u, q) ⊂ Ω, (v, u, q) solves (8) and takes values in U.
+
+In particular (v, u)(x, t) ∈ Kco almost everywhere. Finally, observe also that if (v, u)(x, t) ∈ Kco, then
+
+(v, u)(x, t) ∈ K if and only if |v(x, t)| = 1.
+
+In light of Lemma 2.1 this concludes the proof.
+
+Fix a metric d∗∞ inducing the weak* topology of L∞ in X, so that (X, d∗∞) is a complete metric space.
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+15
+
+Lemma 4.5. The identity map
+
+I : (X, d∗∞) → L2(Rnx × Rt) deﬁned by (v, u, q) → (v, u, q)
+is a Baire-1 map and therefore the set of points of continuity is residual in (X, d∗∞).
+
+Proof. Let φr(x, t) = r−(n+1)φ(rx, rt) be any regular space-time convolution kernel. For each ﬁxed (v, u, q) ∈ X we have
+
+(φr ∗ v, φr ∗ u, φr ∗ q) → (v, u, q) strongly in L2 as r → 0. On the other hand, for each r > 0 and (vk, uk, qk) ∈ X
+
+(vk, uk, qk) ⇀∗ (v, u, q) in L∞ =⇒ φr ∗ (vk, uk, qk) → φr ∗ (v, u, q) in L2. Therefore each map Ir : (X, d∗∞) → L2 deﬁned by
+Ir : (u, v, q) → (φr ∗ v, φr ∗ u, φr ∗ q)
+
+is continuous, and
+
+I (v,
+
+u,
+
+q)
+
+=
+
+lim
+r→0
+
+Ir (v,
+
+u,
+
+q)
+
+for all (v, u, q) ∈ X .
+
+This shows that I : (X, d∗∞) → L2 is a pointwise limit of continuous maps, hence it is a Baire-1 map. Therefore the set of points of continuity of I is
+residual in (X, d∗∞), see [20].
+
+4.3. Points of continuity of the identity map. The proof of Theorem 4.1 will follow from Lemmas 4.4 and 4.5 once we prove the following
+
+Claim: If (v, u, q) ∈ X is a point of continuity of I, then
+
+|v(x, t)| = 1 for almost every (x, t) ∈ Ω .
+
+(29)
+
+Indeed, if the claim is true, then the set of (v, u, q) ∈ X such that |v| = 1
+
+a.e. is nonempty, yielding solutions of (1). Furthermore, any such (v, u, q)
+
+must be the strong L2 limit of some sequence {(vk, uk, qk)} ⊂ X0. Therefore,
+
+with
+
+pk
+
+=
+
+qk
+
+−
+
+1 n
+
+|vk
+
+|2,
+
+and
+
+fk = div
+
+vk
+
+⊗
+
+vk
+
+−
+
+1 n
+
+|vk
+
+|2I
+
+d
+
+−
+
+uk
+
+,
+
+we obtain div vk = 0 and
+
+∂tvk + div vk ⊗ vk + ∇pk = fk.
+
+Moreover, fk → 0 in H−1.
+
+Therefore it remains to prove our claim. Observe that since |v(x, t)| ≤ 1 a.e. (x, t) ∈ Ω, (29) is equivalent to
+v L2(Ω) = |Ω|,
+
+16
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+where |Ω| denotes the (n + 1)-dimensional Lebesgue measure of Ω. To prove the claim we prove the following lemma, from which the claim immediately follows:
+
+Lemma 4.6. There exists a dimensional constant β > 0 with the following
+
+property. Given (v0, u0, q0) ∈ X0 there exists a sequence (vk, uk, qk) ∈ X0
+
+such that
+
+vk
+
+2 L2 (Ω)
+
+≥
+
+v0
+
+2 L2 (Ω)
+
++
+
+β
+
+|Ω| −
+
+v0
+
+2 L2 (Ω)
+
+2
+,
+
+(30)
+
+and (vk, uk, qk) ⇀∗ (v0, u0, q0) in L∞(Ω).
+
+Indeed, assume for a moment that (v, u, q) is a point of continuity of I. Fix a sequence {(vk, uk, qk} ⊂ X0 converges weakly∗ to (v, u, q). Using
+Lemma 4.6 and a standard diagonal argument, we can produce a second sequences (v˜k, u˜k, q˜k) which converges weakly∗ to (v, u, q) and such that
+
+lim inf
+k→∞
+
+v˜k
+
+2 2
+
+≥ lim inf
+k→∞
+
+vk
+
+2 2
+
++
+
+β
+
+|Ω| −
+
+vk
+
+2 2
+
+2
+
+.
+
+(31)
+
+Since I is continuous at (v, u, q), both vk and v˜k converge strongly to v.
+
+Therefore
+
+v
+
+2 2
+
+≥
+
+v
+
+2 2
+
++
+
+β
+
+|Ω| −
+
+v
+
+2 2
+
+2.
+
+(32)
+
+Therefore,
+
+v
+
+2 2
+
+= |Ω|.
+
+On the other
+
+hand, since v = 0 a.e.
+
+outside Ω and
+
+|v| ≤ 1 a.e. on Ω, this implies (29).
+
+Proof of Lemma 4.6. Step 1. Let (v0, u0, q0) ∈ X0. By Lemma 4.3 for any (x, t) ∈ Ω there exists a direction
+v¯(x, t), u¯(x, t) ∈ Rn × S0n
+such that the line segment with endpoints
+
+v0(x, t), u0(x, t), q0(x, t) ± v¯(x, t), u¯(x, t), 0
+is contained in U, and |v¯(x, t)| ≥ C(1 − |v0(x, t)|2).
+Moreover, since (v0, u0, q0) is uniformly continuous, there exists ε > 0 such that for any (x, t), (x0, t0) ∈ Ω with |x−x0|+|t−t0| < ε, the ε-neighbourhood of the line segment with endpoints
+
+v0(x, t), u0(x, t), q0(x, t) ± v¯(x0, t0), u¯(x0, t0), 0 is also contained in U.
+
+Step 2. Fix (x0, t0) ∈ Ω for the moment. Use Proposition 2.2 with
+
+a = (v¯(x0, t0), u¯(x0, t0), 0) ∈ Λ
+
+and ε > 0 to obtain a smooth solution (v, u, q) of (8) with the properties stated in the Proposition, and for any r < ε let
+
+(vr, ur, qr)(x, t) = (v, u, q)
+
+x
+
+− r
+
+x0
+
+,
+
+t
+
+− r
+
+t0
+
+.
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+17
+
+Then (vr, ur, qr) is also a smooth solution of (8), with the properties • the support of (vr, ur, qr) is contained in Br(x0, t0) ⊂ Rnx × Rt, • the image of (vr, ur, qr) is contained in the ε–neighborhood of the line-segment with endpoints ±(v¯(x, t), u¯(x, t), 0), • and
+|vr(x, t)| dx dt ≥ α|v¯(x0, t0)||Br(x0, r0)|.
+
+In particular, for any r < ε we have (v0, u0, q0) + (vr, ur, qr) ∈ X0.
+Step 3. Next, observe that since v0 is uniformly continuous, there exists r0 > 0 such that for any r < r0 there exists a ﬁnite family of pairwise disjoint balls Brj (xj, tj) ⊂ Ω with rj < r such that
+
+(1 − |v0(x, t)|2)dxdt ≤ 2 (1 − |v0(xj, tj)|2)|Br(xj, tj)| (33)
+
+Ω
+
+j
+
+Fix
+
+k
+
+∈
+
+N with
+
+1 k
+
+<
+
+min{r0, ε}
+
+and
+
+choose a
+
+ﬁnite family
+
+of
+
+pair-
+
+wise
+
+disjoint
+
+balls
+
+Brk,j (xk,j , tk,j )
+
+⊂
+
+Ω
+
+with
+
+radii
+
+rk,j
+
+<
+
+1 k
+
+such
+
+that
+
+(33)
+
+holds. In each ball Brk,j (xk,j, tk,j) we apply the construction above to ob-
+
+tain (vk,j, uk,j, qk,j), and in particular we then have
+
+(vk, uk, qk) := (v0, u0, q0) + (vk,j, uk,j, qk,j) ∈ X0,
+j
+and
+
+|vk(x, t) − v0(x, t)|dxdt =
+j
+
+|vk,j(x, t)|dxdt
+
+≥ α |v¯(xk,j, tk,j)||Brk,j (xk,j, tk,j)|
+j
+
+≥ Cα (1 − |v0(xk,j, tk,j)|2)|Brk,j (xk,j, tk,j)|
+j
+
+≥
+
+1Cα 2
+
+(1 − |v0(x, t)|2)dxdt.
+Ω
+
+(34)
+
+Finally observe that by letting k → ∞, the above construction yields a sequence (vk, uk, qk) ∈ X0 such that
+
+(vk, uk, qk) ⇀∗ (v0, u0, q0).
+
+(35)
+
+Hence,
+
+lim inf
+k→∞
+
+vk L2(Ω)
+
+=
+
+v0
+
+2 2
+
++
+
+lim inf
+k→∞
+
+v0, (vk − v0) 2 +
+
+vk − v0
+
+2 2
+
+(3=5)
+
+|v0
+
+2 2
+
++
+
+lim inf
+k→∞
+
+vk − v0
+
+2 2
+
+≥
+
+v0
+
+2 2
+
++
+
+|Ω|
+
+lim inf
+k→∞
+
+vk − v0 L1(Ω) 2
+
+(36)
+
+18
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+Combining (34) and (36) we get
+
+lim inf
+k→∞
+
+vk
+
+L2 (Ω)
+
+≥
+
+v0
+
+2 L2 (Ω)
+
++
+
+|Ω|C 2 α2 4
+
+which
+
+gives
+
+(30)
+
+with
+
+β
+
+=
+
+1 4
+
+|Ω|C
+
+2α2
+
+.
+
+|Ω| −
+
+v0
+
+2 L2 (Ω)
+
+2
+,
+
+5. A proof of Theorem 4.1 using convex integration
+In this section we provide an alternative, more direct proof for Theorem 4.1, following the method of convex integration as presented for example in [17].
+In fact the two approaches (i.e. Baire category methods and convex integration) can be uniﬁed to a large extent. For a discussion comparing the two approaches we refer to the end of Section 3.3 in [14], see also the paper [24] for a diﬀerent point of view. Nevertheless, in order to get a feeling for the type of solution that Theorem 4.1 produces, it helps to see the direct construction of the convex integration method.
+We will freely refer to the notation of the previous sections. In particular the proof relies on Lemmas 4.2, 4.3, 4.4 and 4.6. These results enable us to construct an approximating sequence, as explained brieﬂy at the beginning of Section 4, by adding (almost-)plane-waves on top of each other. It is only the limiting step that is more explicit in this approach. The following argument is essentially from Section 3.3 in [17].
+
+Alternative proof of Theorem 4.1. Using Lemma 4.6, we construct inductively a sequence (vk, uk, qk) ∈ X0 and a sequence of numbers ηk > 0 as follows. Let ρε be a standard mollifying kernel in Rn+1 = Rnx × Rt and set (v1, u1, q1) ≡ 0 in Rnx × Rt.
+
+Having obtained zj := (vj, uj, qj) for j ≤ k and η1, . . . , ηk−1 we choose
+
+ηk < 2−k
+
+(37)
+
+in such a way that
+
+zk − zk ∗ ρηk L2(Ω) < 2−k.
+
+(38)
+
+Then we apply Lemma 4.6 to obtain zk+1 = (vk+1, uk+1, qk+1) ∈ X0 such
+
+that
+
+vk+1
+
+2 L2 (Ω)
+
+≥
+
+vk
+
+2 L2 (Ω)
+
++
+
+β
+
+|Ω| −
+
+vk
+
+2 L2 (Ω)
+
+2
+,
+
+(39)
+
+and
+
+(zk+1 − zk) ∗ ρηj L2(Ω) < 2−k for all j ≤ k.
+
+(40)
+
+The sequence {zk} is bounded in L∞(Rnx × Rt), therefore by passing to a suitable subsequence we may assume without loss of generality that
+zk ⇀∗ z in L∞(Rnx × Rt)
+
+THE EULER EQUATIONS AS A DIFFERENTIAL INCLUSION
+
+19
+
+for some z = (v, u, q) ∈ X, and that the sequence {zk} and the corresponding sequence {ηk} satisﬁes the properties (37),(38),(39) and (40). Then for every k∈N
+
+∞
+
+zk ∗ ρηk − z ∗ ρηk L2(Ω) ≤
+
+zk+j ∗ ρηk − zk+j+1 ∗ ρηk L2(Ω)
+
+j=0
+
+∞
+≤ 2−(k+j) ≤ 2−k+1,
+
+j=0
+
+and since zk − z L2(Ω) ≤ zk − zk ∗ ρηk L2(Ω) + zk ∗ ρηk − z ∗ ρηk L2(Ω) + z ∗ ρηk − z L2(Ω),
+we deduce that vk → v strongly in L2(Ω). Therefore, passing into the limit in (39) we conclude
+
+v
+
+2 L2 (Ω)
+
+≥
+
+v
+
+2 L2 (Ω)
+
++
+
+β
+
+|Ω| −
+
+v
+
+2 L2 (Ω)
+
+2
+
+(41)
+
+and hence
+
+v
+
+2 2
+
+=
+
+|Ω|.
+
+Since v vanishes outside Ω and |v| ≤ 1 in Ω, we
+
+conclude that |v| = 1Ω. Since (v, u, q) ∈ X, we also have that (v, u)(x, t) ∈
+
+Kco for a.e. (x, t) ∈ Ω. From this we deduce that (v, u)(x, t) ∈ K for a.e.
+
+(x, t) ∈ Ω, thus concluding the proof.
+
+References
+[1] Bressan, A., and Flores, F. On total diﬀerential inclusions. Rend. Sem. Mat. Univ. Padova 92 (1994), 9–16.
+[2] Cellina, A. On the diﬀerential inclusion x′ ∈ [−1, +1]. Atti Accad. Naz. Lincei Rend. Cl. Sci. Fis. Mat. Natur. (8) 69, 1-2 (1980), 1–6 (1981).
+[3] Chorin, A. J. Vorticity and turbulence, vol. 103 of Applied Mathematical Sciences. Springer-Verlag, New York, 1994.
+[4] Constantin, P., E, W., and Titi, E. S. Onsager’s conjecture on the energy conservation for solutions of Euler’s equation. Comm. Math. Phys. 165, 1 (1994), 207–209.
+[5] Dacorogna, B., and Marcellini, P. General existence theorems for HamiltonJacobi equations in the scalar and vectorial cases. Acta Math. 178 (1997), 1–37.
+[6] Dafermos, C. M. Hyperbolic conservation laws in continuum physics, vol. 325 of Grundlehren der Mathematischen Wissenschaften [Fundamental Principles of Mathematical Sciences]. Springer-Verlag, Berlin, 2000.
+[7] DiPerna, R. J. Compensated compactness and general systems of conservation laws. Trans. Amer. Math. Soc. 292, 2 (1985), 383–420.
+[8] DiPerna, R. J., and Majda, A. J. Concentrations in regularizations for 2-D incompressible ﬂow. Comm. Pure Appl. Math. 40, 3 (1987), 301–345.
+[9] Duchon, J., and Robert, R. Inertial energy dissipation for weak solutions of incompressible Euler and Navier-Stokes equations Nonlinearity, 13 (2000), 249–255.
+[10] Eyink, G. L. Energy dissipation without viscosity in ideal hydrodynamics. I. Fourier analysis and local energy transfer. Phys. D 78, 3-4 (1994), 222–240.
+[11] Frisch, U. Turbulence. Cambridge University Press, Cambridge, 1995. The legacy of A. N. Kolmogorov.
+[12] Gromov, M. Partial diﬀerential relations, vol. 9 of Ergebnisse der Mathematik und ihrer Grenzgebiete (3). Springer-Verlag, Berlin, 1986.
+
+20
+
+CAMILLO DE LELLIS AND LA´ SZLO´ SZE´ KELYHIDI JR.
+
+[13] Kirchheim, B. Deformations with ﬁnitely many gradients and stability of quasiconvex hulls. C. R. Acad. Sci. Paris S´er. I Math. 332, 3 (2001), 289–294.
+[14] Kirchheim, B. Rigidity and Geometry of microstructures. Habilitation thesis, University of Leipzig, 2003.
+[15] Kirchheim, B., Mu¨ller, S., and Sˇvera´k, V. Studying nonlinear PDE by geometry in matrix space. In Geometric analysis and Nonlinear partial diﬀerential equations, S. Hildebrandt and H. Karcher, Eds. Springer-Verlag, 2003, pp. 347–395.
+[16] Majda, A. J., and Bertozzi, A. L. Vorticity and incompressible ﬂow, vol. 27 of Cambridge Texts in Applied Mathematics. Cambridge University Press, Cambridge, 2002.
+[17] Mu¨ller, S., and Sˇvera´k, V. Convex integration for Lipschitz mappings and counterexamples to regularity. Ann. of Math. (2) 157, 3 (2003), 715–742.
+[18] Mu¨ller, S., and Sychev, M. Optimal existence theorems for nonhomogeneous diﬀerential inclusions. J. Funct. Anal. 181, 2 (2001), 447–475.
+[19] Onsager, L. Statistical hydrodynamics. Nuovo Cimento (9) 6, Supplemento, 2(Convegno Internazionale di Meccanica Statistica) (1949), 279–287.
+[20] Oxtoby, J. C. Measure and category, second ed., vol. 2 of Graduate Texts in Mathematics. Springer-Verlag, New York, 1980. A survey of the analogies between topological and measure spaces.
+[21] Scheffer, V. An inviscid ﬂow with compact support in space-time. J. Geom. Anal. 3, 4 (1993), 343–401.
+[22] Shnirelman, A. On the nonuniqueness of weak solution of the Euler equation. Comm. Pure Appl. Math. 50, 12 (1997), 1261–1286.
+[23] Shnirelman, A. Weak solutions with decreasing energy of incompressible Euler equations. Comm. Math. Phys. 210, 3 (2000), 541–603.
+[24] Sychev, M. A. A few remarks on diﬀerential inclusions. Proc. Roy. Soc. Edinburgh Sect. A, 3 (2006), 649-668.
+[25] Tao, T. Nonlinear dispersive equations, vol. 106 of CBMS Regional Conference Series in Mathematics. Published for the Conference Board of the Mathematical Sciences, Washington, DC, 2006. Local and global analysis.
+[26] Tartar, L. Compensated compactness and applications to partial diﬀerential equations. In Nonlinear analysis and mechanics: Heriot-Watt Symposium, Vol. IV, vol. 39 of Res. Notes in Math. Pitman, Boston, Mass., 1979, pp. 136–212.
+[27] Tartar, L. The compensated compactness method applied to systems of conservation laws. In Systems of nonlinear partial diﬀerential equations (Oxford, 1982), vol. 111 of NATO Adv. Sci. Inst. Ser. C Math. Phys. Sci. Reidel, Dordrecht, 1983, pp. 263–285.
+[28] Temam, R. Navier-Stokes equations, third ed., vol. 2 of Studies in Mathematics and its Applications. North-Holland Publishing Co., Amsterdam, 1984. Theory and numerical analysis, With an appendix by F. Thomasset.
+Institut fu¨r Mathematik, Universita¨t Zu¨rich, CH-8057 Zu¨rich E-mail address: camillo.delellis@math.unizh.ch
+Departement Mathematik, ETH Zu¨rich, CH-8092 Zu¨rich E-mail address: szekelyh@math.ethz.ch
+

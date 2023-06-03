@@ -1,0 +1,594 @@
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Article Volume 14, Number 3
+6 March 2013 doi:10.1002/ggge.20071
+ISSN: 1525-2027
+
+Efﬁcient spherical harmonic transforms aimed at pseudospectral numerical simulations
+Nathanaël Schaeffer
+ISTerre, Université de Grenoble 1, CNRS, F-38041 Grenoble, France (nathanael.schaeffer@ujf-grenoble.fr)
+[1] In this paper, we report on very efﬁcient algorithms for spherical harmonic transform (SHT). Explicitly vectorized variations of the algorithm based on the Gauss-Legendre quadrature are discussed and implemented in the SHTns library, which includes scalar and vector transforms. The main breakthrough is to achieve very efﬁcient on-the-ﬂy computations of the Legendre-associated functions, even for very high resolutions, by taking advantage of the speciﬁc properties of the SHT and the advanced capabilities of current and future computers. This allows us to simultaneously and signiﬁcantly reduce memory usage and computation time of the SHT. We measure the performance and accuracy of our algorithms. Although the complexity of the algorithms implemented in SHTns are in OðN 3Þ (where N is the maximum harmonic degree of the transform), they perform much better than any third-party implementation, including lower-complexity algorithms, even for truncations as high as N = 1023. SHTns is available at https://bitbucket.org/nschaeff/shtns as open source software.
+Components: 3,700 words, 5 ﬁgures.
+Keywords: spherical harmonics; performance; mathematical software.
+Index Terms: 1932 Informatics: High-performance computing; 1976 Informatics: Software tools and services; 3255 Mathematical Geophysics (0500, 4307, 4314, 4400, 7833): Spectral analysis (3205, 3280, 4319); 1906 Informatics: Computational models, algorithms; 1510 Geomagnetism And Paleomagnetism: Dynamo: theories and simulations.
+Received 11 December 2012; Revised 15 January 2013; Accepted 15 January 2013; Published 6 March 2013.
+Schaeffer, N. (2013), Efﬁcient spherical harmonic transforms aimed at pseudospectral numerical simulations, Geochem. Geophys. Geosyst., 14, 751–758, doi:10.1002/ggge.20071.
+
+1. Introduction
+[2] Spherical harmonics are the eigenfunctions of the Laplace operator on the 2-sphere. They form a basis and are useful and convenient to describe data on a sphere in a consistent way in spectral space. Spherical harmonic transforms (SHT) are the spherical counterpart of the Fourier transform, casting spatial data to the spectral domain and vice versa. They are commonly used in various pseudospectral direct numerical simulations in spherical geometry,
+
+for simulating the Sun or the liquid core of the Earth among others [Glatzmaier, 1984; Sakuraba, 1999; Christensen et al., 2001; Brun & Rempel, 2009; Wicht & Tilgner, 2010].
+[3] All numerical simulations that take advantage of spherical harmonics use the classical Gauss-Legendre algorithm (see section 2) with complexity OðN 3Þ for a truncation at spherical harmonic degree N. As a consequence of this high computational cost when N increases, high-resolution spherical codes currently spend most of their time performing SHT. A few years
+
+©2013. American Geophysical Union. All Rights Reserved.
+
+751
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+ago, state-of-the-art numerical simulations used N = 255 [Sakuraba & Roberts, 2009].
+[4] However, there exist several asymptotically fast algorithms [Driscoll & Healy, 1994; Potts et al., 1998; Mohlenkamp, 1999; Suda & Takami, 2002; Healy et al., 2003; Tygert, 2008], but the overhead for these fast algorithms is such that they do not claim to be effectively faster for N < 512. In addition, some of them lack stability (the error becomes too large even for moderate N) and ﬂexibility (e.g., N + 1 must be a power of 2).
+[5] Among the asymptotically fast algorithms, only two have open-source implementations, and the only one that seems to perform reasonably well is SpharmonicKit, based on the algorithms described by Healy et al. [Healy et al., 2003]. Its main drawback is the need of a latitudinal grid of size 2(N + 1), while the Gauss-Legendre quadrature allows the use of only N + 1 collocation points. Thus, even if it were as fast as the GaussLegendre approach for the same truncation N, the overall numerical simulation would be slower because it would operate on twice as many points. These facts explain why the Gauss-Legendre algorithm is still the most efﬁcient solution for numerical simulations.
+[6] A recent paper [Dickson et al., 2011] reports that a carefully tuned software could ﬁnally run nine times faster on the same CPU than the initial nonoptimized version, and insists on the importance of vectorization and careful optimization of the code. As the goal of this work is to speed up numerical simulations, we have written a highly optimized and explicitly vectorized version of the Gauss-Legendre SHT algorithm. The next section recalls the basics of spherical harmonic transforms. We then describe the optimizations we used and compare the performance of our transform to other SHT implementations. We conclude this paper by a short summary and perspectives for future developments.
+
+2. Spherical Harmonic Transform
+2.1. Deﬁnitions and Properties [7] The orthonormalized spherical harmonics of degree n and order À n ≤ m ≤ n are functions deﬁned on the sphere as:
+
+Ynmðθ; ’Þ ¼ PnmðcosθÞexpðim’Þ
+
+(1)
+
+where θ is the colatitude, ’ is the longitude, and Pnm are the associated Legendre polynomials normal-
+
+ized for spherical harmonics
+
+rﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃsﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+
+PnmðxÞ ¼ ðÀ1Þm
+
+2n þ 1 4p
+
+ðn ðn
+
+À þ
+
+jmjÞ!À jmjÞ! 1
+
+À
+
+x2Ájmj=2
+
+djmj dxjmj
+
+Pn
+
+ðxÞ
+
+(2)
+
+which involve derivatives of Legendre polynomials Pn(x) deﬁned by the following recurrence:
+P0ðxÞ ¼ 1 P1ðxÞ ¼ x nPnðxÞ ¼ ð2n À 1ÞxPnÀ1ðxÞ À ðn À 1ÞPnÀ2ðxÞ
+The spherical harmonics Ynmðθ; ’Þ form an orthonormal basis for functions deﬁned on the sphere:
+
+Z 2p Z p
+
+Ynmðθ; ’ÞYlkðθ; ’Þsinθdθd’ ¼ dnldmk
+
+(3)
+
+00
+
+with dij the Kronecker symbol. By construction, they are eigenfunctions of the Laplace operator on
+the unit sphere:
+
+ΔYnm ¼ Ànðn þ 1ÞYnm
+
+(4)
+
+This property is very appealing for solving many physical problems in spherical geometry involving the Laplace operator.
+
+2.2. Synthesis or Inverse Transform
+[8] The spherical harmonic synthesis is the evaluation of the sum
+
+XN Xn
+
+f ðθ; ’Þ ¼
+
+fnmYnmðθ; ’Þ
+
+(5)
+
+n¼0 m¼Àn
+
+up to degree n = N, given the complex coefﬁcients
+
+Àfnfmnm. ÁIÃf,
+
+f(θ,’) is a where z*
+
+real-valued function, then fnÀm ¼ stands for the complex conjugate
+
+of z.
+
+[9] The sums can be exchanged; and using the ex-
+
+pression of Ynm we can write
+
+0
+
+1
+
+XN XN
+
+f ðθ; ’Þ ¼
+
+@ fnmPnmðcosθÞAeim’
+
+(6)
+
+m¼ÀN n¼jmj
+
+From this last expression, it appears that the summation over m is a regular Fourier transform. Hence, the remaining task is to evaluate
+
+XN
+
+fmðθÞ ¼
+
+fnmPnmðcosθÞ
+
+(7)
+
+n¼jmj
+
+or its discrete version at given collocation points θj.
+
+752
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+2.3. Analysis or Forward Transform
+
+[10] The analysis step of the SHT consists in computing the coefﬁcients
+
+Z 2p Z p
+
+fnm ¼
+
+f ðθ; ’ÞYnmðθ; ’Þsinθdθd’
+
+(8)
+
+00
+
+The integral over ’ is obtained using the Fourier
+
+transform:
+
+Z 2p
+
+fmðθÞ ¼ f ðθ; ’Þeim’d’
+
+(9)
+
+0
+
+so the remaining Legendre transform reads
+
+Zp
+
+fnm ¼ fmðθÞPnmðcosθÞsinθdθ
+
+(10)
+
+0
+
+The discrete problem reduces to the appropriate
+quadrature rule to evaluate the integral (10) knowing only the values fm(θj). In particular, the use of the Gauss-Legendre quadrature replaces the inte-
+gral of expression (10) by the sum
+
+X Nθ À Á À Á
+
+fnm ¼ fm θj Pnm cosθj wj
+
+(11)
+
+j¼1
+
+where θj and wj are, respectively, the Gauss nodes and weights [Temme, 2011]. Note that the sum equals the integral if fmðθÞPnmðcosθÞ is a polynomial in cosθ of order 2Nθ À 1 or less. If fm(θ) is given by expression (7), then fmðθÞPnmðcosθÞ is always a polynomial in cosθ, of degree at most 2N. Hence, the GaussLegendre quadrature is exact for Nθ ≥ N + 1.
+[11] A discrete spherical harmonic transform using Gauss nodes as latitudinal grid points and a Gauss-Legendre quadrature for the analysis step is referred to as a Gauss-Legendre algorithm.
+
+3. Optimization of the Gauss-Legendre Algorithm
+3.1. Standard Optimizations [12] Let us ﬁrst recall some standard optimizations found in almost every serious implementation of the Gauss-Legendre algorithm. All the following optimizations are used in the SHTns library.
+3.1.1. Use the Fast-Fourier Transform
+[13] The expressions in section 2 show that part of the SHT is in fact a Fourier transform. The fast Fourier transform (FFT) should be used for this part, as it improves accuracy and speed. SHTns uses the FFTW
+
+library [Frigo & Johnson, 2005], a portable, ﬂexible, and highly efﬁcient FFT implementation.
+
+3.1.2. Take Advantage of Hermitian Symmetry for Real Data
+
+[14] tral
+
+When dealing with coefﬁcients fulﬁll
+
+frnÀeaml-¼vaÀlufnemdÁÃd,atsao,
+
+the we
+
+speconly
+
+need to store them for m ≥ 0. This also allows the
+
+use of faster real-valued FFTs.
+
+3.1.3. Take Advantage of Mirror Symmetry
+[15] Due to the deﬁned symmetry of spherical harmonics with respect to a reﬂection about the equator
+Pnmðcosðp À θÞÞ ¼ ðÀ1ÞnþmPnmðcosθÞ
+one can reduce by a factor of 2 the operation count of both forward and inverse transforms.
+
+3.1.4. Precompute Values of Pnm ÀÁ
+[16] The coefﬁcients Pnm cosθj appear in both synthesis and analysis expressions (7 and 10), and can be precomputed and stored for all (n,m,j). When performing multiple transforms, it avoids computing the Legendre polynomial recursion at every transform and saves some computing power, at the expense of memory bandwidth. This may or may not be efﬁcient, as we will discuss later.
+
+3.1.5. Polar Optimization
+
+[17] High-order spherical harmonics have their magnitude decrease exponentially when approaching the poles as shown in Figure 1. Hence, the integral of expression (10) can be reduced to
+
+Z pÀθm0 n
+
+fnm ¼
+
+fmðθÞPnmðcosθÞsinθdθ
+
+(12)
+
+θm0 n
+
+where θm0 n≥0 is a threshold below which Pnm is consid-
+
+ered to be zero. Similarly, the synthesis of fm(θ) (equa-
+
+tion uses
+
+(7)) is only a threshold
+
+needed θm0 n that
+
+for θm0 n≤θ≤p À θm0 n does not depend on
+
+. SHTns n, which
+
+leads to around 5% to 20% speed increase, depending
+
+on the desired accuracy and the truncation N.
+
+3.2. On-the-Fly Algorithms and Vectorization [18] It can be shown that PnmðxÞ can be computed recursively by
+753
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+1.5
+
+1
+
+0.5
+
+0
+
+-0.5
+
+-1
+
+-1.5
+
+0
+
+0.5
+
+1
+
+1.5
+
+2
+
+2.5
+
+3
+
+θ
+
+Figure 1. Two associated Legendre polynomials of degree n = 40 and order m = 33 (blue) and m = 36 (red), showing the localization near the equator.
+
+PmmðxÞ
+
+¼
+
+amm
+
+À 1
+
+À
+
+x2Ájmj=2
+
+(13)
+
+Pmmþ1ðxÞ ¼ ammþ1xPmmðxÞ
+
+(14)
+
+PnmðxÞ ¼ amn xPnmÀ1ðxÞ þ bmn PnmÀ2ðxÞ
+
+(15)
+
+with
+
+amm
+
+¼
+
+v u u tﬃﬃ1ﬃﬃﬃﬃﬃﬃY ﬃjﬃmﬃﬃjﬃﬃﬃ2ﬃﬃﬃkﬃﬃﬃþﬃﬃﬃﬃﬃ1ﬃﬃ 4p k¼1 2k
+
+(16)
+
+rﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+
+amn ¼
+
+4n2 À 1 n2 À m2
+
+(17)
+
+sﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃﬃ
+
+bmn ¼ À
+
+2n þ 1 ðn À 1Þ2 À m2 2n À 3 n2 À m2
+
+(18)
+
+The coefﬁcients amn and bmn do not depend on x, and
+
+can be easily precomputed and stored into an array
+
+of (N order
+
++ 1)2 values. N3 values of
+
+ThisÀ hÁas Pnm xj ,
+
+to be which
+
+compared to the are usually pre-
+
+computed and stored in the spherical harmonic
+
+transforms implemented in numerical simulations.
+
+TheÀ aÁmount of memory required to Pnm xj in double-precision is at least
+
+store all 2(N + 1)3
+
+bytes, which gives 2 Gb for N = 1023. Our on-the-
+
+ﬂy algorithm only needs about 8(N + 1)2 bytes of
+
+storage (same size as a spectral representation fnm),
+
+that is, 8 Mb for N = 1023. When N becomeÀs Ávery large, it is no longer possible to store Pnm xj in
+
+memory (for N ≳1024 nowadays) and on-the-ﬂy ÀÁ
+algorithms (which recompute Pnm xj from the recurrence relation when needed) are then the only
+
+possibility.
+
+[19] We would like to stress that even far from that storage limit, on-the-ﬂy algorithm can be signiﬁcantly faster thanks to vector capabilities of modern
+
+processors. Most desktop and laptop computers, as well as many high-performance computing clusters, have support for single-instruction, multiple-data (SIMD) operations in double precision. The SSE2 instruction set is available since year 2000 and currently supported by almost every PC, allowing the performance of the same double-precision arithmetic operations on a vector of two doubleprecision numbers, effectively doubling the computing power. The recently introduced AVX instruction set increases the vector size to four double-precision numbers. This means that PnmðxÞ can be computed from the recursion relation (15) (which requires three multiplications and one addition) for two or four values of x simultaneously, which may be faster than loading precomputed values from memory. Hence, as already pointed out by Dickson et al. [Dickson et al., 2011], it is therefore very important to use the vector capabilities of modern processors to address their full computing power. Furthermore, when running multiple transforms on the different cores of a computer, the performance of on-the-ﬂy transforms (which use less memory bandwidth) scales much better than algorithms with precomputed matrices, because the memory bandwidth is shared between cores. Superscalar architectures that do not have double-precision SIMD instructions but have many computation units per core (like the POWER7 or SPARC64) could also beneﬁt from on-the-ﬂy transforms by saturating the many computation units with independent computations (at different x).
+[20] Figure 2 shows the beneﬁt of explicit vectorization of on-the-ﬂy algorithms on an Intel Xeon E5-2680 (Sandy Bridge architecture with AVX instruction set running at 2.7 GHz) and compares on-the-ﬂy algorithms with algorithms based on precomputed matrices. With the four vectors of AVX, the fastest algorithm is always on the ﬂy, while for two vectors, the fastest algorithm uses precomputed matrices for N ≲200 . In the forthcoming years, wider vector architecture is expected to become widely available, and the beneﬁts of on-the-ﬂy vectorized transforms will become even more important.
+3.2.1. Runtime Tuning
+[21] We have now two different available algorithms: one uses precomputed values for PnmðxÞ and the other one computes them on the ﬂy at each transform. The SHTns library compares the time taken by those algorithms (and variants) at startup and chooses the fastest, similarly to what the FFTW
+754
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+Figure 2. Efﬁciency (N + 1)3/(2tf ) of various algorithms, where t is the execution time and f the frequency of the Xeon E5-2680 CPU (2.7 GHz). On-the-ﬂy algorithms with two different vector sizes are compared with the algorithm using precomputed matrices. Note the inﬂuence of hardware vector size for on-the-ﬂy algorithms (AVX vectors pack four double-precision ﬂoating point numbers where SSE3 vectors pack only two). The efﬁciency of the algorithm based on precomputed matrices drops above N = 127 probably due to cache size limitations.
+library [Frigo & Johnson, 2005] does. The time overhead required by runtime tuning can be several orders of magnitude larger than that of a single transform. The observed performance gain varies between 10% and 30%. This is signiﬁcant for numerical simulations, but runtime tuning can be entirely skipped for applications performing only a few transforms, in which case there is no noticeable overhead.
+3.3. Multithreaded Transform
+[22] Modern computers have several computing cores. We use OpenMP to implement a multithreaded algorithm for the Legendre transform including the above optimizations and the on-the-ﬂy approach. The lower memory bandwidth requirements for the on-the-ﬂy approach is an asset for a multithreaded transform because if each thread would read a different portion of a large matrix, it can saturate the memory bus very quickly. The multithreaded Fourier transform is left to the FFTW library.
+[23] We need to decide how to share the work between different threads. Because we compute the Pnm on the ﬂy using the recurrence relation (15), we are left with each thread computing different θ, or different m. As the analysis step involves a sum over θ, we choose the latter option.
+[24] From equation (7), we see that the number of terms involved in the sum depends on m, so that the computing cost will also depend on m. To
+
+achieve the best workload balance between a team of p threads, the thread number i (0 ≤ i < p) handles m = i + kp ≤ N, with integer k from 0 to (N + 1)p. [25] For different thread number b, we have measured the time Ts(p) and Ta(p) needed for a scalar spherical harmonic synthesis and analysis, respectively (including the FFT). [26] Figure 3 shows the speedup T(1)/T(p), where T(p) is the largest of Ts(p) and Ta(p), and T(1) is the time of the fastest single threaded transform. It shows that there is no point in doing a parallel transform with N below 128. The speedup is good for N ¼ 255 or above, and excellent up to eight threads for N ≥ 511 or up to 16 threads for very large transform (N ≥ 2047).
+3.4. Performance Comparisons [27] Table 1 reports the timing measurements of two SHT libraries, compared to the optimized GaussLegendre implementation found in the SHTnslibrary (this work). We compare with the Gauss-Legendre implementation of libpsht [Reinecke, 2011] a parallel spherical harmonic transform library targeting very large N, and with SpharmonicKit 2.7 (DH) which implements one of the Driscoll-Healy fast algorithms [Healy et al., 2003]. All the timings are for a complete SHT, which includes the fast Fourier transform. Note that the Gauss-Legendre algorithm is by far (a factor of order 2) the fastest algorithm of the libpsht library. Note also that SpharmonicKit is limited to N + 1 being a power of two, requires 2 (N + 1) latitudinal colocation points, and crashed for N = 2047. The software library implementing the fast
+Figure 3. Speedup obtained with multiple threads using OpenMP (gcc 4.6.3) on a 16-core Intel Xeon E5-2680 (Sandy Bridge architecture with AVX instruction set running at 2.7 GHz).
+755
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+Table 1. Comparison of Execution Time for Different SHT Implementations
+
+N
+
+63
+
+127
+
+255
+
+511
+
+1023
+
+2047
+
+4095
+
+libpsht (1 thread) DH (fast) SHTns (1 thread)
+
+1.05 ms 1.1 ms 0.09 ms
+
+4.7 ms 5.5 ms 0.60 ms
+
+27 ms 21 ms
+4.2 ms
+
+162 ms 110 ms
+28 ms
+
+850 ms 600 ms 216 ms
+
+4.4 s NA
+1.6 s
+
+30.5 s NA 11.8 s
+
+The numbers correspond to the average execution time for forward and backward scalar transform (including the FFT) on an Intel Xeon X5650 (2.67GHz) with 12 cores. The programs were compiled with gcc 4.4.5 and -O3 -march=native -ffast-math compilation options.
+
+Legendre transform described by Mohlenkamp [Mohlenkamp, 1999], libftsh, has also been tested and found to be of comparable performance to that of SpharmonicKit, although the comparison is not straightforward because libftsh did not include the Fourier transform. Again, that fast library could not operate at N = 2047 because of memory limitations. Note ﬁnally that these measurements were performed on a machine that did not support the new AVX instruction set. [28] To ease the comparison, we deﬁne the efﬁciency of the SHT by (N + 1)3/(2Tf ), where T is the execution time (reported in Table 1) and f the frequency of the CPU. Note that (N + 1)3/2 reﬂects the number of computation elements of a Gauss-Legendre algorithm [the number of modes (N + 1)(N + 2)/2 times the number of latitudinal points N + 1]. An efﬁciency that does not depend on N corresponds to an algorithm with an execution time proportional to N3. [29] The efﬁciency of the tested algorithms is displayed in Figure 4. Not surprisingly, the Driscoll-Healy implementation has the largest slope, which means that its efﬁciency grows fastest with N, as expected for a fast algorithm. It also performs slightly better than libpsht for N ≥ 511. However, even for N = 1023 (the largest size that it can compute), it is still 2.8 times slower than the Gauss-Legendre algorithm implemented in
+Figure 4. Efﬁciency (N + 1)3/(2Tf ) of the implementations from Table 1, where T is the execution time and f the frequency of the Xeon X5650 CPU (2.67 GHz) with 12 cores.
+
+SHTns. It is remarkable that SHTns achieves an efﬁciency very close to 1, meaning that almost one element per clock cycle is computed for N = 511 and N = 1023. Overall, SHTns is between 2 and 10 times faster than the best alternative.
+
+3.5. Accuracy
+
+[30] One cannot write about an SHT implementation without addressing its accuracy. The Gauss-Legendre quadrature ensures very good accuracy, at least on par with other high-quality implementations.
+
+[31] The recurrence relation we use (see section 3.2) is numerically stable, but for N ≳1500 , the value PmmðxÞ can become so small that it cannot be represented by a double-precision number anymore. To avoid this underﬂow problem, the code dynamically rescales the values of PnmðxÞ during the recursion, when they reach a given threshold.
+The number of rescalings is stored in an integer,
+which acts as an enhanced exponent. Our
+implementation of the rescaling does not impact
+performance negatively, as it is compensated by
+dynamic polar optimization: these very small values
+are treated as zero in the transform (equations (7)
+and (11)), but not in the recurrence. This technique
+ensures good accuracy up to N = 8191 at least, but
+partial transforms have been performed successfully
+up to N = 43,600.
+
+[32] To quantify the error, we start with random
+spherical harmonic coefﬁcients Qmn with each real part and imaginary part between -1 and + 1. After
+
+a backward and forward transform (with orthonor-
+
+mal spherical harmonics), we compare the resulting coefﬁcients Rmn with the originals Qmn . We use two different error measurements: the maximum error
+
+is deﬁned as
+
+emax
+
+¼
+
+max
+n;m
+
+Rmn
+
+À
+
+Qmn 
+
+while the root mean square (rms) error is deﬁned as
+erms ¼ sﬃðﬃNﬃﬃﬃﬃﬃþﬃﬃﬃﬃﬃ1ﬃﬃÞﬃ2ﬃðﬃﬃNﬃﬃﬃﬃﬃþﬃﬃﬃﬃﬃ2ﬃﬃÞﬃﬃﬃﬃX ﬃnﬃﬃ;ﬃmﬃﬃﬃﬃﬃRﬃﬃﬃmnﬃﬃﬃﬃÀﬃﬃﬃﬃﬃQﬃﬃﬃmnﬃﬃﬃﬃ2ﬃﬃ
+
+756
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+vectorized on-the-ﬂy implementations, we should be able to run spectral geodynamo simulations at N = 1023 in the next few years. Such high-resolution simulations will operate in a regime much closer to the dynamics of the Earth’s core.
+
+Acknowledgments
+
+Figure 5. Accuracy of the on-the-ﬂy Gauss-Legendre algorithm with the default polar optimization.
+
+[36] The author thanks Alexandre Fournier and Daniel Lemire
+for their comments that helped to improve the paper. Some computations have been carried out at the Service Commun de Calcul Intensif de l’Observatoire de Grenoble (SCCI) and other were run on the PRACE Research Infrastructure Curie at the TGCC (grant PA1039).
+References
+
+The error measurements for our on-the-ﬂy Gauss-Legendre implementation with the default polar optimization and for various truncation degrees N are shown in Figure 5. The errors steadily increase with N and are comparable to other implementations. For N < 2048, we have emax < 10À 11, which is negligible compared to other sources of errors in most numerical simulations.
+4. Conclusion and Perspectives
+[33] Despite the many fast spherical harmonic transform algorithms published, the few with a publicly available implementation are far from the performance of a carefully written Gauss-Legendre algorithm, as implemented in the SHTns library, even for quite large truncation (N = 1023). Explicitly vectorized on-the-ﬂy algorithms seem to be able to unleash the computing power of nowadays and future computers, without suffering too much of memory bandwidth limitations, which is an asset for multithreaded transforms.
+[34] The SHTns library has already been used in various demanding computations [e.g., Schaeffer et al., 2012; Augier & Lindborg, 2013; Figueroa et al., 2013]. The versatile truncation, the various normalization conventions supported, as well as the scalar and vector transform routines available for C/C++, Fortran or Python, should suit most of the current and future needs in high-performance computing involving partial differential equations in spherical geometry.
+[35] Thanks to the signiﬁcant performance gain, as well as the much lower memory requirement of
+
+Augier, P., and E. Lindborg (2013), A new formulation of the spectral energy budget, of the atmosphere, with application to two high-resolution general circulation models, ArXiv e-prints, 1211.0607, submitted to J. Atmos. Sci.
+Brun, A., and M. Rempel (2009), Large scale ﬂows in the solar convection zone, Space Sci. Rev., 144(1), 151–173, doi:10.1007/s11214-008-9454-9.
+Christensen, U. R., et al. (2001), A numerical dynamo benchmark, Phys. Earth and Planet. In., 128(1–4), 25–34, doi:10.1016/S0031-9201(01)00275-8.
+Dickson, N. G., K., Karimi, and F. Hamze (2011), Importance of explicit vectorization for CPU and GPU software performance, J. Comput. Phys., 230(13), 5383–5398, doi:10.1016/j.jcp.2011.03.041.
+Driscoll, J., and D. M., Healy (1994), Computing Fourier transforms and convolutions on the 2-sphere, Adv. Appl. Math., 15(2), 202–250, doi:10.1006/aama.1994.1008.
+Figueroa, A., N., Schaeffer, H.-C., Nataf, and D. Schmitt (2013), Modes and instabilities in magnetized spherical couette ﬂow, J. Fluid Mech., 716, 445–469, doi:10.1017/jfm.2012.551.
+Frigo, M., and S. G. Johnson (2005), The design and implementation of FFTW3, P. IEEE, 93(2), 216–231, doi:10.1109/JPROC.2004.840301.
+Glatzmaier, G. A. (1984), Numerical simulations of stellar convective dynamos. I. the model and method, J. Comput. Phys., 55(3), 461–484, doi:10.1016/0021-9991(84)90033-0.
+Healy, D. M., D. N., Rockmore, P. J., Kostelec, and S. Moore (2003), Ffts for the 2-sphere-improvements and variations, J. of Fourier Anal. Appl., 9(4), 341–385, doi:10.1007/ s00041-003-0018-9.
+Mohlenkamp, M. J. (1999), A fast transform for spherical harmonics, J. of Fourier Anal. Appl., 5(2/3).
+Potts, D., G., Steidl, and M. Tasche (1998), Fast algorithms for discrete polynomial transforms, Math. Comput., 67, 1577–1590.
+Reinecke, M. (2011), Libpsht â€“ algorithms for efﬁcient spherical harmonic transforms, Astron. Astrophys., 526, A108+, doi:10.1051/0004-6361/201015906.
+Sakuraba, A. (1999), Effect of the inner core on the numerical solution of the magnetohydrodynamic dynamo, Phys. Earth Planet. In., 111(1-2), 105–121, doi:10.1016/S0031-9201 (98)00150-2.
+Sakuraba, A., and P. H. Roberts (2009), Generation of a strong magnetic ﬁeld using uniform heat ﬂux at the surface of the core, Nat. Geosci., 2(11), 802–805, doi:10.1038/ngeo643.
+757
+
+15252027, 2013, 3, Downloaded from https://agupubs.onlinelibrary.wiley.com/doi/10.1002/ggge.20071 by Cochrane Romania, Wiley Online Library on [26/02/2023]. See the Terms and Conditions (https://onlinelibrary.wiley.com/terms-and-conditions) on Wiley Online Library for rules of use; OA articles are governed by the applicable Creative Commons License
+
+Geochemistry
+3 Geophysics
+G Geosystems
+
+SCHAEFFER: EFFICIENT SPHERICAL HARMONIC TRANSFORM
+
+10.1002/ggge.20071
+
+Schaeffer, N., D., Jault, P., Cardin, and M. Drouard (2012), On the reﬂection of alfvén waves and its implication for earth’s core modelling, Geophys. J. Int., 191(2), 508–516, doi:10.1111/j.1365-246X.2012.05611.x.
+Suda, R., and M. Takami (2002), A fast spherical harmonics transform algorithm, Math. Comput., 71(238), 703–715, doi:10.1090/S0025-5718-01-01386-2.
+Temme, N. M. (2011), Gauss quadrature, in Digital
+Library of Mathematical Functions (DLMF), chap. 3.5
+
+(v), National Institute of Standards and Technology (NIST). Tygert, M. (2008), Fast algorithms for spherical harmonic expansions, II, J. Comput. Phys., 227(8), 4260–4279, doi:10.1016/j.jcp.2007.12.019. Wicht, J., and A. Tilgner (2010), Theory and modeling of planetary dynamos, Space Sc. Rev., 152(1), 501–542, doi:10.1007/s11214-010-9638-y.
+
+758
+

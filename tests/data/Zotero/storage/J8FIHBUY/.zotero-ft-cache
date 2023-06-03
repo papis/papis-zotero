@@ -1,0 +1,5142 @@
+Advances in Mathematics 268 (2015) 478–528 Contents lists available at ScienceDirect
+Advances in Mathematics
+www.elsevier.com/locate/aim
+
+Fractional Laplacians on domains, a development of Hörmander’s theory of μ-transmission pseudodiﬀerential operators
+Gerd Grubb
+Department of Mathematical Sciences, Copenhagen University, Universitetsparken 5, DK-2100 Copenhagen, Denmark
+
+article info
+Article history: Received 15 October 2013 Accepted 7 September 2014 Available online 17 October 2014 Communicated by Charles Feﬀerman
+To the memory of Lars Hörmander 1931–2012
+Keywords: Fractional Laplacian Pseudodiﬀerential boundary problem Fredholm solvability Lp Sobolev spaces Hölder regularity μ-transmission property
+
+a b s t r a c t
+Let P be a classical pseudodiﬀerential operator of order m ∈ C on an n-dimensional C∞ manifold Ω1. For the truncation PΩ to a smooth subset Ω there is a wellknown theory of boundary value problems when PΩ has the transmission property (preserves C∞(Ω)) and is of integer order; the calculus of Boutet de Monvel. Many interesting operators, such as for example complex powers of the Laplacian (−Δ)μ with μ ∈/ Z, are not covered. They have instead the μ-transmission property deﬁned in Hörmander’s books, mapping xμnC∞(Ω) into C∞(Ω). In an unpublished lecture note from 1965, Hörmander described an L2-solvability theory for μ-transmission operators, departing from Vishik and Eskin’s results. We here develop the theory in Lp Sobolev spaces (1 < p < ∞) in a modern setting. It leads to not only Fredholm solvability statements but also regularity results in full scales of Sobolev spaces (s → ∞). The solution spaces have a singularity at the boundary that we describe in detail. We moreover obtain results in Hölder spaces, which radically improve recent regularity results for fractional Laplacians.
+© 2014 Elsevier Inc. All rights reserved.
+
+E-mail address: grubb@math.ku.dk.
+http://dx.doi.org/10.1016/j.aim.2014.09.018 0001-8708/© 2014 Elsevier Inc. All rights reserved.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+479
+
+0. Introduction
+
+Pseudodiﬀerential operators (ψdo’s) of integer order with the transmission property (preserving C∞ up to the boundary in a domain) and their boundary problems have been studied since the basic theory was developed by Boutet de Monvel in [4]. The theory includes diﬀerential operators and the parametrices of elliptic such ones, and also operators whose symbols are rational functions of ξ.
+This was preceded by works of Vishik and Eskin ([30,31] etc., included for the major part in Eskin’s book [7]), which treated operators of a more general type, having a factorization of the principal symbol at the boundary of a smooth open set Ω, in two factors extending analytically to {Im ξn > 0} resp. {Im ξn < 0} as functions of the conormal variable ξn, with each their degree of homogeneity m − κ(x ) resp. κ(x ), x ∈ ∂Ω. When Ω is compact, such operators will under mild restrictions on the factorization index κ(x ) deﬁne Fredholm operators on Sobolev spaces with exponent s in a certain open interval ]s−, s+[ of length ≤ 1. For larger s one has to add suitable boundary conditions, and for smaller s potential terms, in order to get Fredholmness. The results have been extended to Lp-based Sobolev spaces by Shargorodsky [28] and Chkadua and Duduchava [6].
+In an unpublished (photocopy distributed) lecture note at Princeton 1965 [19], Hörmander introduced, with Vishik and Eskin’s work as a starting point, a generalized transmission condition of type μ ∈ C (where the condition in [4] is the case μ = 0), reﬂecting the properties of the general operators studied by Vishik and Eskin in the case κ(x ) = μ0 constant. Here he showed not only the Fredholm property in Sobolev spaces for s in an interval, but he moreover determined the L2 Sobolev regularity of solutions with data given for all larger s, or given in C∞(Ω), ﬁnding the domain spaces for Fredholm solvability and describing the associated boundary conditions.
+The transmission condition of type μ was brieﬂy characterized in [21, Section 18.2]. An application to propagation of singularities was given by Hirschowitz and Piriou [17].
+Fractional powers of the Laplacian (−Δ)a are of type μ = a; they have recently received increased attention both in probability theory, cf. e.g. Bogdan, Grzywny and Ryznar [2], Ros-Oton and Serra [26], in diﬀerential geometry, cf. e.g. Gonzalez, Mazzeo and Sire [10], and in Schrödinger theory, cf. e.g. Frank and Geisinger [8], and the references in these papers. Only a little seems to be known about the regularity of solutions on domains. Inspired by this, we have in the present paper worked out an extension of Hörmander’s theory to Lp-Sobolev spaces, 1 < p < ∞, with additional results, moreover leading to solvability results in Hölder spaces. Applications include fractional powers of strongly elliptic diﬀerential operators.
+In this process, the presentation could beneﬁt from the theories developed since 1965, namely the theory of boundary value problems of type 0, as introduced by Boutet de Monvel for integer-order cases in [4], and further developed by the present author, e.g. in [12]. The work [11] is particularly useful, extending the Boutet de Monvel calculus to the Lp-setting and introducing reﬁned order-reduction techniques. A joint work with
+
+480
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Hörmander [14] treated operators of type 0 and arbitrary real order m (including Sm,δ symbols).
+Here are some of the main results. We consider a smooth subset Ω of an n-dimensional Riemannian C∞ manifold Ω1, and denote by d(x) a C∞(Ω)-function equal to dist(x, ∂Ω) near ∂Ω and positive on Ω. Restriction to Ω is denoted rΩ (or r+), extension by zero on Ω1 \ Ω is denoted eΩ (or e+). For μ ∈ C with Re μ > −1, Eμ(Ω) denotes the space of functions u such that u = eΩd(x)μv with v ∈ C∞(Ω). The deﬁnition is generalized in
+a distribution sense to lower values of μ. On Ω1 we consider a classical ψdo P of order m ∈ C, with symbol in local coordinates p(x, ξ) ∼ j∈N0 pj(x, ξ) where pj(x, tξ) = tm−j pj (x, ξ). The μ-transmission property was described in [21, Th. 18.2.18]:
+
+Proposition 1. A necessary and suﬃcient condition in order that rΩP u ∈ C∞(Ω) for all u ∈ Eμ(Ω) is that P satisﬁes the μ-transmission condition (in short: is of type μ), namely that
+
+∂xβ ∂ξαpj (x, −N ) = eπi(m−2μ−j−|α|)∂xβ∂ξαpj (x, N ), x ∈ ∂Ω,
+
+(1)
+
+for all j, α, β, where N denotes the interior normal to ∂Ω at x.
+
+In the following theorems we take Ω compact. Deﬁne the special spaces Hpμ(s)(Rn+) (Hörmander’s μ-spaces), for s > Re μ − 1/p :
+
+Hpμ(s) Rn+ = u ∈ H˙ pRe μ−1/p +0 Rn+
+
+r+ OP
+
+ξ
+
++ iξn
+
+μ
+
+u
+
+∈
+
+H
+
+s−Re p
+
+μ
+
+Rn+
+
+. (2)
+
+(The notation used for Lp Sobolev spaces is listed below in Section 1.) The deﬁnition extends to deﬁne Hpμ(s)(Ω) by use of local coordinates. This is the solution space for
+P u = f on Ω:
+
+Theorem 2. Assume that P is elliptic of order m ∈ C and type μ0 ∈ C (mod 1), and
+
+has factorization index μ0, and let s > Re μ0 − 1/p . When u ∈ H˙ pRe μ0−1/p +0(Ω), then
+
+rΩP u
+
+∈
+
+H
+
+s−Re p
+
+m(Ω)
+
+implies
+
+u
+
+∈
+
+Hpμ0(s)(Ω).
+
+The
+
+mapping
+
+rΩ P
+
+:
+
+Hpμ0(s)(Ω)
+
+→
+
+H
+
+s−Re p
+
+m(Ω)
+
+(3)
+
+is Fredholm. Moreover, rΩP u ∈ C∞(Ω) implies u ∈ Eμ0 (Ω), and the mapping rΩP from Eμ0 (Ω) to C∞(Ω) is Fredholm.
+
+The spaces Hpμ(s)(Ω) allow a deﬁnition of boundary values γμ,ju, that generalize the mapping u → ∂xjn (x−n μu)|xn=0, deﬁned for u ∈ Eμ(Rn+) when Re μ > −1.
+
+Theorem 3. When P and s are as in Theorem 2, and μ = μ0−M for a positive integer M , then the following operator is Fredholm:
+
+{rΩ P,
+
+γμ,0,
+
+.
+
+.
+
+.
+
+,
+
+γμ,M −1 }:
+
+Hpμ(s)(Ω)
+
+→
+
+H
+
+s−Re p
+
+m(Ω)
+
+×
+
+Bps−Re μ−j−1/p(∂Ω). (4)
+
+0≤j<M
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+481
+
+Now follow some applications to fractional powers. Let a > 0 and let Pa equal the power Aa of a strongly elliptic second-order diﬀerential operator A with C∞-coeﬃcients on Ω1 (a special case is Pa = (−Δ)a). Then Pa is of order 2a, of type a, and has factorization index a. Theorems 2 and 3 give e.g. the following results in Hölder spaces (where C˙ t(Ω) stands for {u ∈ Ct(Ω1) | supp u ⊂ Ω}):
+Theorem 4. Let u ∈ H˙ pa−1/p +0(Ω) for some 1 < p < ∞ (this holds if u ∈ e+L∞(Ω) when a < 1, u ∈ C˙ a−1+0(Ω) when a ≥ 1). The solutions of
+
+rΩPau = f
+
+(5)
+
+satisfy for t ≥ 0:
+
+f ∈ Ct+0(Ω) =⇒ u ∈ e+d(x)aCt+a−0(Ω) ∩ Ct+2a−0(Ω).
+
+(6)
+
+(For t = 0, f ∈ e+L∞(Ω) suﬃces.) A solution exists under a ﬁnite dimensional linear condition on f . Moreover,
+
+f ∈ C∞(Ω) ⇐⇒ u ∈ e+d(x)aC∞(Ω),
+
+(7)
+
+with Fredholm solvability.
+
+This theorem is concerned with the homogeneous Dirichlet problem for Pa. We can moreover treat a nonhomogeneous Dirichlet problem (8):
+
+Theorem 5. Let u ∈ Hp(a−1)(s)(Ω) with s > a − 1/p . The solutions of
+
+rΩPau = f,
+
+γ0d(x)1−au = ϕ,
+
+(8)
+
+satisfy
+
+f ∈ Ct+0(Ω), ϕ ∈ Ct+a+1(∂Ω) =⇒
+
+u ∈ e+d(x)a−1Ct+a+1−0(Ω) ∩ Ct+2a−0(Ω) + C˙ t+2a−0(Ω).
+
+(9)
+
+(For t = 0, f ∈ e+L∞(Ω) suﬃces.) A solution exists under a ﬁnite dimensional linear condition on {f, ϕ}. Moreover,
+
+f ∈ C∞(Ω), ϕ ∈ C∞(∂Ω) ⇐⇒ u ∈ e+d(x)a−1C∞(Ω),
+
+(10)
+
+with Fredholm solvability.
+
+Ros-Oton and Serra have recently shown in [26] for (5) with Pa = (−Δ)a, 0 < a < 1, that f ∈ L∞ implies u ∈ d(x)aCα for an α < min{a, 1 − a} when Ω is C1,1, by potential
+
+482
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+theoretic methods. Theorem 4 sharpens this result, allows more general operators, and extends it to higher regularity, when Ω is smooth. We are not aware of any published precedents to the other theorems given above. One can also replace the condition in (8) by a Neumann condition γa−1,1u = ψ or more general conditions.
+The theory of μ-transmission ψdo’s presented here provides a missing link between, on one hand, Boutet de Monvel’s theory of boundary value problems for integer-order 0-transmission ψdo’s, and on the other hand the very general boundary value theories of other authors. There is a rich literature; let us for example point to the works of Schulze and coauthors, see e.g. Rempel and Schulze [23], Harutyunyan and Schulze [16] and their references, and the works of Melrose and coauthors, e.g. Melrose [22], Albin and Melrose [1] and their references.
+
+Outline. In Section 1, the relevant function spaces are introduced, including Hörmander’s μ-spaces, along with important order-reducing operators. Section 2 deﬁnes the μ-transmission property and the corresponding boundary behavior for smooth functions. Section 3 recalls the result of Vishik and Eskin. In Section 4 we show the Sobolev mapping properties of μ-transmission operators and deduce the regularity results for solutions of elliptic homogeneous boundary problems. Section 5 deﬁnes the appropriate boundary operators, and analyzes the structure of the solution spaces. In Section 6, solvability of nonhomogeneous elliptic boundary problems is established, with a description of parametrices. Finally in Section 7, consequences are drawn for fractional powers of strongly elliptic diﬀerential operators, and their solvability properties in Hölder spaces.
+
+1. Function spaces
+
+1.1. Lp-Sobolev spaces
+
+The function spaces used in [19] are L2-Sobolev spaces and their anisotropic variants
+
+as introduced in [18], together with a hitherto unpublished interesting case describing a
+
+special boundary behavior adapted to symbols with the μ-transmission property.
+
+In the present paper we generalize this to Lp-Sobolev spaces, mainly of Bessel-potential type, 1 < p < ∞, to which the results of Eskin’s book [7] were extended in [28] and [6].
+
+The notation will be a compromise between the nowadays common style where the
+
+regularity exponent s is an upper index without parentheses, giving room for p as a
+
+lower index (in [18,19,21], a lower index (s) is used), and on the other hand Hörmander’s
+
+notation of indicating by H(Rn+) resp. H˙ (Rn+) the distributions restricted from Rn resp.
+
+supported in Rn+. The spaces are all Banach spaces with the indicated norms.
+
+In the Euclidean space Rn, the points are written x = {x1, . . . , xn} = {x , xn}, Rn± =
+
+{x | xn ≷ 0},
+
+x
+
+=
+
+(1
+
++
+
+|x|2
+
+)
+
+1 2
+
+,
+
+and
+
+we
+
+denote
+
+by
+
+[ξ]
+
+a
+
+smoothed
+
+version
+
+of
+
+|ξ|:
+
+[ξ] ∈ C∞ Rn, R+ ,
+
+[ξ] = |ξ| for |ξ| ≥ 1,
+
+[ξ] ≥ 1 for all ξ. 2
+
+(1.1)
+
+Restriction from Rn to Rn± is denoted r±, extension by zero from Rn± to Rn is denoted e±.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+483
+
+F denotes the Fourier transformation
+
+(F f )(ξ) = fˆ(ξ) = e−ix·ξf (x) dx,
+Rn
+
+deﬁned on the Schwartz space S(Rn) of rapidly decreasing C∞-functions, and extended to distribution in S (Rn) and in function spaces in a well-known way. Note the minus-sign,
+
+standard in the Western literature, whereas there is usually a plus-sign in the deﬁnition
+
+used in the literature originating from Russian and other East-European authors.
+
+We shall consider classical pseudodiﬀerential operators (ψdo’s) P of order m ∈ C; this
+
+means that the symbol has an expansion in homogeneous terms p(x, ξ) ∼
+
+∞ 0
+
+pj
+
+(x,
+
+ξ),
+
+where pj is homogeneous of degree m − j in ξ:
+
+pj (x, tξ) = tm−j pj (x, ξ) = tRe m−j ei Im m log tpj(x, ξ), for t > 0.
+
+(We just take one-step polyhomogeneous symbols here, although [19] allows general order sequences mj with Re mj → −∞.) The operator is deﬁned by
+
+P u = p(x, D)u = OP p(x, ξ) u = (2π)−n eix·ξp(x, ξ)uˆ dξ,
+
+(1.2)
+
+suitably interpreted. Some boundary problems are treated e.g. in [4,11–13]. By truncation
+to Rn±, P deﬁnes P± = r±P e±. For s, t ∈ R and 1 < p < ∞, the Bessel-potential spaces over Rn are deﬁned by
+
+Hps Rn = u ∈ S Rn F −1 ξ suˆ ∈ Lp Rn , with norm u = Hps(Rn) u s = F −1 ξ suˆ Lp(Rn),
+Hps,t Rn = u ∈ S Rn F −1 ξ s ξ tuˆ ∈ Lp Rn , with norm u = Hps,t(Rn) u s,t = F −1 ξ s ξ tuˆ Lp(Rn).
+
+(1.3)
+
+The latter anisotropic spaces are used in [18,12,13,6]; [28] includes other anisotropic
+cases. Note that Hps = Hps,0, and that Hp0 = Lp. The pseudodiﬀerential symbols p(x, ξ) of order m ∈ C are in S1R,0e m(Rn × Rn), hence
+the operators are continuous from Hps(Rn) to Hps−Re m(Rn) for all s ∈ R, as accounted for e.g. in [11]. The continuity extends to the map from Hps,t(Rn) to Hps−Re μ,t(Rn) for all t ∈ R, cf. e.g. [6]. The operators we consider in this paper are scalar.
+From the spaces in (1.3) we deﬁne with a notation extended from [18,19,21]:
+
+H˙ ps,t Rn+ = u ∈ Hps,t Rn supp u ⊂ Rn+ ,
+
+H
+
+s,t p
+
+Rn+
+
+=
+
+u∈D
+
+Rn+
+
+u = r+U for some U ∈ Hps,t Rn ,
+
+(1.4)
+
+484
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+the ﬁrst space is a closed subspace of Hps,t(Rn), and in the second space, homeomorphic to Hps,t(Rn)/H˙ ps,t(Rn−), the norm
+
+u
+
+H
+
+s,t p
+
+(Rn+
+
+)
+
+=
+
+inf
+
+U Hps,t(Rn) u = r+U ,
+
+also denoted u s,t,
+
+is used. H˙ was denoted H˚ in the book [18] and in [19]. In some other texts it is marked
+
+as H0 (e.g. in [11]), or H (e.g. in [7,29,28,6]). When s − 1/p is integer, Triebel’s use of
+
+H˚ in [29] (ﬁrst edition 1978) diﬀers from Hörmander’s original 1963 deﬁnition.
+
+The use of both H and H˙ is practical, since it allows leaving out the indication of
+
+the
+
+domain
+
+Rn+.
+
+We
+
+recall
+
+that
+
+H˙ ps,t(Rn+)
+
+and
+
+H
+
+−s,−t p
+
+(Rn+)
+
+(1/p
+
+= 1 − 1/p) are dual
+
+spaces to one another with respect to an extension of the sesquilinear form (u, v) =
+
+Rn+ u(x)v(x) dx. We shall denote
+
+H˙ ps+ε = H˙ ps+0,
+ε>0
+
+H
+
+s+ε p
+
+=
+
+H
+
+s+0 p
+
+,
+
+ε>0
+
+H˙ ps−ε = H˙ ps−0,
+ε>0
+
+H
+
+s−ε p
+
+=
+
+H
+
+s−0 p
+
+.
+
+ε>0
+
+(1.5)
+
+The notation S˙(Rn+), S˙ (Rn+), will be used for Schwartz functions resp. distributions
+
+supported in Rn+, and S(Rn+), S (Rn+), will be used for Schwartz functions resp. distributions restricted to Rn+. Here S˙(Rn+) (and C0∞(Rn+)) is dense in the spaces H˙ ps,t(Rn+),
+
+and
+
+S (Rn+ )
+
+is
+
+dense
+
+in
+
+H
+
+s,t p
+
+(Rn+).
+
+We shall also need the Besov spaces Bps(Rn), which enter as range spaces for trace
+
+maps, recalling that for 0 < s < 2,
+
+f ∈ Bps Rn
+
+⇐⇒
+
+f
+
+p Lp
+
++
+
+|f (x) + f (y) − 2f ((x + y)/2)|p
+
+|x + y|n+ps
+
+dxdy < ∞;
+
+R2n
+
+and Bps−t(Rn) = (1 − Δ)t/2Bps(Rn) for all t ∈ R. Embedding, interpolation and other properties are found e.g. in Triebel [29].
+
+Let γj denote the trace operator γj: u(x , xn) → Dnj u(x , 0), deﬁned to begin with on
+
+smooth
+
+functions:
+
+it
+
+extends
+
+to
+
+a
+
+continuous
+
+linear
+
+map
+
+γj
+
+:
+
+H
+
+s p
+
+(Rn+)
+
+→
+
+Bps−1/p(Rn−1),
+
+for s > 1/p. It is surjective with a continuous right inverse. In fact, deﬁning the column
+
+vector M = {γ0, . . . , γM−1} for a positive integer M , we have that
+
+M
+
+:
+
+H
+
+s p
+
+Rn+
+
+→
+
+Bps−j−1/p Rn−1
+
+0≤j<M
+
+for s > M − 1/p,
+
+(1.6)
+
+continuous and surjective, having a right inverse (row vector) KM = {K0, . . . , KM−1} (a Poisson operator, cf. [11]), that in addition is continuous from 0≤j<M Bpt−j−1/p(Rn−1)
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+485
+
+to Htp(Rn+) for all t ∈ R. As KM one can for example take the Poisson operator ϕ → u solving the Dirichlet problem for (1 − Δ)M ,
+
+(1 − Δ)M u = 0 in Rn+,
+
+M u = ϕ on Rn−1
+
+(an elementary treatment of the case M = 1 is found in [13, Ch. 9]). We shall here use the closely related choice, cf. (1.1) (e+ is sometimes left out):
+
+KM = {K0, . . . , KM−1}, with
+
+Kj : ϕj
+
+→
+
+(−1)j j!
+
+Fξ−→1 x
+
+ϕˆj
+
+ξ
+
+∂ξjn
+
+ξ
+
++ iξn −1
+
+=
+
+ij j!
+
+xjn
+
+Fξ−→ 1 x
+
+e+r+e−[ξ ]xn ϕˆj ξ
+
+.
+
+(1.7)
+
+It can also be convenient to use (1.7) with [ξ ] replaced by ξ , more closely related to 1 − Δ. Still another choice is given in [18, Th. 2.5.7] (also recalled in [12,13]).
+It is known that there are natural identiﬁcations
+
+H˙ ps Rn+
+
+=
+
+u
+
+∈
+
+H
+
+s p
+
+Rn+
+
+M u = 0 , for M + 1/p > s > M + 1/p − 1;
+
+H˙ ps Rn+
+
+=
+
+H
+
+s p
+
+Rn+
+
+,
+
+for 1/p > s > 1/p − 1 = −1/p .
+
+(1.8)
+
+In the borderline case s = 1/p, H1p/p(Rn+) is strictly larger than H˙ p1/p(Rn+); the latter
+
+carries the norm
+
+u
+
+H
+
+s p
+
++
+
+xn−1/pu Lp . However, C0∞(Rn+) is dense in both of these spaces.
+
+(Cf. [11, (2.15)ﬀ. and its references].)
+
+The deﬁnitions carry over to the manifold situation by use of local coordinates.
+
+1.2. Order-reducing operators
+
+Homeomorphisms between the various spaces play an important role in the theory. The operator OP( ξ μ) deﬁnes homeomorphisms from Hps(Rn) to Hps−Re μ(Rn) for all s ∈ R. Likewise for any μ ∈ C, cf. (1.1),
+
+Ξμ = OP χμ , where χμ = [ξ]μ, deﬁnes homeomorphisms Ξμ: Hps Rn −−∼→ Hps−Re μ Rn , all s ∈ R, with inverse Ξ−μ.
+
+(1.9)
+
+In the following, we can either use ξ , ξ as in [19], or replace them by [ξ], [ξ ] to proﬁt
+from the homogeneity. The operators deﬁned by the two choices have the same mapping
+properties. The explicit formulas in the following will be written with [ξ ], since this is useful in the deﬁnition of Λμ± further below.
+For the spaces deﬁned relative to Rn±, there are several interesting choices. One is the simple family
+
+486
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+χμ+ = ξ + iξn μ, resp. χμ− = ξ − iξn μ, OP ξ ± iξn μ = Ξ±μ
+
+(1.10)
+
+(or, if needed, the corresponding formulas with ξ ). Here χμ+ (resp. χμ−) extends analytically as a function of ξn into C− = {Im ξn < 0} resp. C+ = {Im ξn > 0}. (The imaginary
+halfspaces play the opposite roles in the works [7,28,6] because of the opposite sign in the deﬁnition of F .) Since χμ+ extends analytically to Im ξn < 0, the operator Ξ+μ preserves support in Rn+; hence we have for all s ∈ R that
+
+Ξ+μ : H˙ ps Rn+ −−∼→ H˙ ps−Re μ Rn+ , with inverse Ξ+−μ.
+
+(1.11)
+
+The
+
+adjoint
+
+mapping
+
+is
+
+Ξ−μ ,+
+
+:
+
+H
+
+−s+Re p
+
+μ(Rn+
+
+)
+
+−−∼→
+
+H p−s (Rn+ );
+
+this
+
+shows
+
+for
+
+general
+
+s, p, μ:
+
+Ξ−μ ,+ :
+
+H
+
+s p
+
+Rn+
+
+−−∼→
+
+H
+
+s−Re p
+
+μ
+
+Rn+
+
+,
+
+with inverse Ξ−−,μ+.
+
+(1.12)
+
+Remark 1.1. For s > −1/p , Ξ−μ,+ in (1.12) identiﬁes with r+Ξ−μ e+ (e+ is only deﬁned then). For lower s, the mapping in (1.12) can be understood, besides being a speciﬁc
+adjoint, as the extension by continuity from the operator deﬁned on the dense subspace S(Rn+) (as noted in [15, p. 174]). There is also a third formulation worth mentioning, used in [7], namely that for any extension operator : Hsp(Rn+) → Hps(Rn) with r+ = Id,
+
+Ξ−μ,+f = r+Ξ−μ f.
+
+(1.13)
+
+This holds since r+Ξ−μ g = 0 for any distribution g supported in Rn−, using that since χμ− extends analytically to Im ξn > 0, the operator Ξ−μ preserves support in Rn−. The formula (1.13) is independent of the choice of .
+
+The symbols χμ± are not truly pseudodiﬀerential (although the OP(χμ±) have a good meaning by Lizorkin’s criterion, cf. e.g. [11]), since the higher ξ -derivatives do not have the correct fall-oﬀ for |ξ| → ∞. But there exists another choice with true ψdo symbols given in [11] (inspired from the unpublished [9]), that also has the above mapping properties. Deﬁne
+
+λμ± = λ1± μ,
+
+λ1− = ξ ψ
+
+ξn a[ξ ]
+
+− iξn,
+
+λ1+ = λ1−,
+
+(1.14)
+
+with ψ ∈ S(R) having ψ(0) = 1 and supp F−1ψ ⊂ R−. We set ψ(±∞) = 0, then ψ is C∞ on the extended real axis. Here the constant a > 0 is chosen so large that the negative powers are well-deﬁned, cf. [11, pp. 317–322]. The functions λμ+ (resp. λμ−) extend analytically into {Im ξn < 0} resp. {Im ξn > 0}. Denoting OP(λμ±) = Λμ±, we have for all s ∈ R that
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+487
+
+Λμ+: H˙ ps Rn+ −−∼→ H˙ ps−Re μ Rn+ , with inverse Λ−+μ,
+
+Λμ−,+
+
+:
+
+H
+
+s p
+
+Rn+
+
+−−∼→
+
+H
+
+s−Re p
+
+μ
+
+Rn+
+
+,
+
+with inverse Λ−−μ,+;
+
+(1.15)
+
+here Λμ−,+ is the adjoint of Λ+μ : H˙ p−s+Re μ(Rn+) −−∼→ H˙ p−s(Rn+), and again there are interpretations as in Remark 1.1. The proofs are given in [11] (cf. (4.11), (4.24) there) using
+that for a taken suﬃciently large in (1.14) (as we assume),
+
+η±μ (ξ) = λ1±(ξ)/χ1±(ξ) μ = 1 + q±μ (ξ)
+
+with
+
+q±μ (ξ)
+
+≤
+
+1 ,
+
+2
+
+(1.16)
+
+analytic for Im ξn ≶ 0; they deﬁne ψdo’s η±μ (ξ , Dn) = OPn(η±μ (ξ , ξn)) of order 0 that are homeomorphisms in L2(R), uniformly in ξ . Since they preserve support in R± respectively (and the inverses do so too), r±η±μ (ξ , Dn)e± are homeomorphisms in L2(R±), respectively. This allows transferring the mapping properties of the Ξ±μ to the Λμ±, cf. [11]. The operators Ξ+μ , Λμ+ and η+μ (ξ , Dn) belong to the so-called “plus-operators” of Eskin [7], and the operators Ξ−μ , Λμ− and η−μ (ξ , Dn) belong to the “minus-operators”. The symbols are said to be “plus-symbols” resp. “minus-symbols”. (The sub-indices ± here
+should not be confounded with the ± used to indicate truncation — added on as an
+extra index.)
+In addition to what was shown in [11], we observe:
+
+Lemma 1.2. Let Y+μ = OP(η+μ (ξ)), then Y+μ,+ = r+Y+μe+ is a homeomorphism of Hsp,t(Rn+) onto itself for all s, t ∈ R. For any s, t ∈ R,
+
+r+Ξ+μ u
+
+H
+
+s,t p
+
+(Rn+
+
+)
+
+r+Λμ+u
+
+. H
+
+s,t p
+
+(Rn+
+
+)
+
+(1.17)
+
+The equivalence also holds if [ξ ] is replaced by ξ in the deﬁnition of Ξ+μ .
+
+Proof. The proof needs some care, because Y+μ is not a standard ψdo on Rn; however it is so at the one-dimensional level where we just use the deﬁnition with respect to ξn. Here the Boutet de Monvel calculus on R shows that r+η+μ (ξ , Dn)e+ is a homeomorphism in Hm 2 (R+) with inverse r+ OPn((η+μ (ξ))−1)e+ for all m ∈ Z, since the left-over operators such as G+(OPn(η+μ ))G−(OPn(η+−μ)) arising in the composition have the G−-factor equal to 0, hence vanish. The norms are bounded in ξ . Interpolation extends the home-
+omorphism property to all real s.
+Estimating the norms simply by Fourier transformation, we ﬁnd for p = 2 that the full operator r+Y+μe+ is a homeomorphism in Hs2,t(Rn+) with inverse r+(Y+μ)−1e+. Moreover, the homeomorphism property holds in H˙ 2s,t(Rn+) because the symbol is a plus-symbol. Both Y+μ and (Y+μ)−1 = Y+−μ are continuous in Hps,t(Rn) by Lizorkin’s criterion. The L2-calculations apply in particular to functions functions in S˙(Rn+), showing that this space is mapped onto itself by r+Y+μe+. This extends to the H˙ ps,t(Rn+) scale by closure and to the Hsp,t(Rn+) scale by duality, completing the proof of the homeomorphism property.
+
+488
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Now
+r+Λμ+u = r+Y+μΞ+μ u = r+Y+μe+r+Ξ+μ u,
+where the corresponding term with e−r− in the middle vanishes since r−Ξ+μ u does so. Then in view of the homeomorphism property of r+Y+μe+,
+Λμ+u s,t ≤ C Ξ+μ u s,t.
+Similarly, an inequality the other way follows by use of Y+−μ. For the last statement, the operators OP(([ξ ] + iξn)μ) and OP(( ξ + iξn)μ) can be
+compared in a similar way, since (([ξ ]+iξn)/( ξ +iξn))μ = (1+([ξ ]− ξ )/( ξ +iξn))μ is an invertible plus-symbol of order 0. 2
+
+It is important to observe that the operators Λm + , m ∈ Z, that act homeomorphically in the scale H˙ ps(Rn+), can also be applied to the scale Hsp(Rn+) for s > −1/p after truncation, Λm +,+ = r+Λm + e+, since they belong to the Boutet de Monvel calculus. But here they
+must in general be supplied with trace or Poisson operators to deﬁne homeomorphisms.
+E.g. for integer m > 0,
+
+Λm +,+
+m
+
+:
+
+H
+
+s p
+
+Rn+
+
+−−∼→
+
+H
+
+s−m p
+
+Rn+
+
+×
+
+Bps−j−1/p Rn−1 ,
+
+0≤j<m
+
+when s > m − 1/p
+
+(1.18)
+
+(shown in [11, Th. 4.3]); it is an elliptic boundary value problem. A similar mapping property holds with Ξ+m instead of Λm + .
+The construction of these operators extends to the manifold situation, by the method described in [11]. Let Ω be a compact n-dimensional C∞ manifold with interior Ω and boundary ∂Ω = Σ, and let E be a Hermitean C∞ vector bundle over Ω of dimension N ,
+its restriction to Σ denoted E . We can assume that Ω is smoothly embedded in a
+compact boundaryless n-dimensional manifold Ω1 (e.g. the double of Ω) such that Σ is the boundary of Ω there, and we assume that E is the restriction to Ω of a smooth
+vectorbundle E1 given over Ω1. Then there is a standard way to generalize the deﬁnitions of Sobolev spaces over Rn, Rn±, to spaces of distributions over Ω, Σ, Ω1, valued in the bundles, by use of local trivializations. The deﬁnition of ψdo’s likewise generalizes to the
+manifold and vector bundle situation. In the present paper, our application deals with
+scalar ψdo’s, so we shall drop the vector bundle aspect to simplify notations, but declare
+at this point that the constructions of order-reducing operators generalize to bundles as in [11], easily taken up when needed. We denote by rΩ, or for brevity r+, the restriction from Ω1 to Ω, and by eΩ or e+ the extension from Ω by zero on Ω1 \ Ω. For an operator P over Ω1, we denote rΩP eΩ (also called e+P r+) by PΩ or P+.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+489
+
+Theorem 1.3. There exists a family of elliptic ψdo’s Λ+(μ) on Ω1, classical of order μ and with principal symbol λμ+ at the boundary of Ω, preserving support in Ω and deﬁning homeomorphisms
+
+Λ+(μ): H˙ ps(Ω) −−∼→ H˙ ps−Re μ(Ω),
+
+(1.19)
+
+for all s ∈ R, with inverses (Λ+(μ))−1 likewise preserving support in Ω. The family of adjoints are classical elliptic operators Λ(−μ), with principal symbol λ−μ at the boundary of Ω, such that Λ−(μ,)+ = r+Λ−(μ)e+ are homeomorphisms
+
+Λ−(μ,)+:
+
+H sp (Ω )
+
+−−∼→
+
+H
+
+s−Re p
+
+μ(Ω),
+
+for all s ∈ R, with inverses ((Λ−(μ))−1)+.
+
+(1.20)
+
+Proof. The construction is explained in detail in [11, Sections 4 and 5], which we use with
+minor adaptations that we shall explain here. We provide Ω1 and Σ with Riemannian metrics, such that a tubular neighborhood Ω2 of Σ in Ω1 is isometric with Σ× ]−2, 2[; the coordinates in Σ resp. ]−2, 2[ will be denoted x and xn, and we write Σc = Σ× ]−c, c[ for c ≤ 2. Fix μ. In the deﬁnition of λμ± (1.14) we can insert an extra parameter ζ ≥ 0 (called μ in [11]), deﬁning
+
+λμ±,ζ = λ1±,ζ μ,
+
+λ1−,ζ = ξ , ζ ψ ξn/a ξ , ζ
+
+− iξn,
+
+λ1+,ζ = λ1−,ζ . (1.21)
+
+Now the construction of the ψdo Λ+(μ,)ζ deﬁned on Ω1 is carried out similarly to the description in [11] around (5.1), using λμ+,ζ near the boundary and [(ξ, ζ)]μ at a distance from the boundary:
+
+λ+(μ,)ζ = λ1+,ζ μα(xn) (ξ, ζ) μ(1−α(xn))
+
+on Σ2, extended by [(ξ, ζ)]μ on the rest of Ω1; here α(xn) ∈ C∞(R, [0, 1]) equal to
+
+1
+
+on
+
+[−1, 1]
+
+and
+
+0
+
+on
+
+the
+
+complement
+
+of
+
+[−
+
+3 2
+
+,
+
+3 2
+
+].
+
+The
+
+symbol
+
+extends
+
+analytically
+
+to
+
+Im ξn < 0. The operator Λ+(μ,)ζ is pieced together from this by use of a ﬁnite partition
+
+of unity subordinate to a covering of Ω1 by open sets in Σ 3 and open sets in Ω1 \ Σ 1 ,
+
+4
+
+2
+
+whereby Λ+(μ,)ζ preserves support in Ω.
+
+The construction with μ replaced by −μ gives the operator Λ+(−,ζμ), likewise elliptic on
+
+Ω1 and preserving support in Ω. Now
+
+Λ+(μ,)ζ Λ+(−,ζμ) = I + U1(ζ),
+
+Λ+(−,ζμ)Λ+(μ,)ζ = I + U2(ζ),
+
+(1.22)
+
+with U1, U2 of order −1, hence compact operators in Hpt(Ω1) for all t, p; they also preserve support in Ω. Standard elliptic theory shows that Λ+(μ,)ζ is a Fredholm operator from
+
+490
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Hps(Ω1) to Hps−Re μ(Ω1) for all s, p, with a ﬁnite dimensional C∞ kernel and range
+complement independent of s, p. We have in particular that Λ+(μ,)ζ maps H˙ ps(Ω) into H˙ ps−Re μ(Ω), and Λ+(−,ζμ) maps the other way, with (1.22) valid there, so Λ+(μ,)ζ is Fredholm between those spaces, with a ﬁnite dimensional C∞ kernel K1 and range complement
+
+K2 independent of s, p. The idea with the parameter ζ is that we can apply the calculus
+
+of [12] (just for ψdo symbols), where our symbols are of regularity ν = +∞ as functions
+
+of
+
+(ξ, ζ);
+
+then
+
+the
+
+norms
+
+of
+
+U1
+
+and
+
+U2
+
+are
+
+≤
+
+1 2
+
+for
+
+ζ
+
+suﬃciently
+
+large,
+
+so
+
+that
+
+I
+
++ U1
+
+and I + U2 are invertible, and it follows that Λ+(μ,)ζ over Ω is invertible for large ζ.
+
+Since it depends continuously on ζ, it follows that Λ+(μ,)0 has index 0. For p = 2, the
+
+kernel and range complement are spanned by orthonormal systems of smooth functions
+
+{ϕ1, . . . , ϕN } and {ψ1, . . . , ψN } supported in Ω, and when we deﬁne the order −∞
+
+operator Ψ by Ψ u =
+
+N j,k=1
+
+ψj
+
+(u,
+
+ϕk
+
+),
+
+Λ+(μ) = Λ+(μ,)0 + Ψ,
+
+has the desired bijectiveness property.
+An operator Λ−(μ,)+ with the desired properties is now found as the adjoint of Λ(+μ) in (1.19), in the same way as for Rn+. 2
+
+For negative s in (1.20) the operator is understood as in Remark 1.1. The assertion (1.18) generalizes to these operators. More properties are shown in Example 2.8 later.
+It is the introduction of these ψdo’s that allows a relatively elegant deduction of solvability properties for the equations we consider in this paper. They had not been found when [19] was written (and there is a remark there that such operators would be helpful).
+
+Occasionally we shall refer to the spaces Ct(Ω) and Ct(Ω) for t ≥ 0; in integer cases
+they are the usual spaces of functions with continuous derivatives up to order t on Ω
+resp. Ω, and when t = k + s, k ∈ N0, s ∈ ]0, 1[, they are the Hölder spaces also denoted Ck,s(Ω) resp. Ck,s(Ω). We denote ε>0 Ct+ε = Ct+0, and ε>0 Ct−ε = Ct−0 if t > 0. There are embeddings
+
+Htp(Ω) ⊂ Ct−n/p−0(Ω) when t > n/p,
+
+C t+0 (Ω )
+
+⊂
+
+H
+
+t p
+
+(Ω)
+
+when t ≥ 0;
+
+(1.23)
+
+in the ﬁrst embedding, “−0” can be left out if t − n/p is not integer, in the second we assume Ω compact. We shall denote {u ∈ Ct(Ω1) | supp u ⊂ Ω} = C˙ t(Ω).
+
+1.3. Hörmander’s μ-spaces
+
+In the notes [19] there are introduced (for p = 2) the following spaces that mix the
+features of the supported and the restricted Sobolev spaces in a particular way by use of the mappings Ξ+μ . (Actually, [19] uses ( D + ∂n)μ instead of Ξ+μ = ([D ] + ∂n)μ; they are equivalent.)
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+491
+
+Deﬁnition 1.4. Let μ ∈ C, and let s > Re μ−1/p . An element u ∈ S˙ (Rn+) is in Hpμ(s)(Rn+) if and only if Ξ+μ u ∈ H˙ p−1/p +0(Rn+) and
+
+r+Ξ+μ u
+
+< ∞; H
+
+s−Re p
+
+μ (Rn+ )
+
+(1.24)
+
+the topology is deﬁned by the norm (1.24), also denoted u μ(s). In this deﬁnition, Ξ+μ can be replaced by Λμ+.
+
+The last statement is justiﬁed by the properties shown in Section 1.2, in particular
+Lemma 1.2. The condition Ξ+μ u ∈ H˙ p−1/p +0(Rn+) can also be expressed as
+
+u ∈ H˙ pRe μ−1/p +0 Rn+ ,
+
+in view of the homeomorphism properties (1.11). Note that the inequality in (1.24) implies, since s − Re μ > −1/p , that the elements satisfy for 0 < ε < min{1, s − Re μ + 1/p }:
+
+Ξ+μ u
+
+∈
+
+H
+
+ε−1/p p
+
+Rn+
+
+H˙ pε−1/p Rn+ ,
+
+(1.25)
+
+using the identiﬁcation of r+v and e+r+v in spaces with −1/p < s < 1/p, cf. (1.8). So the norm (1.24) is stronger than the norm on the spaces in (1.25), which need not be
+mentioned in the deﬁnition of the topology. If s < Re μ + 1/p, the condition in (1.24) reduces to Ξ+μ u ∈ H˙ ps−Re μ(Rn+); therefore
+
+Hpμ(s) Rn+ = H˙ ps Rn+ when −1/p < s − Re μ < 1/p,
+
+(1.26)
+
+and C0∞(Rn+) is dense in the space. When s is larger, (1.24) gives a nontrivial restriction on u.
+We can then extend the deﬁnition to all s, consistently with the above:
+
+Deﬁnition 1.5. Let μ ∈ C, and let s < Re μ + 1/p. Then we deﬁne
+
+Hpμ(s) Rn+ = H˙ ps Rn+ .
+
+(1.27)
+
+Note that H˙ ps(Rn+) ⊂ Hpμ(s)(Rn+) holds for all s and μ.
+
+Example 1.6. Let μ = m ∈ N and s > m − 1/p . Then u ∈ Hpm(s) if and only if
+
+u
+
+∈
+
+H˙ pm−1/p
+
++0
+
+and
+
+r+([D
+
+]+iDn)mu
+
+∈
+
+H
+
+s−m p
+
+.
+
+The
+
+ﬁrst
+
+condition
+
+implies
+
+that
+
+mu = 0,
+
+and
+
+the
+
+second
+
+condition
+
+holds
+
+if
+
+u
+
+∈
+
+H
+
+s p
+
+.
+
+The
+
+second
+
+condition
+
+can
+
+also
+
+be
+
+written
+
+Λm +,+u ∈ Hsp−m, and in view of the ellipticity of the system {Λm +,+, m} in the Boutet de
+
+Monvel calculus, cf. (1.18), we see that u must lie in Hsp.
+
+492
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+This
+
+shows
+
+that
+
+Hpm(s)
+
+=
+
+{u
+
+∈
+
+H
+
+s p
+
+|
+
+mu = 0}. Note that for s > m + 1/p, the space
+
+is
+
+a
+
+proper
+
+subspace
+
+of
+
+H
+
+s p
+
+,
+
+diﬀerent
+
+from
+
+H˙ ps.
+
+This example is still within the Boutet de Monvel calculus; the novelty of the spaces Hpμ(s) lies more in what happens for noninteger μ.
+The following observation will be very useful:
+
+Proposition 1.7. Let s > Re μ − 1/p . The mapping r+Ξ+μ is a homeomorphism of
+
+Hpμ(s)(Rn+)
+
+onto
+
+H
+
+s−Re p
+
+μ
+
+(Rn+)
+
+with
+
+inverse
+
+Ξ+−μe+.
+
+In
+
+particular,
+
+Hpμ(s)(Rn+)
+
+is
+
+a
+
+Ba-
+
+nach space.
+
+The analogous result holds with Λμ+-operators, and with Ξ+μ -operators where [ξ ] is
+
+replaced by ξ .
+
+Proof. By deﬁnition, r+Ξ+μ is continuous.
+
+Surjectiveness
+
+is
+
+seen
+
+as
+
+follows:
+
+Let
+
+v
+
+∈
+
+H
+
+s−Re p
+
+μ,
+
+and
+
+set
+
+w
+
+=
+
+Ξ+−μe+v.
+
+Then
+
+Ξ+μ w
+
+=
+
+Ξ+μ Ξ+−μe+v = e+v. Since s − Re μ > −1/p , e+v ∈ H˙ p−1/p +0, so Ξ+μ w ∈ H˙ p−1/p +0 as
+
+required in Deﬁnition 1.4. Moreover,
+
+r+Ξ+μ w = r+Ξ+μ Ξ+−μe+v = r+e+v = v
+
+is
+
+in
+
+H
+
+s−Re p
+
+μ
+
+by
+
+hypothesis,
+
+so
+
+v
+
+is
+
+the
+
+image
+
+of
+
+w
+
+∈
+
+Hpμ(s).
+
+The injectiveness. When u satisﬁes the hypotheses of Deﬁnition 1.4, then u is recon-
+
+structed from v = r+Ξ+μ u as follows: Since Ξ+μ u ∈ H˙ p−1/p +0(Rn+), we can write
+
+Ξ+μ u = e+r+Ξ+μ u + e−r−Ξ+μ u.
+
+(1.28)
+
+Here r−Ξ+μ u = 0, since Ξ+μ preserves support in Rn+. Hence
+
+u = Ξ+−μΞ+μ u = Ξ+−μe+r+Ξ+μ u = Ξ+−μe+v.
+
+Thus
+
+r+Ξ+μ
+
+is
+
+an
+
+isometry
+
+of
+
+Hpμ(s)
+
+onto
+
+H
+
+s−Re p
+
+μ,
+
+with
+
+inverse
+
+Ξ+−μe+.
+
+In
+
+particular,
+
+Hpμ(s) is a Banach space.
+
+The proof for Λμ+ and for the other version of Ξ+μ goes in the same way. 2
+
+The spaces can also be deﬁned in the manifold situation. By use of the operators Λ±(μ) introduced in Theorem 1.3, we can formulate the deﬁnition as follows:
+
+Deﬁnition 1.8. Let μ ∈ C. When s > Re μ − 1/p , then Hpμ(s)(Ω) consists of the elements u ∈ E˙ (Ω) such that Λ+(μ)u ∈ H˙ p−1/p +0(Ω) and
+
+rΩ Λ+(μ)u
+
+H
+
+s−Re p
+
+μ
+
+(Ω
+
+)
+
+<
+
+∞;
+
+it is a Banach space with the norm (1.29), also denoted u μ(s).
+
+(1.29)
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+493
+
+When s < Re μ + 1/p, we deﬁne
+
+Hpμ(s)(Ω) = H˙ ps(Ω).
+
+(1.30)
+
+Here the space E˙ (Ω) denotes the distributions supported in Ω (compactly supported
+in Ω, if Ω is allowed to be merely paracompact). Again we observe that the norm in (1.29) is stronger than the norm in H˙ pε−1/p (Ω) for small ε, and that the space equals H˙ ps(Ω) when −1/p < s − Re μ < 1/p, so that the last part of the deﬁnition allowing lower values of s is consistent with the ﬁrst part. Also Proposition 1.7 extends. We can here take Λ+(−μ) = (Λ+(μ))−1.
+There are of course embeddings
+
+Hpμ(s) ⊂ Hpμ(s ) for s < s.
+
+(1.31)
+
+On the other hand, embeddings between spaces with diﬀerent μ, μ do not hold in general. An exception is when μ − μ is integer, see Proposition 4.3 later.
+The structure of the spaces will be further described below, particularly their importance for ψdo’s with the transmission property of type μ.
+
+Remark 1.9. In [19], H2μ(s)(Ω) is deﬁned as the completion of Eμ(Ω) in the topology
+
+deﬁned by the seminorms u →
+
+r+P u
+
+, H
+
+s−Re 2
+
+m
+
+(Ω)
+
+where
+
+P
+
+runs
+
+through
+
+the
+
+operators
+
+of type μ and any order m ∈ C. The proof that this is equivalent with Deﬁnition 1.4
+
+(when localized) ﬁlls a large section. It is here covered by Proposition 4.1 and Theorem 4.2
+
+below.
+
+2. The μ-transmission condition
+
+The μ-transmission condition is deﬁned and characterized in [21] at the end of Section 18.2. Since the explanation is quite compressed there, we have incorporated some of the original detailed deductions from [19] here, slightly modiﬁed if necessary. (We remark that the conventions in [21] are a little diﬀerent from here: The space called Cμ∞ there on pp. 110–111 is the same as E−μ−1 here, and μ in Th. 18.2.18 there corresponds to −μ in Deﬁnition 2.5 below.)
+Let Ω1 be a ﬁxed paracompact C∞ manifold, and let Ω be an open subset of Ω1 with a C∞ boundary ∂Ω. Our purpose is to study boundary problems for the pseudodiﬀerential operator P in Ω. This means that we shall look for distributions u with support in Ω such that P u = f is given in Ω and u satisﬁes some conditions on ∂Ω in addition. In particular we shall make a detailed study of the regularity of u at the boundary when f and the boundary data are smooth. Examples involving α-potentials due to M. Riesz and extended in part by Wallin show that one should not expect u to be smooth up to the boundary but that one has to expect u to behave as the distance to the boundary raised to some power. This leads us to deﬁne a family of spaces of distributions Eμ as follows.
+
+494
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Deﬁnition 2.1. If Re μ > −1 and if d is a real valued function in C∞(Ω1) such that
+
+Ω = x d(x) > 0
+
+(2.1)
+
+and d vanishes only to the ﬁrst order on ∂Ω, then Eμ(Ω) consists of all functions u such that u = 0 in Ω and u = dμv in Ω for some v ∈ C∞(Ω).
+For lower values of Re μ, Eμ is deﬁned successively so that Eμ−1 is always the linear hull of the spaces DEμ when D varies over the ﬁrst order diﬀerential operators with C∞
+coeﬃcients.
+
+This deﬁnition is independent of the choice of d, for if d1, d2 are two functions with the required properties, the quotient d1/d2 is positive and inﬁnitely diﬀerentiable.
+To justify the second part of the deﬁnition we note that if D is a ﬁrst order diﬀerential operator with C∞ coeﬃcients, and if Re μ > 0, then DEμ ⊂ Eμ−1, for D(dμv) = dμ−1V for some V ∈ C∞. The linear hull of the spaces DEμ when D varies is in fact equal to Eμ−1. It is suﬃcient to prove that it contains any element in Eμ−1 with support in a coordinate patch where Ω is deﬁned by xn > 0. Then we can take D = ∂/∂xn, noting that if v ∈ C∞ then
+xn
+tμ−1v x , t dt = xμnV (x),
+0
+where
+1
+V (x) = tμ−1v x , xnt dt
+0
+is a C∞ function. If u = xμn−1v and U = xμnV χ, both functions being deﬁned as 0 when xn < 0, and χ ∈ C0∞ is 1 in a neighborhood of supp u, then u = ∂U/∂xn is a C∞ function on Rn+ with support in xn ≥ 0, so u ∈ ∂Eμ/∂xn + Eμ. It is thus legitimate to deﬁne Eμ successively for decreasing Re μ as indicated.
+The spaces Eμ so obtained have the local property that u ∈ Eμ(Ω) and ϕ ∈ C∞(Ω1) implies that ϕu ∈ Eμ(Ω). In fact, if D again denotes a ﬁrst order diﬀerential operator we have
+
+ϕDEμ+1 ⊂ DϕEμ+1 + Eμ+1 ⊂ DEμ+1 + Eμ ⊂ Eμ,
+where we have assumed that the assertion is already proved with μ replaced by μ+1. The spaces Eμ are thus determined by local properties. Inside the set, the condition u ∈ Eμ only means that u is a C∞ function.
+To determine the meaning of the condition u ∈ Eμ at a boundary point we consider the case when u has compact support in a coordinate patch where Ω is deﬁned by the condition xn > 0.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+495
+
+Remark 2.2. It will be useful to recall some formulas for power functions in one variable t and their Fourier transforms. Denote as in [19]
+
+Iμ(t) = tμ/Γ (μ + 1) for t > 0,
+
+0
+
+for t ≤ 0,
+
+(2.2)
+
+when Re μ > −1; it is called χμ+(t) in [20, Section 3.2]. It is shown there that the distribution Iμ extends analytically from Re μ > −1 to μ ∈ C. (For negative integers, I−k = δ0k−1.) Moreover, [19] uses the notation (z±)a for the boundary values of za from the half-planes C± = {z ∈ C | Im z ≷ 0}, deﬁned to be real and positive on the positive real axis (they are denoted (z ± i0)a in [20]). Explicitly,
+
+z+ a =
+
+za |z|aeiπa
+
+for z > 0, for z < 0;
+
+z− a =
+
+za |z|ae−iπa
+
+for z > 0, for z < 0.
+
+(2.3)
+
+Then, cf. [20, Ex. 7.1.17], Iμ(t) has the Fourier transform
+
+Ft→τ I μ = e−iπ(μ+1)/2 τ − −μ−1.
+
+(2.4)
+
+We also note that when σ > 0, translation by −iσ gives
+
+e−iπ(μ+1)/2F −1(τ − iσ)−μ−1 = F −1(σ + iτ )−μ−1 = Iμe−tσ.
+
+(2.5)
+
+Lemma 2.3. An element u ∈ E (Rn) belongs to Eμ(Rn+), if and only if u vanishes when xn < 0 and one can ﬁnd u0, u1, . . . ∈ C0∞(Rn−1) such that for every N
+
+N −1
+uˆ(ξ) − (ξn − i)−μ−j−1uˆj ξ
+0
+
+= O |ξ|− Re μ−N−1 ,
+
+ξ → ∞.
+
+(2.6)
+
+Conversely, given such u0, u1, . . . one can ﬁnd u ∈ Eμ(Rn+) satisfying this condition. Here the argument of ξn − i is chosen so that it tends to 0 when ξn → +∞.
+
+Proof. Any element u ∈ Eμ can be written u = v + ∂w/∂xn where v and w belong to Eμ+1. If the necessity of (2.6) has been proved when μ is replaced by μ + 1 it follows therefore for μ. Hence we may assume that Re μ > 0, thus u = vxμn when xn > 0, where v ∈ C0∞(Rn). By forming a Taylor expansion of vexn we can write for every N
+N
+v = e−xn vj x xjn + RN (x)
+0
+where vj ∈ C0∞(Rn−1) and RN (x) = O(xNn ) when xn → 0, RN (x) = O(e−xn/2) when xn → ∞. Set RN0 (x) = e+r+RN (x). Then RN0 (x)xμn has integrable derivatives of order N ,
+
+496
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+so the Fourier transform is O(|ξ|−N ). Now
+
+∞
+
+uˆ =
+
+vˆj ξ Fxn→ξn e+r+e−xn xμn+j + Fx→ξ RN0 (x)xμn .
+
+0
+
+By (2.5), Fxn→ξn (e+r+e−xn xμn+j ) = Γ (μ + j + 1)e−iπ(μ+j+1)/2(ξn − i)−μ−j−1, so if we set
+
+uj = vj Γ (μ + j + 1)e−πi(μ+j+1)/2,
+
+(2.7)
+
+it follows that (2.6) holds with the error term O(|ξ|−N ). Taking a few additional terms
+
+in the left hand side of (2.6) and noting that they can all be estimated in terms of the
+
+quantity on the right, we thus conclude that (2.6) is valid.
+
+On the other hand, if u satisﬁes (2.6) we obtain with vj deﬁned by (2.7) that u −
+
+e−xn
+
+N 0
+
+−1
+
+vj
+
+xjn+μ
+
+will
+
+be
+
+arbitrarily
+
+smooth
+
+if
+
+N
+
+is
+
+large.
+
+This
+
+proves
+
+the
+
+suﬃciency
+
+of (2.6). To prove the last statement we again assume that Re μ > 0, take χ ∈ C0∞(R)
+
+equal to 1 when |xn| < 1 and deﬁne
+
+u(x) = 0, xn ≤ 0,
+
+∞
+u(x) = e−xn vj x xμn+j χ(xnaj ),
+0
+
+xn > 0,
+
+where aj is chosen so large that the derivatives of the j-th term of order ≤ j are all ≤ 2−j. This is possible since (xnaj)ν χ(k)(xnaj) is bounded uniformly in xn and aj if
+Re ν ≥ 0. This completes the proof. 2
+
+The particular case where μ is an integer is of special importance. When μ ≥ 0 the space Eμ then consists of all functions in C∞(Ω) which vanish to the order μ at the boundary (that is, the derivatives of order < μ vanish there), extrapolated by 0 outside. When μ < 0 we have the sum of a function in C∞(Ω) extrapolated as 0 in the complement of Ω, and multiple layers with C∞ densities and of order < −μ on ∂Ω. This is the only case when Eμ contains elements supported by ∂Ω; in other words, the restriction of an element in Eμ to Ω determines it uniquely except when μ is a negative integer.
+
+Remark 2.4. It was convenient in the proof of Lemma 2.3 to work with powers of ξn − i
+instead of powers of ξn, and one could also work with powers of ξn − iσ with a σ > 0, e.g. σ = [ξ ]; however (ξn−)a are more convenient in some applications. In terms of these functions we can rewrite (2.6) in the form
+
+N −1
+
+uˆ(ξ) −
+
+ξn− −μ−j−1uˆj ξ
+
+0
+
+= O |ξ|− Re μ−N−1 ,
+
+ξ → ∞, |ξn| > 1,
+
+(2.8)
+
+where uj is a linear combination of u0, . . . , uj with coeﬃcient 1 for uj. Namely, insert
+
+Taylor
+
+expansions
+
+(z
+
+−
+
+i)a
+
+=
+
+(z−)a
+
++
+
+(−i)a(z−)a−1
+
++
+
+(−i)2
+
+1 2
+
+a(a
+
+−
+
+1)(z−)a−2
+
++
+
+·
+
+·
+
+·
+
+of
+
+the
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+497
+
+terms (ξn − i)−μ−j−1, and regroup the resulting sums. Thus the uj occurring in (2.8) are in one to one correspondence with the uj in (2.6) and can be chosen arbitrarily.
+In particular, when μ = 0, so that Eμ(Ω) = eΩC∞(Ω),
+
+u0 = u0 = −iγ0u,
+
+(2.9)
+
+where γ0u is the boundary value from Ω.
+
+Consider a classical pseudodiﬀerential operator P in Ω1 of order m ∈ C. Recall the notation for derivatives of the symbol in local coordinates:
+
+p((αβ))(x, ξ) = ∂ξα∂xβp(x, ξ).
+
+(2.10)
+
+The ﬁrst question to investigate is when P maps Eμ into C∞(Ω) (more precisely, the restrictions to Ω belong to C∞(Ω)). By the pseudo-local property of ψdo’s we know that P u ∈ C∞(Ω) for all u ∈ Eμ. We shall therefore only expect a restriction on P at points on ∂Ω. Of course it is no restriction to assume P compactly supported when studying a
+regularity problem.
+
+Deﬁnition 2.5. A classical pseudodiﬀerential operator of order m in Ω1 is said to satisfy the μ-transmission condition relative to Ω (in short: be of type μ), when the symbol in any local coordinate system satisﬁes
+
+pj
+
+(α) (β)
+
+(x,
+
+−N )
+
+=
+
+eπi(m−2μ−j
+
+−|α|)pj
+
+(α) (β)
+
+(x,
+
+N ),
+
+x ∈ ∂Ω,
+
+for all j, α, β, where N denotes the interior normal of ∂Ω at x.
+
+(2.11)
+
+Theorem 2.6. Let P be a classical compactly supported pseudodiﬀerential operator of order m in Ω1. In order that rΩP u ∈ C∞(Ω) for all u ∈ Eμ(Ω), it is necessary and suﬃcient that P satisﬁes the μ-transmission condition.
+Since every polynomial satisﬁes this hypothesis with μ = 0 it follows from the rules for coordinate changes that (2.11) is invariant under any change of variables. In the proof of the theorem we may therefore use local coordinates such that Ω is deﬁned by the inequality xn > 0. The statement is local, so it is enough to consider P u for u ∈ Eμ(Rn+) with compact support in the coordinate patch U ⊂ Rn. After modifying P by an operator with symbol 0 we may assume that P is a compactly supported operator in U .
+A key observation is the following elementary lemma.
+Lemma 2.7. Let q be a positively homogeneous function on R of degree σ, Re σ < −1. For t > 0 we set ϕσ(t) = t−σ−1 if σ is not an integer and ϕσ(t) = t−σ−1 log t if σ is an
+
+498
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+integer. Then
+
+eitτ q(τ ) dτ, t > 0,
+|τ |>1
+is on R+ equal to the sum of a function in C∞(R+) and Cϕσ(t). Here C = 0 if and only if q(−1) = eiπσq(1), that is, if q(τ ) = q(1)(τ +)σ.
+Proof. Let γ+ (γ−) consist of the real axis with the interval (−1, 1) replaced by a semicircle in the upper (lower) half plane. Then the two functions
+
+τ ± σeitτ dτ − τ ± σeitτ dτ
+
+|τ |>1
+
+γ±
+
+are integrals of eitτ over semi-circles, hence obviously entire analytic functions of t. By Cauchy’s integral formula one concludes that the integral over γ+ (γ−) vanishes for t > 0 (t < 0), and that it is homogeneous of degree −σ − 1 when t < 0 (t > 0). When σ is not an integer, the two functions (τ +)σ and (τ −)σ are linearly independent, hence form a basis for positively homogeneous functions of degree σ. This proves the lemma for non-integer σ.
+To complete the proof it only remains to study
+
+τ ± σ−1|τ | eitτ dτ
+|τ |>1
+
+when σ is an integer ≤ −2. When σ = −2 the last integral is equal to
+
+∞
+
+∞
+
+2 τ −2 sin tτ dτ = 2t τ −2 sin τ dτ.
+
+1
+
+1/t
+
+A Taylor expansion of sin τ shows that the integral is equal to log 1/t plus a function in C∞(R+). This proves the statement when σ = −2, and by successive integration it follows for all integers σ < −2. 2
+
+Proof of Theorem 2.6. Suppose that the theorem was already proved with μ replaced by μ + 1. The necessity of (2.11) is then obvious for it holds with μ replaced by μ + 1 and e−2πi = 1. To prove its suﬃciency we have to show that P Du ∈ C∞(Ω) if u ∈ Eμ+1 and D is a ﬁrst order diﬀerential operator. Since P Du = DP u + [P, D]u and [P, D] satisﬁes (2.11) if P does, the assertion follows. Hence we may assume in what follows
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+499
+
+that Re μ > Re m. Then the product of p(x, ξ) by the Fourier transform of any compactly supported u ∈ Eμ(Rn+) is integrable, so by an obvious regularization we obtain
+
+p(x, D)u = (2π)−n p(x, ξ)uˆ(ξ)eix·ξ dξ.
+
+(2.12)
+
+We shall introduce a Taylor expansion of p in (2.12),
+
+p(x, ξ) =
+
+∂|α|p x , 0, 0, ξn /∂ξα ∂xαnn xαnn ξα /α! +
+
+rα(x, ξ)xαnn ξα , (2.13)
+
+|α|<ν
+
+|α|=ν
+
+where
+
+1
+rα(x, ξ) = |α|/α! (1 − t)|α|−1p((ααn)) x , txn, tξ , ξn dt,
+0
+
+where somewhat incorrectly we have used the notation α for (α , 0) and αn for (0, αn). When |α | > Re m we can estimate rα by (1 + |ξn|)Re m−|α |, and when |α | ≤ Re m we can estimate by (1 + |ξ|)Re m−|α | instead. Now we have
+
+rα(x, ξ)xαnn ξα uˆ(ξ)eix·ξ dξ = (i∂ξn )αn rα(x, ξ)ξα uˆ(ξ) eix·ξ dξ.
+
+Here the factor xαnn was removed by an integration by parts with respect to ξn (using that xαnn eixnξn = (−i∂ξn )αn eixnξn ). In view of (2.6) we conclude that the integral and its derivatives of order ≤ k are absolutely convergent, thus the integral deﬁnes a Cl
+function, provided that
+
+l + Re m − α − αn − Re μ < 0.
+If we choose ν > k + Re(m − μ), the error term in (2.13) will therefore only contribute a Cl term to p(x, D)u. The remaining problem is only to study the regularity of the partial sums of the series obtained by replacing p(x, ξ) by its Taylor expansion in (2.12). Since uˆ is rapidly decreasing when ξ → ∞ with |ξn| < 1, this part of the integral in (2.12) is inﬁnitely diﬀerentiable. In view of (2.8) — where we drop the prime on uj — it only remains to examine when the partial sums of the series
+
+(2π)−n
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, ξn
+
+xαnn ξα uˆk
+
+ξ
+
+α,j,k
+
+|ξn |>1
+
+ξn− −μ−k−1eix·ξ dξ/α!
+
+become arbitrarily smooth when the order of the sum goes to inﬁnity. Here we can remove xαnn by an integration by parts with respect to ξn as above. The boundary terms
+
+500
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+which then occur will give rise to only C∞ terms. Thus we are reduced to examining the diﬀerentiability of the partial sums of the series
+
+Dα uk x (2π)−1
+
+(i∂ξn )αn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, ξn
+
+ξn− −μ−k−1 eixnξn dξn/α!.
+
+α,j,k
+
+|ξn |>1
+
+Since the functions Dα uk can be chosen arbitrarily in the neighborhood of any point, or rather, linear combinations of them are arbitrary, we conclude that for P to have the required property it is necessary and suﬃcient that for any α and k = 0, 1, . . . the partial sums of higher order of the series
+
+(2π)−1
+
+(i∂ξn )αn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, ξn
+
+αn ,j
+
+|ξn |>1
+
+ξn− −μ−k−1 eixnξn dξn/α!
+
+(2.14)
+
+are
+
+in
+
+Cν (R+)
+
+=
+
+r+Cν (R)
+
+for
+
+any
+
+given
+
+ν.
+
+Here
+
+(i∂ξn
+
+)αn
+
+(pj
+
+(α ) (αn )
+
+(x
+
+,
+
+0,
+
+0,
+
+ξn)(ξn−)−μ−k−1)
+
+is homogeneous of degree m − j − |α| − μ − k − 1, so if m − j − |α| − μ − 1 = σ, the degree
+
+is σ − k.
+
+Now we shall apply Lemma 2.7. Noting that a ﬁnite sum cjϕσj (t) with diﬀerent σj is in Cν(R+) if and only if cj = 0 when −σj − 1 ≤ ν, we conclude that (2.14) has the
+
+desired diﬀerentiability properties if and only if for each complex number σ, each α and
+
+k = 0, 1, . . . , each x , the sum
+
+q(ξn) ≡
+
+(i∂ξn )αn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, ξn
+
+ξn− −μ−k−1 /αn!
+
+m−j−|α|−μ−1=σ
+
+(2.15)
+
+is proportional to (ξn+)σ−k. (The sum of course contains only ﬁnitely many terms.)
+
+In
+
+view
+
+of
+
+the
+
+homogeneity
+
+of
+
+pj
+
+(α ) (αn )
+
+(x
+
+, 0, 0, ξn)
+
+of
+
+degree
+
+m
+
+−
+
+j
+
+−
+
+|α
+
+|,
+
+we
+
+have
+
+for
+
+each term in the sum:
+
+(i∂ξn )αn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, ξn
+
+ξn− −μ−k−1
+
+for ξn > 0 equals
+
+= iαn ∂ξαnn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, 1
+
+ξnm−j−|α |−μ−k−1
+
+= iαn m − j − α
+
+−μ−k−1
+
+···
+
+m − j − |α| − μ − k
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, 1
+
+× ξnm−j−|α|−μ−k−1
+
+= iαn m − j − α
+
+−μ−k−1
+
+···
+
+m − j − |α| − μ − k
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, 1
+
+ξnσ−k ,
+
+(2.16)
+
+whereas (cf. also (2.3))
+
+(i∂ξn )αn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, ξn
+
+ξn− −μ−k−1
+
+for ξn < 0 equals
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+501
+
+= iαn ∂ξαnn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, −1
+
+|ξn|m−j−|α |−μ−k−1e−πi(−μ−k−1)
+
+= (−i)αn m − j − α
+
+−μ−k−1
+
+···
+
+m − j − |α| − μ − k
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, −1
+
+× |ξn|σ−keπi(μ+k+1).
+
+A function equal to (2.16) on R+ will be proportional to (ξn+)σ−k exactly when it on R− has the value
+
+iαn m − j − α
+
+−μ−k−1
+
+···
+
+m − j − |α| − μ − k
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, 1
+
+|ξn |σ−k eπi(σ−k) .
+
+Thus q(ξn), where we for ﬁxed α , k, σ, take the sum over m − j − |α| − μ − 1 = σ, is proportional to (ξn+)σ−k if and only if
+
+m−j− α
+
+−μ−k−1
+
+...
+
+m − j − |α| − μ − k
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, 1
+
+m−j−|α|−μ−1=σ
+
+× eπi(σ−k)/αn!
+
+=
+
+m−j− α
+
+−μ−k−1
+
+...
+
+m − j − |α| − μ − k
+
+(−1)αn
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, −1
+
+× eπi(μ+k+1)/αn!.
+
+After the exponential factors have been moved to the same side and integer powers of e2πi have been eliminated, we ﬁnd that k occurs only in the polynomial factors, which are of degree αn, all diﬀerent. It follows that the coeﬃcients have to agree, that is
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, 1
+
+eπi(m−j−|α
+
+|−2μ)
+
+=
+
+pj
+
+(α ) (αn )
+
+x , 0, 0, −1
+
+.
+
+(2.17)
+
+This gives a necessary and suﬃcient condition for r+P to map Eμ(Rn+) into C∞(Rn+). But (2.17) is a consequence of (2.11), and conversely, by diﬀerentiating (2.17) with respect
+to x and using the homogeneity with respect to ξn we obtain (2.11). This completes the proof of Theorem 2.6. 2
+
+Note that it suﬃces that the conditions in (2.11) hold for the subset of derivatives
+
+pj
+
+(α ) (αn )
+
+indicated
+
+in
+
+(2.17).
+
+A
+
+similar
+
+sharpening
+
+is
+
+proved
+
+in
+
+[14]
+
+for
+
+more
+
+general,
+
+not
+
+necessarily polyhomogeneous symbols, in the case μ = 0.
+
+In [3], Boutet de Monvel with reference to the notes [19] showed that (2.11) for ψdo’s
+
+with analytic symbols implies a mapping property as in Theorem 2.6 for functions ana-
+
+lytic up to ∂Ω.
+
+The product of two symbols of type μ1 resp. μ2 is clearly of type μ1 + μ2.
+
+Example 2.8. As simple examples, let us mention (−Δ)ν and Λν± on Rn+ (ν ∈ C). For (−Δ)ν, of order m = 2ν, the symbol |ξ|2ν equals 1 for ξ = 0, ξn = ±1, so (2.11) is
+satisﬁed with μ = ν; it is of type ν.
+
+502
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+For λν+, the principal symbol (λν+)0 is (|ξ |ψ(ξn/(a|ξ |)) + iξn)ν (recall that ψ(±∞) = 0), so (λν+)0(0, ±1) = (±i)ν, satisfying (2.11) with m = ν, μ = ν. The diﬀerence between λμ± and (λμ±)0 is of order −∞, since it has compact support in ξ and is rapidly decreasing in ξn. This shows that λν+ is of type ν.
+A similar study of λν− gives that it satisﬁes (2.11) with m = ν, μ = 0, since the
+principal part clearly does so, and the remainder is of order −∞. Hence it is of type 0. Moreover, the modiﬁed symbols λ±(μ,)0, used in the construction of order-reducing op-
+erators on a manifold (Theorem 1.3), are of type μ resp. 0, since the exact symbols λμ±
+are used near ∂Ω, modulo smoothing terms.
+
+We also have, when Ω1 is compact:
+Lemma 2.9. Let A be a strongly elliptic second-order diﬀerential operator with C∞-coefﬁcients, and let ν ∈ C. Then the pseudodiﬀerential operator Aν is of order 2ν, and of type ν for any smooth set Ω.
+
+Proof. Aν is constructed by the method of Seeley [27] (we recall that if 0 is an eigenvalue of A, Aν is taken zero on the generalized eigenspace). First it is found that the resolvent Q = (A − λ)−1 has the symbol in local coordinates
+
+q(x, ξ, λ) ∼ q−l(x, ξ, λ), where q0 = a0(x, ξ) − λ −1,
+l≥0
+
+2l
+
+q−1 = b1,1(x, ξ)q02, . . . , q−l =
+
+bl,k(x, ξ)q0k+1, . . . ;
+
+k=l/2
+
+with symbols bl,k independent of λ and polynomial of degree 2k − l in ξ. (References are given e.g. in [12, Remark 3.3.7].) The symbol of the ν-th power of A is essentially constructed from this by a Cauchy integral together with λν around the spectrum. The principal term gives (a0(x, ξ))ν , where, at boundary points,
+
+a0 = s0 x ξn2 + O |ξn| ξ + O ξ 2 , s0 x = 0,
+
+with similar properties as the Laplacian symbol above; the ν-th power satisﬁes (2.11)
+with m = 2ν and μ = ν. In the next terms, when q0k+1 = c∂λkq0 is inserted in the integral and the λ-derivative is carried over to λν , we get powers (a0(x, ξ))ν−k, that likewise satisfy (2.11) with μ = ν, since the factors a−0 k are of type 0. It follows that Aν is of
+type ν. 2
+
+Remark 2.10. Consider A as above and assume moreover that it has product struc-
+
+ture near the boundary ∂Ω, i.e., coordinates can be chosen near ∂Ω such that A =
+
+Dn2 + A (x , D ) there with A strongly elliptic on ∂Ω. Then the associated Dirichlet-
+
+to-Neumann operator PDN (sending γ0u to γ1u when Au = 0) is essentially a constant
+
+times
+
+(A
+
+)
+
+1 2
+
+,
+
+which
+
+is
+
+of
+
+order
+
+1
+
+and
+
+type
+
+1 2
+
+with
+
+respect
+
+to
+
+smooth
+
+subsets
+
+of
+
+∂Ω.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+503
+
+Remark 2.11. When Eqs. (2.11) are satisﬁed with μ = 0 and m integer, they hold also if the normal vectors N and −N exchange roles. Then P is of type 0 also for the exterior domain Ω1 \ Ω; the so-called two-sided transmission property. This is the case treated in the Boutet de Monvel calculus.
+
+Noninteger transmission properties have been used in another context by Hirschowitz and Piriou [17] to investigate lacunas by application of Fourier integral operators; see also the survey by Boutet de Monvel [5].
+
+3. The Vishik–Eskin estimates
+
+Consider a C∞ manifold Ω1, a relatively compact subset Ω with C∞ boundary ∂Ω, and a classical pseudodiﬀerential operator P in Ω1. The operator P we assume to be elliptic in Ω1, that is, in a local coordinate system where the symbol is pj(x, ξ), the terms being homogeneous of degree m − j, we have
+
+p0(x, ξ) = 0 for 0 = ξ ∈ Rn.
+
+(3.1)
+
+Further we assume that the μ-transmission condition is fulﬁlled at least for j = α = β = 0, that is, we assume that there is a number μ such that
+
+p0(x, −N ) = eπi(m−2μ)p0(x, N ), x ∈ ∂Ω,
+
+(3.2)
+
+where N denotes the interior normal of ∂Ω at x. If n > 2 the set {ξ | ξ ∈ Rn, ξ = 0} is simply connected, so for ﬁxed x we can deﬁne log p(x, ξ) uniquely by ﬁxing the value at one point. When n = 2, we impose this as a condition on p, called the root condition in analogy with the corresponding condition in the case of diﬀerential equations. Then we have
+
+log p0(x, ξ + τ N ) − log p0(x, τ N ) = log p0(x, ξ + τ N )/p0(x, τ N ) → 0, τ → ∞. Hence
+
+log p0(x, ξ + τ N ) − m log |ξ| → a±(x), τ → ±∞,
+
+(3.3)
+
+where exp a± = p0(x, ±N ). It follows from (3.2) that ea− = eπi(m−2μ)+a+ , that is, μ ≡ m/2 + (a+ − a−)/2πi (mod 1). We deﬁne the factorization index μ0 by
+
+μ0 = m/2 + (a+ − a−)/2πi,
+
+(3.4)
+
+noting that for reasons of continuity this number, which is always congruent to μ, must be a constant on connected components of ∂Ω. (There is a remark in Hörmander [19] that much of the theory goes through with light modiﬁcations when m and μ0 are allowed
+
+504
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+to be variable, referring to the 1964 Doklady notes preceding [30,31].) Note that we may replace μ by μ0 in (3.2).
+We can now state the basic existence theorem for the Dirichlet problem, due to Vishik and Eskin in the case p = 2, cf. [30,7], and extended to 1 < p < ∞ by Shargorodsky [28].
+
+Theorem 3.1. Let P be elliptic of order m satisfying (3.2) (and the root condition if n = 2), and assume the factorization index μ0 introduced above to be constant on ∂Ω. Then the mapping
+
+H˙ ps(Ω)
+
+u
+
+→
+
+rΩ
+
+P
+
+u
+
+∈
+
+H
+
+s−Re p
+
+m(Ω)
+
+(3.5)
+
+is a Fredholm operator if s is a real number with 1/p − 1 < s − Re μ0 < 1/p.
+
+In the proof one observes that it suﬃces to prove the a priori estimate for smooth functions
+
+u s ≤ C rΩP u s−Re m0 + u s−1 , u ∈ H˙ ps(Ω),
+
+(3.6)
+
+together with an analogous estimate for the adjoint tP . This can be reduced to the study of “constant-coeﬃcient” symbols p0(x0, ξ) for x0 ∈ ∂Ω in the case Ω = Rn+. Here there is a factorization
+
+p0(x0, ξ) = p−(x0, ξ)p+(x0, ξ)
+
+(3.7)
+
+with p± of degree μ0 resp. m − μ0, extending as analytic functions of ξn to C− resp. C+, hence deﬁning operators preserving support in Rn+ resp. Rn−. Details on the factorization and its application to obtain the estimates are found e.g. in [7, §6, 7, 19], extended to
+Lp-spaces in [28]. (See (1.10)ﬀ. concerning sign conventions.) Those works moreover treat systems P and cases where μ0 depends on x ∈ ∂Ω; then the interval where s runs has a smaller length.
+
+Example 3.2. When Aν is deﬁned as in Lemma 2.9, the principal symbol at a boundary point (x , 0) has the factorization
+
+a0 x , 0, ξ , ξn ν = s0 x ν m+ x , ξ − ξn ν m− x , ξ − ξn ν ,
+where m± are the roots in C±, respectively, of the characteristic polynomial of degree 2. Here (m±(x , ξ ) − ξn)ν extends analytically to C∓, respectively. Thus the factorization index equals ν, and Theorem 3.1 applies with s − Re ν ∈ ]−1/p , 1/p[.
+Let ν = a ∈ R+. In the application of the theorem, s ∈ a+ ]−1/p , 1/p[, so regardless of how regular rΩP u is, this gives at best u ∈ H˙ pa+1/p−0(Ω). When p > n/a, Sobolev embedding gives u ∈ Ca+1/p−n/p−0(Ω) with boundary value zero. For p → ∞ we get
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+505
+
+u ∈ Ca−0(Ω). It is pointed out in Ros-Oton and Serra [26] for (−Δ)a with a ∈ ]0, 1[ that the exponent a − 0 cannot in general be lifted to values > a.
+There are similar considerations for strongly elliptic 2m-order diﬀerential operators. Here the principal symbol at the boundary factors into two polynomials in ξn of degree m with roots in C±, respectively. The ν-th power is then of order 2νm and type νm, and has factorization index νm.
+More generally, let P be of order m ∈ C with an even symbol, that is, pj(x, −ξ) = (−1)jpj(x, ξ) for all j ≥ 0. Then in view of the homogeneity of each pj, p satisﬁes (2.11) with μ = m/2. For the principal symbol, a+ = a− in (3.3)–(3.4), so the factorization index is m/2. (One can also include a skew factor eiπ .)
+The integral operators treated in the recent work of Ros-Oton and Serra [26] have these properties, with m = 2s, when the kernel is smooth (outside 0).
+Note that (2.11) is only required for the interior normal N (x) to a given smooth subset Ω; the above examples have the property with respect to all directions.
+
+The new task is to characterize the regularity of u when P u is given in more smooth
+
+spaces. There is a preparatory result in [19] on “tangential regularity” which follows by
+
+classical arguments due to Nirenberg.
+
+Let Ω be the half ball {x ∈ Rn | |x| < 1, xn > 0}. The unit ball we denote by Ω.
+
+By
+
+H˙ ps,loc(Ω
+
+)
+
+and
+
+H
+
+s−Re p,loc
+
+m(Ω)
+
+we
+
+denote
+
+the
+
+distributions
+
+which
+
+multiplied
+
+with
+
+func-
+
+tions in C0∞(Ω) give elements in the analogous spaces in Rn+. Here Ω = {x ∈ Rn |
+
+|x| < 1, xn ≥ 0}.
+
+Theorem 3.3. Let P satisfy the hypotheses of Theorem 3.1. If −1/p < s − Re μ < 1/p and t0, t1 are real numbers, then
+
+u ∈ H˙ ps,,lto0c Ω ,
+
+rΩ P
+
+u
+
+∈
+
+H
+
+s−Re p,loc
+
+m,t1 (Ω)
+
+(3.8)
+
+implies that
+
+u ∈ H˙ ps,,lto1c Ω .
+
+(3.9)
+
+Proof. It is no restriction to assume that t1 − t0 is a positive integer, for we may always decrease t0. It suﬃces to prove the theorem when t1 − t0 = 1. Now we claim that for every compact subset K of Ω, and every real number t there is a constant C such that
+
+u s,t ≤ C rΩ P u s−Re m,t + u s−1,t
+
+(3.10)
+
+for all u ∈ C0∞(K), hence for all u ∈ H˙ s,t with support in K. In fact, this follows from by applying (3.6) to [D ]tu, cut oﬀ conveniently. We may replace the last term in (3.10) by
+the larger quantity u s,t−1. Now assume that (3.8) is fulﬁlled with t0 = t, t1 = t+1. Then ϕu satisﬁes the same hypothesis if ϕ ∈ C0∞(Ω). Let therefore u have compact support in Ω . Denote by uh the convolution of u by the Dirac measure at (h1, . . . , hn−1, 0) = h,
+
+506
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+that is, uh is a tangential translation of u. Let Ph be the analogous translation of P . Then
+
+P (uh − u)/|h| = (fh − f )/|h| + (P − Ph)/|h|u,
+
+(3.11)
+
+where f = P u. Since
+
+(f − fh)/|h| s,t ≤ f s,t+1,
+and since (P − Ph)/|h| is continuous from Hps,t to Hps−Re m,t uniformly when h → 0, we conclude using (3.10) that (uh −u)/|h| (s,t) is bounded when h → 0. Hence Dju (s,t) < ∞ when j < n, which proves that u ∈ H˙ (s,t+1). 2
+
+4. Solvability of homogeneous problems
+
+For the study of solvability, we ﬁrst set the Hpμ(s)-spaces in relation to Eμ. In the following we assume that Ω is compact, unless otherwise mentioned.
+
+Proposition 4.1. 1◦ Let s > Re μ − 1/p . For any compact K, u ∈ Eμ(Rn+) ∩ E (K) implies u ∈ Hpμ(s)(Rn+). Similarly, Eμ(Ω) ⊂ Hpμ(s)(Ω).
+2◦ We have that s Hpμ(s)(Rn+) ⊂ Eμ(Rn+), and that
+
+Hpμ(s)(Ω) = Eμ(Ω).
+s
+
+(4.1)
+
+3◦ Moreover, Eμ(Rn+) ∩ E˙ (Rn+), resp. Eμ(Ω), is dense in Hpμ(s)(Rn+) ∩ E˙ (Rn+) resp. Hpμ(s)(Ω), when s > Re μ − 1/p .
+
+Proof. 1◦. Let u ∈ Eμ(Rn+) ∩ E (K). Then by (2.8), we have for |ξn| > 1, M ∈ N, and any N ,
+
+M −1
+uˆ(ξ) = uˆj ξ
+j=0
+
+ξn− −μ−j−1 + O ξ −N |ξn|− Re μ−M−1 ,
+
+(4.2)
+
+where the uˆj are in S(Rn−1). To estimate Ξ+μ u, we shall calculate uˆ(ξ)(ξn −i[ξ ])μ, where we note that (ξn − i[ξ ])μ = (−i)μ([ξ ] + iξn)μ = (−i)μχμ+. There are Taylor expansions (for |ξn| > 1, say)
+
+ξn − i ξ
+
+μ = ξn− μ + c1 ξ ξn− μ−1 + · · · + cl−1 ξ l−1 ξn− μ−l+1 + O ξ l+[Re μ−l]+ |ξn|Re μ−l .
+
+(4.3)
+
+Insertion gives (with c0 = 1):
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+507
+
+F Ξ+μ u (−i)μ = uˆ(ξ) ξn − i ξ μ
+
+M −1
+= uˆj ξ
+j=0
+
+ξn− −μ−j−1
+
+M −j−1
+
+×
+
+cl ξ l ξn− μ−l + O
+
+l=0
+
++ O ξ −N |ξn|−M−1
+
+ξ M −j+[Re μ−M +j]+ |ξn|Re μ−M +j
+
+M −1 M −j−1
+
+=
+
+uˆj ξ cl ξ l ξn− −j−l−1 + O ξ −N |ξn|−M−1
+
+j=0 l=0
+
+M −1 j
+
+=
+
+cjkuˆk ξ
+
+j=0 k=0
+
+ξ j−kξn−j−1 + O ξ −N |ξn|−M−1 .
+
+(4.4)
+
+In the last step we replaced l, j by j = l + j and k = j, and removed the primes. The
+
+ckj are constants, with cjj = 1. (It is also for later purposes that we account for this in detail.)
+
+The terms in the sum are Fourier transforms of functions in S(Rn+), and the remainder
+
+is bounded by ξ −N for N ≤ min{N, M + 1}, so by letting N, M → ∞, we see that
+
+any
+
+H
+
+t p
+
+(Rn+)-norm
+
+of
+
+Ξ+μ u
+
+is
+
+bounded.
+
+The result for Ω follows by using the above in local coordinate patches where
+
+d(x) = xn. 2◦. Now let u ∈ s Hpμ(s)(Rn+). Then v = r+Ξ+μ u ∈ t Htp(Rn+), which consists of
+C∞(Rn+)-functions with all Lp-norms of derivatives bounded. In view of Proposition 1.7, u = Ξ+−μe+v. By Lemma 2.3, v has an expansion as in (2.8) with μ = 0, and the
+multiplication by ([ξ ] + iξn)−μ = i−μ(ξn − i[ξ ])−μ gives a function with an expansion
+
+(2.8) with the actual μ, so we conclude from Lemma 2.3 with (2.8) that u ∈ Eμ(Rn+).
+For Ω we ﬁnd from this by localization that s Hpμ(s)(Ω) ⊂ Eμ(Ω); here there is equality in view of 1◦.
+
+3◦. To show that Eμ ∩ E˙ (Rn+) is dense in the set of all u ∈ S˙ (Rn+) satisfying (1.24),
+
+we ﬁrst take a sequence vj ∈ C∞(Rn+) of compactly supported functions approximat-
+
+ing F −1(ξn − i[ξ ])μuˆ in the norm
+
+, H
+
+s−Re p
+
+μ
+
+and
+
+also
+
+in
+
+the
+
+topology
+
+of
+
+S
+
+outside
+
+a
+
+neighborhood of supp u (which is possible since the function to approximate agrees with
+
+a function in S there). Deﬁne vj = 0 in Rn−. Set uj = F −1((ξn − i[ξ ])−μvˆj). This is
+
+an element of Eμ in view of Lemma 2.3 (the Fourier transform is the product of that of
+
+vj and (ξn − i[ξ ])−μ, and the behavior of the Fourier transform of vj is described by
+
+Lemma 2.3 with μ = 0). Then by Proposition 1.7, uj → u in the norm in (1.24), and also
+
+in the topology of S outside a neighborhood of supp u. Hence we can cut oﬀ uj there
+
+without disturbing the convergence in order to obtain an approximating sequence with
+
+compact supports. The statement for Hpμ(s)(Ω) follows by localization. 2
+
+508
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+In the next theorems we use the order-reduction operators to reach situations where we can draw on results from the Boutet de Monvel calculus. The calculus was established in [4] and is moreover presented in detail e.g. in [12,13], see also [11].
+
+Theorem 4.2. Let the ψdo P on Rn be of order m, and type μ relative to Rn+, and compactly supported. Then for s > Re μ − 1/p and u ∈ Hpμ(s)(Rn+),
+
+r+P u
+
+≤ C H
+
+s−Re p
+
+m
+
+r+Ξ+μ u
+
+, H
+
+s−Re p
+
+μ
+
+r+P u
+
+≤ C H
+
+s−Re p
+
+m
+
+r+Λμ+u
+
+. H
+
+s−Re p
+
+μ
+
+(4.5)
+
+Similarly, for a ψdo P on the manifold Ω1 of order m, and type μ on Ω, one has for u ∈ Hpμ(s)(Ω),
+
+rΩP u
+
+≤ C H
+
+s−Re p
+
+m
+
+(Ω)
+
+rΩ Λ+(μ)u
+
+. H
+
+s−Re p
+
+μ (Ω )
+
+(4.6)
+
+In
+
+other
+
+words,
+
+r+P
+
+maps
+
+Hpμ(s)
+
+continuously
+
+into
+
+H
+
+s−Re p
+
+m
+
+when
+
+s > Re μ − 1/p .
+
+Proof. By deﬁnition, v = r+Λμ+u ∈ Hs−Re μ, and by Proposition 1.7, u = Λ−+μe+v then. Thus we can write
+
+r+P u = r+P Λ−+μv.
+
+Moreover, by (1.15),
+
+where
+
+r+P u
+
+H
+
+s−Re p
+
+m
+
+Λ−μ−,+mr+P u
+
+, H
+
+s−Re p
+
+μ
+
+Λ−μ−,+mr+P u = r+Λ−μ−mP u
+in view of Remark 1.1 (since the action of Λ−μ−,+m is independent of how r+P u is extended). Altogether,
+
+r+P u
+
+H
+
+s−Re p
+
+m
+
+r+Qe+v
+
+, H
+
+s−Re p
+
+μ
+
+where Q = Λ−μ−mP Λ−+μ.
+
+Here Q is of order 0 and type 0, hence belongs to the Boutet de Monvel calculus (as
+
+noted in Remark 2.11), and we have from [11] that Q+ = r+Qe+ is continuous from
+
+H
+
+s−Re p
+
+μ
+
+to
+
+itself,
+
+since
+
+s
+
+>
+
+Re μ
+
+−
+
+1/p
+
+.
+
+This
+
+implies
+
+the
+
+second
+
+inequality
+
+in
+
+(4.5),
+
+and
+
+the ﬁrst one follows in view of Lemma 1.2.
+
+For Ω we obtain the result either by using the above in local coordinates or by repeating the proof using Λ±(μ). 2
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+509
+
+In the notes [19], the proof of this theorem for p = 2 takes up much space and involves a number of other tricks, needed because the order-reducing operators Λμ± were not known then. Finiteness of all seminorms
+
+u→
+
+rΩP u
+
+, H
+
+s−Re 2
+
+m
+
+(Ω)
+
+(4.7)
+
+with P of type μ and any order m, was taken as the deﬁnition of the topology of H2μ(s)(Ω),
+
+and a large eﬀort or more precisely,
+
+went into ﬁniteness
+
+showing that of r+( D +
+
+on Rn+ ∂n)μu
+
+, ﬁniteness of r+Ξ+μ u H
+
+H
+
+s−Re 2
+
+μ
+
+suﬃces.
+
+It
+
+comes
+
+s−Re μ 2
+in as
+
+suﬃces, a special
+
+case when (4.7) is investigated for P = (1 − Δ)μ, m = 2μ.
+
+The mapping property was proved for operators of type 0 and any real order m in
+
+[14]
+
+for
+
+L2-spaces,
+
+including
+
+more
+
+general,
+
+not
+
+polyhomogeneous
+
+symbols
+
+in
+
+S
+
+m ,δ
+
+.
+
+(This
+
+covers classical symbols of order m ∈ C and type 0, since they are in S1R,0e m.)
+
+Proposition 4.3. Let s > Re μ − 1/p . Both for spaces over Rn+ and over Ω, we have that
+
+Hpμ(s) ⊂ Hp(μ−1)(s), and the norms are equivalent on Hpμ(s). Proof. When u ∈ Hpμ(s)(Rn+) for some s > Re μ − 1/p , then
+
+(4.8)
+
+r Λ u + μ−1
++
+
+H
+
+s−Re p
+
+μ+1
+
+r+Dj Λ+μ−1u
+
++ H
+
+s−Re p
+
+μ
+
+r+Λ+μ−1u
+
+H
+
+s−Re p
+
+μ
+
+j≤n
+
+≤C
+
+r+Λμ+u
+
+, H
+
+s−Re p
+
+μ
+
+where we could use Theorem 4.2 in the last step, since DjΛ+μ−1 and Λ+μ−1 are of type
+μ and order μ resp. μ − 1. This shows the inclusion in (4.8). On the other hand, since r+Ξ+μ u = r+([D ] + iDn)Ξ+μ−1u,
+
+r+Ξ+μ u
+
+≤ C H
+
+s−Re p
+
+μ
+
+r+Ξ+μ−1u
+
+. H
+
+s−Re p
+
+μ+1
+
+Thus the norms are equivalent on Hpμ(s), in view of Lemma 1.2. The statements carry over to the manifold situation by localization. 2
+
+The Hμ(s)-spaces serve the purpose of describing the regularity of solutions with data in more regular Sobolev spaces than the result of Vishik and Eskin (Theorem 3.1) allows. We can now show the main regularity result for homogeneous boundary problems (proved for p = 2 in [19]), obtaining moreover a formula for a parametrix:
+
+510
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Theorem 4.4. Let P be classical elliptic of order m ∈ C on Ω1 and of type μ0 ∈ C relative
+
+to Ω, and with factorization index μ0. Let s > Re μ0 − 1/p , and let u ∈ H˙ pσ(Ω) for some
+
+σ
+
+>
+
+Re μ0
+
+−
+
+1/p
+
+.
+
+If
+
+r+P u
+
+∈
+
+H
+
+s−Re p
+
+m
+
+(Ω),
+
+then
+
+u
+
+∈
+
+Hpμ0(s)(Ω).
+
+The
+
+mapping
+
+Hpμ0(s)(Ω)
+
+u
+
+→
+
+r+P
+
+u
+
+∈
+
+H
+
+s−Re p
+
+m(Ω)
+
+(4.9)
+
+is Fredholm, and has the parametrix
+
+R
+
+=
+
+Λ(+−μ0)e+Q+Λ−(μ,0+−m):
+
+H
+
+s−Re p
+
+m(Ω)
+
+→
+
+Hpμ0(s)(Ω),
+
+(4.10)
+
+where Q+ is a parametrix of Q+ = r+Qe+, with
+
+Q = Λ−(μ0−m)P Λ(+−μ0),
+
+(4.11)
+
+elliptic of order and type 0, with factorization index 0. In particular, if r+P u ∈ C∞(Ω), then u ∈ Eμ0 (Ω). The mapping
+Eμ0 (Ω) u → r+P u ∈ C∞(Ω)
+
+(4.12)
+
+is Fredholm.
+
+Proof. Note ﬁrst that there is a σ0 ≤ min{s, σ} with σ0 ∈ Re μ0+ ]−1/p , 1/p[.
+
+Theorem 3.1 (by Vishik, Eskin and Shargorodsky) applies with s replaced by σ0 to
+
+show
+
+the
+
+Fredholm
+
+solvability
+
+of
+
+r+P u
+
+=
+
+f
+
+∈
+
+H
+
+σ0 p
+
+−Re
+
+m
+
+with
+
+solution
+
+u
+
+∈
+
+H˙ pσ0 .
+
+We must show that this solution lies in Hμ0(s). It already lies in Hμ0(σ0), since
+
+Λ+(μ0)u
+
+∈
+
+H
+
+σ0 p
+
+−Re
+
+μ0
+
+⊂
+
+H˙ p−1/p
+
++0.
+
+To discuss the solvability of
+
+r+P u
+
+=
+
+f
+
+∈
+
+H
+
+s−Re p
+
+m(Ω
+
+),
+
+(4.13)
+
+in spaces with general s we prefer to start from scratch, using devices from Theorem 4.2. Compose to the left with Λ−(μ,0+−m); this gives the equivalent problem
+
+Λ−(μ,0+−m)r+P u = g,
+
+where
+
+g
+
+=
+
+Λ−(μ,0+−m) f
+
+∈
+
+H
+
+s−Re p
+
+μ0
+
+(Ω
+
+),
+
+(4.14)
+
+when we recall (1.20). Note that f = Λ(−m,+−μ0)g. Moreover, in view of Remark 1.1,
+
+Λ−(μ,0+−m)r+P u = r+Λ−(μ0−m)P u.
+Now set v = r+Λ+(μ0)u; then u = Λ+(−μ0)e+v by Proposition 1.7. Expressed in terms of g and v, Eq. (4.13) becomes
+
+Q+v = g;
+
+g
+
+given
+
+in
+
+H
+
+s−Re p
+
+μ0
+
+(Ω
+
+),
+
+(4.15)
+
+where we have deﬁned Q by (4.11).
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+511
+
+The properties of P imply that Q is elliptic of order 0 and type 0 and has factorization index 0; in particular, it belongs to the Boutet de Monvel calculus. The principal symbol at the boundary q(x , 0, ξ) has a factorization q = q+q−, in symbols q±(x , ξ) of plus/minus type and order 0. (We here use upper indices ± to avoid confusion with the lower plus-index for truncation.) The associated operators on L2(R) satisfy
+
+q+ = r+q x , 0, ξ , Dn e+ = r+q− x , ξ , Dn e+r+ + e−r− q+ x , ξ , Dn e+
+
+= q+−q++,
+
+(4.16)
+
+since r+q−e− and r−q+e+ are zero. Let q˜(x , ξ) = 1/q(x , ξ); it likewise has a factorization q˜ = q˜+q˜− in plus/minus symbols, with q˜± = 1/q±. Now for the associated operators
+on R,
+
+r+q+e+r+q˜+e+ = r+q+q˜+e+ − r+q+e−r−q˜+e+ = IR+ ,
+since q˜+ preserves support in R+ so that r−q˜+e+ = 0. One checks similarly that r+q˜+e+r+q+e+ = IR+ , and that also r+q−e+r+q˜−e+ = IR+ , r+q˜−e+r+q−e+ = IR+ . In other words,
+
+q± x , ξ , Dn + has the inverse q˜± x , ξ , Dn + in L2(R+). In view of (4.16), q(x , 0, ξ , Dn)+ therefore has the inverse
+q+ = q+−q++ −1 = q˜++q˜+−.
+
+(4.17) (4.18)
+
+(More precisely, with notation from the Boutet de Monvel calculus as described e.g. in
+
+[13, p. 284ﬀ.], q+ = q˜+ − L(q˜+, q˜−), where the singular Green operator L(q˜+, q˜−) = g+(q˜+)g−(q˜−) is generally nonzero.)
+
+We see that r+q(x , 0, ξ , Dn)e+ is invertible as a boundary symbol operator, and
+
+thus Q+ = r+Qe+ deﬁnes an elliptic boundary problem (without auxiliary trace or
+
+Poisson operators) in the Boutet de Monvel calculus, hence deﬁnes a Fredholm operator
+
+in
+
+H˙ 2t(Ω)
+
+=
+
+H t2 (Ω )
+
+for
+
+|t|
+
+<
+
+1 2
+
+.
+
+(This
+
+is
+
+also
+
+shown
+
+in
+
+Vishik
+
+and
+
+Eskin’s
+
+theorem,
+
+cf.
+
+Theorem 3.1.)
+
+By [11], Q+ is continuous in Htp(Ω) for t > −1/p . We shall denote by Q+ a parametrix of Q+; likewise continuous in Htp(Ω) for t > −1/p . (It will in general be of the form
+
+Q+ + G, where Q is a parametrix of Q and G is a singular Green operator.) Thus,
+
+solutions of Q+v = g with g ∈ Htp(Ω) for some t > −1/p are in Htp(Ω), and
+
+Q+:
+
+H
+
+t p
+
+(Ω)
+
+→
+
+H tp (Ω )
+
+is
+
+Fredholm
+
+for
+
+all
+
+t
+
+>
+
+−1/p
+
+.
+
+It
+
+follows
+
+that
+
+the
+
+solutions
+
+of
+
+(4.15)
+
+satisfy
+
+v
+
+∈
+
+H
+
+s−Re p
+
+μ0 (Ω),
+
+so
+
+the
+
+solutions
+
+of
+
+the
+
+original problem (4.13) satisfy u ∈ Hpμ0(s)(Ω). Retracing the steps, we ﬁnd that (4.10)
+
+is a parametrix of r+P . The Fredholm property also follows.
+
+512
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Finally, the solvability with right-hand side in C∞(Ω) is deduced from the above by use of Proposition 4.1. 2
+
+The proof in [19] of the Fredholm property in the L2-case was based on Theorems 3.1 and 3.3 together with certain intricate results on “partial hypoellipticity at the boundary” (valid for general P of type μ for which ∂Ω is non-characteristic).
+
+Example 4.5. Let us check how this looks in the well-known case of the Laplace–Beltrami
+
+operator, P = Δ. It is of order 2 and type 0, and has factorization index 1 (cf. Exam-
+
+ple 3.2). Let s > 1 − 1/p
+
+= 1/p, so f
+
+is
+
+given
+
+in
+
+H
+
+s−2 p
+
+with
+
+s −
+
+2
+
+>
+
+−2 + 1/p.
+
+From
+
+Example
+
+1.6
+
+with
+
+m
+
+=
+
+1
+
+we
+
+have
+
+that
+
+Hp1(s)
+
+=
+
+{u
+
+∈
+
+H
+
+s p
+
+|
+
+γ0u
+
+=
+
+0}.
+
+Thus
+
+u
+
+is
+
+the
+
+solution of the homogeneous Dirichlet problem: Δu = f in Ω, γ0u = 0.
+
+Remark 4.6. Not all elliptic ψdo’s P of order and type 0 have P+ elliptic without supple-
+
+menting trace or Poisson operators. For example, P = Λ(−1)Λ+(−1) has P+ = Λ(−1,)+Λ+(−,+1)
+
+(in
+
+view
+
+of
+
+Remark
+
+1.1);
+
+here
+
+Λ+(−,+1): H˙ p0
+
+−−∼→
+
+H˙ p1,
+
+but
+
+since
+
+Λ(−1,)+
+
+:
+
+H
+
+1 p
+
+−−∼→
+
+H 0p ,
+
+it
+
+maps
+
+the
+
+subspace
+
+H˙ p1
+
+onto
+
+a
+
+subspace
+
+of
+
+H
+
+0 p
+
+with
+
+inﬁnite
+
+codimension.
+
+Applications to fractional powers Aa will be given below in Section 7.
+
+5. The Hpμ(s)-spaces and their boundary values
+It will now be shown that the Hpμ(s)-spaces admit a special deﬁnition of μ-boundary values.
+Let M be a positive integer. First we consider Eμ and Eμ+M for a smooth subset Ω of a paracompact manifold Ω1 as in Section 2.
+Let us introduce the natural mapping
+
+μ,M : Eμ → Eμ/Eμ+M .
+
+(5.1)
+
+The ﬁrst step is to represent Eμ/Eμ+M as the space of sections of a trivial bundle and
+introduce norms in it. To do so we ﬁrst choose a Riemannian metric in Ω1 and then a C∞ function d in Ω which is equal to the distance from ∂Ω suﬃciently close to the boundary and is positive and C∞ throughout Ω. Set
+
+Iμ(x) = d(x)μ/Γ (μ + 1) in Ω, and Iμ = 0 in Ω,
+
+(5.2)
+
+when Re μ > −1 (consistently with (2.2)). This deﬁnition can be uniquely extended modulo C0∞(Ω) to arbitrary values of μ so that Iμ−1 = ∂nIμ, where ∂n denotes diﬀerentiation along the geodesics perpendicular to ∂Ω, suﬃciently close to ∂Ω, and is deﬁned as a C∞ function elsewhere. By our deﬁnition of Eμ it follows easily that every class in
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+513
+
+Eμ/Eμ+1 contains an element of the form Iμ(x)f where f ∈ C∞(Ω), and that such elements are congruent to 0 if and only if f = 0 on the boundary. By repeated application of this fact we conclude that any element u ∈ Eμ can be written
+
+u = u0Iμ + u1Iμ+1 + · · · + uM−1Iμ+M−1 + v,
+
+(5.3)
+
+where the uj ∈ C∞(Ω) are constant close to ∂Ω on normal geodesics, and v ∈ Eμ+M . The boundary values of uj are uniquely determined by u, and it is natural to write
+
+γμ,j u = uj |∂Ω.
+
+(5.4)
+
+Note that
+
+γμ,j u = γμ+j,0u, when u ∈ Eμ+j ; γμ,0u = Γ (μ + 1)γ0d(x)−μu, when u ∈ Eμ with Re μ > −1.
+
+(5.5)
+
+When Ω = Rn+, and u(x) is written as Iμw with Iμ(xn) = xμn/Γ (μ + 1) and w(x) ∈
+
+C ∞ (Rn+ ),
+
+then
+
+uj (x
+
+)
+
+=
+
+∂nj w(x
+
+, 0)/
+
+μ j
+
+,
+
+where
+
+μ j
+
+= Γ (μ + j + 1)/(j!Γ (μ + 1)).
+
+The mapping
+
+μ,M : u → {γμ,j u}jM=−01
+
+(5.6)
+
+has nullspace Eμ+M and identiﬁes Eμ/Eμ+M with C∞(∂Ω)M ; the mapping identiﬁes with the mapping in (5.1). The identiﬁcation depends of course on the choice of the
+Riemannian structure but we shall keep it ﬁxed in all that follows. We can now think of μ,M as a mapping of Eμ onto C∞(∂Ω)M .
+
+Theorem 5.1. Let s > Re μ + M − 1/p , and let Ω equal Rn+ or a compact smooth manifold with boundary. The mapping μ,M in (5.6) extends by continuity to a continuous mapping, also denoted μ,M ,
+
+μ,M : Hpμ(s)(Ω) →
+
+Bps−Re μ−j−1/p(∂Ω);
+
+0≤j<M
+
+(5.7)
+
+surjective and with kernel Hp(μ+M)(s)(Ω). In other words, μ,M deﬁnes a homeomorphism of Hpμ(s)(Ω)/Hp(μ+M)(s)(Ω) onto 0≤j<M Bps−Re μ−j−1/p(∂Ω).
+Proof. We want to introduce in Eμ/Eμ+M the quotient of the topology of Hpμ(s). When discussing the quotient topology it is suﬃcient to consider sections with support in a local coordinate patch.
+Thus let u ∈ Eμ(Rn+) ∩ E (K) where K is a compact set, and let d(x) = xn. Writing u in the form (5.3) we have for |ξn| > 1, say, and any N ,
+
+514
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+M −1
+uˆ(ξ) = bjuˆj ξ
+j=0
+
+ξn− −μ−j−1 + O ξ −N |ξn|− Re μ−M−1 ,
+
+where bj = i−(μ+j+1),
+
+cf. (2.4). This is similar to the formula (4.2), except that the nonzero factors bj were incorporated in uˆj in (4.2). Then we can use the calculation in (4.4) to obtain:
+
+F Ξ+μ u = iμuˆ(ξ) ξn − i ξ μ
+
+M −1 j
+
+= iμ
+
+cjkbkuˆk ξ
+
+j=0 k=0
+
+ξ j−kξn−j−1 + O ξ −N |ξn|−M−1
+
+M −1 j
+
+=
+
+cjki−k−1uˆk ξ
+
+j=0 k=0
+
+ξ j−kξn−j−1 + O ξ −N |ξn|−M−1 ,
+
+where the cjj equal 1. Moreover, when l < M ,
+
+F ∂nl Ξ+μ u = (iξn)lF Ξ+μ u
+
+M −1 j
+
+=
+
+cjkil−k−1uˆk ξ
+
+j=0 k=0
+
+ξ j−kξnl−j−1 + O ξ −N |ξn|−2 .
+
+To calculate the boundary value γ0∂nl Ξ+μ u from Rn+, note that for l − j − 1 ≥ 0 the terms contribute with distributions supported by xn = 0, and for l − j − 1 < 0 it is the coeﬃcient of ξn−1 that gives the boundary value at xn = 0, cf. (2.9), so only l = j contributes:
+
+j
+γ0∂nj Ξ+μ u = γ0F −1i cjkij−k−1uˆk ξ
+k=0
+
+j
+
+ξ j−k =
+
+cjk D j−kuk,
+
+k=0
+
+(5.8)
+
+with cjj = 1 for all j. In other words, with γj = γ0∂nj , the boundary values γjΞ+μ u satisfy
+
+⎛ γ0Ξ+μ u ⎞ ⎛
+
+⎜⎜⎜⎜⎜⎝
+
+γ1Ξ+μ u ...
+
+⎟⎟⎟⎟⎟⎠ = ⎜⎜⎜⎜⎝
+
+1
+c10[D ] ...
+
+0
+
+. . . 0 ⎞ ⎛ γμ,0u ⎞
+
+1 ...
+
+... ...
+
+0 ...
+
+⎟⎟⎟⎟⎠
+
+⎜⎜⎜⎜⎝
+
+γμ,1u ...
+
+⎟⎟⎟⎟⎠
+
+γM−1Ξ+μ u
+
+cM−1,0[D ]M−1 cM−1,1[D ]M−2 . . . 1
+
+γμ,M −1 u
+
+= Φ μ,M u,
+
+(5.9)
+
+with an invertible triangular transition matrix Φ. Now we have from the well-known continuity properties of M = {γ0, . . . , γM−1}
+(cf. (1.6)) that
+
+M −1
+
+γj Ξ+μ u
+
+≤ C Bps−Re μ−j−1/p(Rn−1)
+
+r+Ξ+μ u
+
+= C H
+
+s−Re p
+
+μ (Rn+ )
+
+u
+
+μ(s).
+
+j=0
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+515
+
+Moreover, Φ is clearly a homeomorphism in 0≤j<M Bps−Re μ−j−1/p(Rn−1), so by (5.9), we likewise have
+
+M −1 j=0
+
+γ u ≤ C μ,j Bps−Re μ−j−1/p(Rn−1)
+
+u μ(s).
+
+(5.10)
+
+Thus the mapping μ,M extends by continuity as asserted.
+
+Finally, the extended map is surjective: For a given vector ϕ = {ϕ0, . . . , ϕM−1} ∈
+
+0≤j<M
+
+Bps−Re
+
+μ−j−1/p(Rn−1),
+
+let
+
+g
+
+∈
+
+H
+
+s−Re p
+
+μ
+
+(Rn+)
+
+be
+
+an
+
+element
+
+of
+
+H
+
+s−Re p
+
+μ
+
+(Rn+)
+
+with
+
+M g = Φϕ, e.g. g = KM Φϕ with KM deﬁned in Section 1.1, cf. (1.7). Set u = Ξ+−μe+g.
+
+By Proposition 1.7, it has the desired properties. 2
+
+One can replace [ξ ] by ξ throughout the proof if convenient. Note that on the space Hpμ(s)(Ω), all the boundary operators γμ,j, j = 0, 1, . . . , M − 1, are deﬁned when s > Re μ + M − 1/p . They are local, in the sense that they are
+extensions by continuity of local operators of the form: γ0 composed with multiplication and diﬀerential operators. For this extended deﬁnition, the ﬁrst line in (5.5) is valid on H(μ+j)(s)(Ω), and the second line holds on Hμ(s)(Ω) when Re μ > −1.
+
+Remark 5.2. In the course of the above proof we have in fact constructed an explicit right inverse to μ,M in the case Ω = Rn+, namely
+
+Kμ,M = Ξ+−μe+KM Φ.
+
+(5.11)
+
+We observe in particular from (5.9) that Φ = I when M = 1, and hence γ0Ξ+μ u = γμ,0u. For the case M = 1 we consequently have:
+
+Corollary 5.3. When s > Re μ + 1/p, the mapping γμ,0 is continuous and surjective from
+
+Hpμ(s)(Rn+) to Bps−Re μ−1/p(Rn−1) with nullspace Hp(μ+1)(s)(Rn+). It coincides with γ0Ξ+μ .
+
+A
+
+right
+
+inverse
+
+is
+
+Kμ,0
+
+=
+
+Ξ+−μe+K0,
+
+where
+
+K0: Bpt−1/p(Rn−1)
+
+→
+
+H
+
+t p
+
+(Rn+)
+
+is
+
+a
+
+right
+
+inverse of γ0.
+
+As an example, let us also do the calculation of Φ in detail in the case M = 2. For u ∈ Eμ(Rn+) ∩ E (K),
+u x , xn = u0 x Iμ(xn) + u1 x Iμ+1(xn) + remainder,
+so we have for |ξn| ≥ 1 (assumed in the following): uˆ(ξ) = i−μ−1uˆ0 ξ ξn− −μ−1 + i−μ−2uˆ1 ξ ξn− −μ−2 + O ξn−μ−3 .
+Denote [ξ ] = σ. The function (σ + iξn)μ is Taylor expanded: (σ + iξn)σ = iμ(ξn − iσ)μ = iμ ξn− μ − iμ−1μσ ξn− μ−1 + O ξnμ−2 .
+
+516
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Hence
+
+(σ + iξn)σuˆ(ξ) = i−1uˆ0 ξ ξn−1 + i−2μσuˆ0 ξ ξn−2 + i−2uˆ1 ξ ξn−2 + O ξn−3 .
+
+In view of (2.9),
+
+γ0Ξ+μ u = u0.
+
+Moreover,
+
+iξn(σ + iξn)σuˆ(ξ) = uˆ0 ξ + i−1μσuˆ0 ξ ξn−1 + i−1uˆ1 ξ ξn−1 + O ξn−2 , so since Fξ−→1xuˆ0(ξ ) = u0(x )⊗δ0(xn) does not contribute to the boundary value from Rn+,
+γ0∂nΞ+μ u = μ σ D u0 + u1.
+
+Thus
+
+γ0Ξ+μ u γ1Ξ+μ u
+
+=
+
+1 μ [D ]
+
+0 1
+
+γμ,0u , and Φ =
+
+1
+
+0 .
+
+γμ,1u
+
+μ [D ] 1
+
+(5.12)
+
+If σ is taken equal to ξ instead of [ξ ], we get of course Φ of the above form with [D ] replaced by D .
+
+By use of concrete formulas from the Boutet de Monvel calculus we can show that not only the boundary operators from Hpμ(s)(Rn+) carry a μ-th power of xn, but also the functions on Rn+ themselves do so.
+Theorem 5.4. When s > Re μ + M − 1/p , and u ∈ Hpμ(s)(Rn+), then with Kμ,M taken as in (5.11),
+
+u = v + w, where v = Kμ,M μ,M u and w ∈ H(μ+M)(s) Rn+ . Here if Re μ > −1, v = Ξ+−μe+KM M Ξ+μ u has the form
+
+v=
+
+M −1
+cj
+j=0
+
+xμn+j
+
+e+
+
+K0
+
+(γμ,j
+
+u)
+
+=
+
+e+xμnv0,
+
+with v0 ∈ Hs−Re μ(Rn+), K0 as in (1.7). Thus one has for Re μ > −1, s > Re μ − 1/p , with M ∈ N:
+
+(5.13) (5.14)
+
+Hpμ(s) Rn+
+
+= H˙ ps(Rn+) if s − Re μ ∈ ]−1/p , 1/p[, ⊂ H˙ ps−0(Rn+) if s − Re μ = 1/p.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+517
+
+Hpμ(s) Rn+
+
+⊂
+
+e+xμn
+
+H
+
+s−Re p
+
+μ
+
+Rn+
+
++
+
+H˙ ps(Rn+) H˙ ps−0(Rn+)
+
+if s − Re μ ∈ M + ]−1/p , 1/p[ if s − Re μ = M + 1/p.
+
+(5.15)
+
+The inclusions (5.15) also hold in the manifold situation, with Rn+ replaced by Ω and xn replaced by d(x).
+
+Proof. The decomposition (5.13) is an immediate consequence of Theorem 5.1; here w ∈ Hp(μ+M)(s)(Rn+) since μ,M w = 0. In the next statements we take Re μ > −1 in order to identify Iμ with the locally integrable function e+r+xμn/Γ (μ + 1). Distributional formulations can be made for lower μ.
+For the description in (5.14), note that the ﬁrst equality follows from (5.9) and (5.11).
+For the next equality, consider ﬁrst the case M = 1, where simply v = Kμ,0γμ,0u. Recall from (1.7) that K0 is the elementary Poisson operator of order 0
+
+ϕ → Fξ−→ 1 x ϕˆ ξ e+r+e−[ξ ]xn = Fξ−→1x ϕˆ ξ ξ + iξn −1 .
+
+Constructing Kμ,0 as in Corollary 5.3 we have, cf. (2.5),
+
+Kμ,0ϕ = Fξ−→1x ξ + iξn −μϕˆ ξ ξ = cμFξ−→ 1 x e+r+xμne−[ξ ]xn ϕˆ ξ
+
++ iξn −1 = cμe+xμnK0ϕ.
+
+(5.16)
+
+Hence since γμ,0u ∈ Bps−Re μ−1/p(Rn−1),
+
+v
+
+=
+
+cμe+xμnK0γμ,0u
+
+∈
+
+e+xμnH
+
+s−Re p
+
+μ
+
+Rn+
+
+,
+
+(5.17)
+
+by the mapping properties of Poisson operators shown in [11]. For general M we have that v = Kμ,0γμ,0u + · · · + Kμ,M−1γμ,M−1u, and we have
+to account for the general term Kμ,jγμ,ju. Here ϕj = γμ,j u ∈ Bps−Re μ−j−1/p(Rn−1). By (1.7), Kj acts as
+
+ϕj → Fξ−→1x ϕˆj ξ
+
+(−1)j j!
+
+∂ξjn
+
+ξ
+
++ iξn −1
+
+= Fξ−→1x ϕˆj ξ ij
+
+ξ
+
++ iξn −j−1 .
+
+Then
+
+Kμ,j ϕj = Fξ−→1x ξ + iξn −μϕˆj ξ ξ + iξn −j−1 = cμ,j Fξ−→ 1 x e+r+xμn+j e−[ξ ]xn ϕˆj ξ = cμ,j e+xμn+j K0ϕj .
+
+(5.18)
+
+By the rules of the Boutet de Monvel calculus, xjnK0 is a Poisson operator of order −j,
+
+so
+
+the
+
+mapping
+
+properties
+
+from
+
+[11]
+
+assure
+
+that
+
+xjnK0ϕj
+
+∈
+
+H
+
+s−Re p
+
+μ(Rn+).
+
+Thus
+
+Kμ,j γμ,j u
+
+∈
+
+e+xμnH
+
+s−Re p
+
+μ
+
+Rn+
+
+.
+
+518
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+The ﬁrst line in (5.15) is shown in (1.26) when s−Re μ < 1/p, and when s−Re μ = 1/p, it follows in view of (1.31). The second line in (5.15) follows from (5.13) and (5.14), when s − Re μ − M ∈ ]−1/p , 1/p[, since H(μ+M)(s)(Rn+) then is as in the ﬁrst line.
+The conclusions in (5.15) carry over to the manifold situation by use of local coordinates. 2
+
+The formulas (5.17), (5.18) are of interest in themselves.
+
+Corollary 5.5. Let Re μ ≥ 0, s > Re μ + n/p. Then
+
+Hpμ(s)(Ω) ⊂ e+d(x)μCs−Re μ−n/p−0(Ω),
+
+(5.19)
+
+where −0 can be left out when s − Re μ − n/p, s − n/p and s − Re μ − 1/p are noninteger.
+
+Proof. We use the description by two terms in (5.15). By (1.23),
+
+e+
+
+d(x)μH
+
+s−Re p
+
+μ(Ω)
+
+⊂
+
+e+ d(x)μ C s−Re
+
+μ−n/p−0(Ω),
+
+where −0 can be left out when s − Re μ − n/p is not integer. When u ∈ H˙ ps(Ω), it belongs to Cs−n/p−0(Ω1) and is supported in Ω; here −0 can be left out when s − n/p
+is not integer. Since s > 1/p, γ0u = 0; then in view of the Hölder continuity, u ∈ e+d(x)μCs−Re μ−n/p−0(Ω), since s − n/p > Re μ ≥ 0. This extends to H˙ ps−0(Ω) when s − Re μ − 1/p is integer; the −0 is needed then in view of (5.15). Hereby the assertion
+is veriﬁed for the two terms in (5.15). 2
+
+6. Nonhomogeneous boundary value problems, parametrices
+
+The problems treated in Theorem 4.4 can be regarded as homogeneous boundary problems, when we see them in the following perspective.
+Consider again our operator P satisfying the hypotheses of Theorem 4.4, with the factorization index μ0 ∈ C. For a positive integer M let μ = μ0 − M . We have from Theorem 5.1 that when s > Re μ + M − 1/p = Re μ0 − 1/p, then μ,M deﬁnes a homeomorphism
+
+μ,M : Hpμ(s)(Ω)/Hpμ0(s)(Ω) −−∼→
+
+Bps−Re μ−j−1/p(∂Ω).
+
+0≤j<M
+
+Combining this with the Fredholm property of
+
+(6.1)
+
+we have immediately:
+
+r+P
+
+:
+
+Hpμ0(s)(Ω)
+
+→
+
+H
+
+s−Re p
+
+m(Ω),
+
+(6.2)
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+519
+
+Theorem 6.1. Let P satisfy the hypotheses of Theorem 4.4, and let μ = μ0 − M for a positive integer M . Then when s > Re μ0 − 1/p , {r+P, μ,M } deﬁnes a Fredholm
+operator
+
+r+P,
+
+μ,M
+
+:
+
+Hpμ(s)(Ω)
+
+→
+
+H
+
+s−Re p
+
+m(Ω)
+
+×
+
+Bps−Re μ−j−1/p(∂Ω).
+
+0≤j<M
+
+(6.3)
+
+This is a solvability result for the following inhomogeneous “Dirichlet problem” for P :
+
+r+P u = f,
+
+μ,M u = ϕ,
+
+(6.4)
+
+where ϕ is an M -vector {ϕ0, . . . , ϕM−1} of boundary data. We can in particular take M = 1; this gives:
+
+Corollary 6.2. With P as in Theorem 6.1, let μ = μ0 − 1. Then
+
+r+P, γμ,0
+
+:
+
+Hpμ(s)(Ω)
+
+→
+
+H
+
+s−Re p
+
+m(Ω)
+
+×
+
+Bps−Re
+
+μ−1/p(∂Ω)
+
+is Fredholm when s > Re μ + 1 − 1/p (= Re μ0 − 1/p ).
+
+(6.5)
+
+This shows a solvability result for the problem
+
+r+P u = f,
+
+γμ,0u = ϕ0,
+
+(6.6)
+
+with just γμ,0u prescribed, μ = μ0 − 1.
+
+Example 6.3. For the Laplace–Beltrami operator, μ0 = 1, so Corollary 6.2 is applicable
+
+with
+
+μ
+
+=
+
+0.
+
+Here
+
+Hp0(s)
+
+=
+
+H
+
+s p
+
+and
+
+γ0,0
+
+=
+
+γ0,
+
+so
+
+it
+
+gives
+
+the
+
+Fredholm
+
+property
+
+of
+
+the
+
+mapping
+
+{Δ,
+
+γ0}:
+
+H
+
+sp(Ω)
+
+→
+
+H
+
+s−2 p
+
+(Ω)
+
+×
+
+Bps−1/p(∂Ω)
+
+for s > 1/p, which is well-known as the inhomogeneous Dirichlet problem for Δ. For M = 2, μ = μ0 − M = −1 and μ,M = {γ−1,0, γ−1,1}. When u ∈ E−1(Rn+),
+
+u = u0 x δ(xn) + u1 x + v, v ∈ E1 Rn+ , u0 and u1 ∈ C∞ Rn−1 ,
+
+according to (5.3); then γ−1,0u = u0(x ) and γ−1,1u = u1(x ). We get a solvability result for Δ where the term u0(x )δ(xn) can be prescribed arbitrarily. This is a point of view on boundary problems related to the works of Roitberg and Sheftel [25,24], going beyond the ordinary concept of boundary value problems.
+
+Remark 6.4. Since the distributions Iμ(xn) are locally integrable functions e+r+cμxμn only when Re μ > −1, the trace maps γμ,0 are somewhat “wild” when Re μ ≤ −1. In the
+
+520
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+interpretations of concrete cases we shall in this paper only consider situations where the entering trace operators have Re μ > −1; e.g. in applications of Theorem 6.1 we only take M < Re μ0 + 1.
+We shall ﬁnally show that a parametrix of the nonhomogeneous boundary problem considered in Corollary 6.2 can be obtained by a combination of the knowledge from the type 0 calculus and the special operators used here. The construction of K “from scratch” takes up much eﬀort in [19].
+
+Theorem 6.5. Let P be a globally estimated elliptic ψdo of order m ∈ C and type μ0 ∈ C, and factorization index μ0, relative to the domain Rn+. Let s > Re μ0 − 1/p .
+For the problem considered in Corollary 6.2:
+
+r+P u = f,
+
+γμ0−1,0u = ϕ,
+
+(6.7)
+
+with
+
+f
+
+given
+
+in
+
+H
+
+s−Re p
+
+m(Rn+)
+
+and
+
+ϕ
+
+given
+
+in
+
+Bps−μ0+1−1/p(Rn−1),
+
+a
+
+parametrix
+
+is
+
+(R
+
+K
+
+)
+
+:
+
+H
+
+s−Re p
+
+m
+
+Rn+
+
+× Bps−μ0+1−1/p Rn−1
+
+→ Hp(μ0−1)(s) Rn+ ,
+
+(6.8)
+
+where R is as in Theorem 4.4, and K is of the form
+
+K = Ξ+1−μ0 e+K = Λ1+−μ0 e+K ,
+
+(6.9)
+
+with Poisson operators K and K of order 0 in the Boutet de Monvel calculus.
+
+Proof. As a parametrix for the problem (6.7) with ϕ = 0 we can use R introduced in Theorem 4.4, since Hpμ0(s) is the subspace of Hp(μ0−1)(s) where γμ0−1,0u = 0. Note that
+P is expressed in terms of Q by
+
+P = Λm − −μ0 QΛμ+0 .
+
+(6.10)
+
+It remains to solve problem (6.7) when f = 0. Consider
+
+r+P u = 0,
+
+γμ0−1,0u = ϕ,
+
+(6.11)
+
+with ϕ given in Bps−μ0+1−1/p(Rn−1). On Rn+ we have explicit formulas for the elementary Poisson-like operators Kμ,M . Here
+
+Kμ0−1,0 = Ξ+1−μ0 e+K0,
+
+(6.12)
+
+cf. Corollary 5.3. To solve (6.11), let
+
+z = Ξ+1−μ0 e+K0ϕ,
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+521
+
+and form w = u − z; it must solve
+
+r+P w = −r+P Ξ+1−μ0 e+K0ϕ,
+
+γμ0−1,0w = 0.
+
+(6.13)
+
+By Theorem 4.4, this problem has the solution in a parametrix sense:
+
+w = −Rr+P Ξ+1−μ0 e+K0ϕ = −Λ−+μ0 e+Q+Λ−μ0,+−mr+Λm − −μ0 QΛμ+0 Ξ+1−μ0 e+K0ϕ = −Λ−+μ0 e+Q+r+QΛμ+0 Ξ+1−μ0 e+K0ϕ,
+
+when we take (6.10) into account, using also Remark 1.1. We now observe, recalling the deﬁnition of Y+μ from (1.16)ﬀ., that
+
+Λμ+0 Ξ+1−μ0 e+K0 = Λ1+e+r+ OP λ+μ0−1χ1+−μ0 e+K0 = Λ1+e+Y+μ,0+−1K0.
+
+An application of Lemma 6.6 below gives that Y+μ,0+−1K0 is a Poisson operator of order 0 in the Boutet de Monvel calculus. Hence Q+r+QΛ1+e+Y+μ,0+−1K0 is a Poisson operator
+K1 of order 1 in the Boutet de Monvel calculus, and
+
+w = −Λ−+μ0 e+K1ϕ.
+
+(6.14)
+
+This can be rewritten, using again Lemma 6.6, as
+
+w = −Ξ+−μ0 e+Y+−,μ+0 K1ϕ,
+where Y+−,μ+0 K1 is another Poisson operator of order 1. Composition with Ξ+−1 gives a Poisson operator of order 0. Thus u = z + w has the structure
+
+u = Ξ+1−μ0 e+K ϕ,
+
+with a Poisson operator K of order 0. This shows the ﬁrst formula in (6.9). For the second formula, we keep w in the form (6.14) and instead rewrite
+
+z = Ξ+1−μ0 e+K0ϕ = Λ−+μ0 e+Λ1+,+Y+μ,0+−1K0ϕ,
+where Λ1+,+Y+μ,0+−1K0 is a Poisson operator of order 1 in view of Lemma 6.6 and the composition rules. 2
+
+Analogous constructions can be made in case M > 1. The following lemma shows a case where the composition of a Poisson operator with certain generalized ψdo’s deﬁned from symbols that only satisfy some of the estimates required for the S1d,0 classes, is again a Poisson operator (similarly to some cases considered in Section 3.2 of [15]).
+
+522
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+Lemma 6.6. Let K be a Poisson operator on Rn+ of order m, with symbol k(x , ξ), let s(x , ξ) be a Poisson symbol of order 0, and let S = OP(s(x , ξ)) be the generalized
+
+ψdo with symbol s (deﬁned as in (1.2)). Then the composed operator S+K is a Poisson
+
+operator of order m The result applies
+
+with symbol k in particular
+
+=s◦k when S
+
+∼ =
+
+Y+μα−∈N1n0 =α1!ODPξα(sη∂+μxα)k−.
+
+1
+
+as
+
+deﬁned
+
+in
+
+(1.6)ﬀ.
+
+Proof. When k is independent of x , so that e+Ku = F−1(k(ξ)uˆ(ξ )), we can move k(ξ)uˆ inside the integral deﬁning the action of S, and the result follows since sk is a Poisson symbol of order m (a product of functions in H+ is in H+). In the x -dependent case, there is a standard procedure of replacing k by a y -form symbol; it can then be moved inside the integral as above, and the resulting symbol in (x , y )-form reduced to x -form as an asymptotic series.
+For the last statement, we recall that
+
+λ1+/χ1+ = 1 + q+1 (ξ), q+1 = ξ ψ¯ ξn/a ξ − 1 / ξ + iξn ∈ H+
+
+as
+
+a
+
+function
+
+of
+
+ξn
+
+for
+
+all
+
+ξ
+
+,
+
+and
+
+|q+1 (ξ)|
+
+≤
+
+1 2
+
+(recall
+
+that
+
+a
+
+is
+
+taken
+
+large).
+
+Then
+
+η+μ (ξ) =
+
+1 + q+1
+
+μ
+
+=
+
+1
+
++
+
+μq+1
+
++
+
+μ(μ
+
+−
+
+1) 1 2
+
+q+1 2 + · · · = 1 + q
+
+as a convergent Taylor series, where (q+1 )k ∈ H−+k as a function of ξn, so that q ∈ H+ for all ξ ; moreover, it is homogeneous of degree 0 for |ξ | ≥ 1. 2
+
+Corollary 6.7. The operator K in Theorem 6.5 has the property that when B is a ψdo of type μ0 and order m0 + μ0, m0 ∈ Z, then γ0r+BK is a ψdo on Rn−1 of order m0 + 1.
+Proof. Let B = BΛ1+−μ0 ; then B is of order m0 + 1 and type 0, hence belongs to the Boutet de Monvel calculus. From the rules there we conclude, using (6.9), that γ0r+BK = γ0B+K is a ψdo of order m0 + 1. 2
+7. Applications to fractional powers of elliptic operators
+
+We here show some consequences for fractional powers of diﬀerential operators. Let A be a second-order strongly elliptic operator with C∞-coeﬃcients on Ω1 (that can be taken compact), and consider the fractional powers Pa = Aa for a > 0. By Lemma 2.9 and Example 3.2, they are classical ψdo’s of order 2a, having type a and factorization index μ0 = a relative to Ω. This holds in particular for (−Δ)a, where Δ is the Laplace–Beltrami operator on Ω1. See also Remark 2.10.
+We have as an immediate corollary of Theorems 4.4 and 6.1:
+
+Theorem 7.1. Let 1 < p < ∞, and let s > a − 1/p = a − 1 + 1/p. 1◦ Let u ∈ H˙ pσ(Ω) for some σ > a − 1/p . If r+Pau ∈ Hps−2a(Ω), then u ∈ Hpa(s)(Ω).
+The mapping r+Pa is Fredholm:
+
+r+Pa: Hpa(s)(Ω) → Hps−2a(Ω).
+
+(7.1)
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+523
+
+2◦ In particular, if r+Pau ∈ C∞(Ω), then u ∈ Ea(Ω), and the mapping r+Pa is Fredholm:
+
+r+Pa: Ea(Ω) → C∞(Ω).
+
+(7.2)
+
+3◦ Moreover, when M is a positive integer, the operator {r+Pa, a−M,M } is Fredholm:
+
+r+Pa,
+
+a−M,M
+
+:
+
+Hp(a−M )(s) (Ω )
+
+→
+
+H
+
+s−2a p
+
+(Ω)
+
+×
+
+Bps−a+M −j −1/p (∂ Ω ),
+
+0≤j<M
+
+r+Pa, a−M,M : Ea−M (Ω) → C∞(Ω) × C∞(∂Ω)M .
+
+(7.3)
+
+As mentioned in Remark 6.4, we shall here only discuss 3◦ when M < a + 1.
+
+Example 7.2. Let us describe the domain of the Dirichlet realization for p = 2 in this context. Deﬁne it as the space of solutions of r+Paf = u with f ∈ L2(Ω) according to the above theorem:
+
+D(Pa,Dir) =
+
+u
+
+∈
+
+H˙ 2a−
+
+1 2
+
++0(Ω)
+
+r+Pau ∈ L2(Ω) .
+
+The order of Pa is 2a, so the range space in Theorem 7.1 1◦ equals L2(Ω) when s = 2a.
+
+Then D(Pa,Dir) = H2a(2a)(Ω), where r+Pa is Fredholm. This is a precise and seemingly
+
+new
+
+result
+
+when
+
+a ≥
+
+1 2
+
+,
+
+the
+
+case
+
+a
+
+<
+
+1 2
+
+being
+
+covered
+
+by
+
+Vishik
+
+and
+
+Eskin’s
+
+theorem.
+
+Note that
+
+2a ∈ a + − 1 , 1
+
+1 when a < ,
+
+22
+
+2
+
+2a ∈ a + 1 + − 1 , 1
+
+when
+
+1
+
+≤
+
+a
+
+<
+
+3 ,
+
+etc.
+
+22
+
+2
+
+2
+
+Then we have by Theorem 5.4,
+
+⎧
+
+⎪⎪⎨ = H˙ 22a(Ω),
+
+when
+
+0
+
+<
+
+a
+
+<
+
+1 2
+
+,
+
+D(Pa,Dir)
+
+⎪⎪⎩
+
+= ⊂
+
+1
+H22
+
+(1)(Ω)
+
+⊂
+
+H˙ 21−0(Ω)
+
+e+d(x)a
+
+H
+
+a 2
+
+(Ω)
+
++
+
+H˙ 22a(Ω)
+
+when
+
+a
+
+=
+
+1 2
+
+,
+
+when
+
+1 2
+
+<
+
+a
+
+<
+
+3 2
+
+,
+
+etc.
+
+(7.4)
+
+For
+
+a
+
+>
+
+1 2
+
+,
+
+the
+
+structure
+
+of
+
+the
+
+contribution
+
+from
+
+d(x)aH
+
+a 2
+
+is
+
+described
+
+in
+
+(5.14),
+
+(5.17).
+
+We remark that the operator Pa,Dir for A = −Δ is not the same as the operator
+
+Ba = (−ΔDir)a deﬁned by L2 spectral theory from the Dirichlet realization ΔDir of the
+
+Laplacian when 0 < a < 1. Here D(Ba) is the interpolation space between H22(Ω)∩H˙ 21(Ω)
+
+and
+
+L2(Ω),
+
+equal
+
+to
+
+{u
+
+∈
+
+H
+
+2a 2
+
+(Ω)
+
+|
+
+γ0u
+
+=
+
+0}
+
+when
+
+a
+
+>
+
+1 4
+
+and
+
+to
+
+H˙ 22a(Ω)
+
+when
+
+a <
+
+3 4
+
+.
+
+Now we want to see what the result gives in terms of bounded or Hölder continuous
+
+functions. It has been shown by Ros-Oton and Serra in [26] for 0 < a < 1, Ω ⊂ Rn,
+
+that solutions of r+(−Δ)au = f ∈ L∞(Ω) with u ∈ H˙ a(Ω) are in d(x)aCα(Ω) for some
+
+524
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+α < min{a, 1 − a}, when Ω is C1,1. (See [26] for further references to contributions to the problem.)
+Let us study the solutions of the homogeneous Dirichlet problem
+
+r+Pau = f,
+
+(7.5)
+
+where
+
+f
+
+is
+
+given
+
+in
+
+H
+
+t p
+
+(Ω)
+
+with
+
+t
+
+≥
+
+0,
+
+for
+
+u
+
+∈
+
+H˙ pa−1/p
+
++0(Ω).
+
+By
+
+Theorem
+
+7.1
+
+1◦
+
+with
+
+s = t + 2a, u belongs to Hpa(t+2a)(Ω). By Corollary 5.5,
+
+Hpa(t+2a)(Ω) ⊂ e+d(x)aCt+a−n/p−0(Ω),
+
+(7.6)
+
+when p is so large that a > n/p (for then t + 2a > a + n/p); here −0 can be left out
+except at certain values of t. The ellipticity of Pa moreover assures that u ∈ Hpt+,lo2ca(Ω), which is contained in Ct+2a−n/p−0(Ω). We conclude that
+
+u ∈ e+d(x)aCt+a−n/p−0(Ω) ∩ Ct+2a−n/p−0(Ω).
+
+(7.7)
+
+Note that the prerequisite u ∈ H˙ pa−1/p +0(Ω) is satisﬁed if (cf. (1.23))
+
+u∈
+
+e+Lp(Ω),
+
+when a < 1/p ,
+
+C˙ a−1/p +0(Ω), when a ≥ 1/p .
+
+(7.8)
+
+For t = 0 we have found in particular:
+
+f ∈ Lp(Ω) =⇒ u ∈ e+d(x)aCa−n/p−0(Ω) ∩ C2a−n/p−0(Ω),
+
+(7.9)
+
+where −0 can be omitted when a−n/p, 2a−n/p and a−1/p are not integer. For p → ∞, a − n/p → a, and (7.9) gives, since L∞(Ω) ⊂ Lp(Ω) for all p,
+
+f ∈ L∞(Ω) =⇒ u ∈ e+d(x)aCa−0(Ω) ∩ C2a−0(Ω).
+
+(7.10)
+
+(It suﬃces that u ∈ H˙ pa0−1/p0+0(Ω) for some p0.) This shows an improvement of Th. 1.2 of Ros-Oton and Serra [26], in higher generality
+concerning the studied operator and the data, when the boundary is smooth. For general higher t, we similarly ﬁnd, noting that Ct+0(Ω) ⊂ Htp(Ω) and letting
+p → ∞:
+
+f ∈ Ct+0(Ω) =⇒ u ∈ e+d(x)aCt+a−0(Ω) ∩ Ct+2a−0(Ω).
+
+(7.11)
+
+Recall also that Theorem 7.1 2◦ shows:
+
+f ∈ C∞(Ω) ⇐⇒ u ∈ e+d(x)aC∞(Ω) = Ea(Ω) ,
+
+(7.12)
+
+with Fredholm solvability, when u ∈ H˙ pa−1/p +0(Ω) for some p.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+525
+
+This extends results of [26] to arbitrarily smooth spaces. The Fredholm property of (7.1) implies that in each of the cases (7.9)–(7.11), there is solvability for f in the indicated space, subject to a ﬁnite dimensional linear condition.
+We have hereby obtained:
+
+Theorem 7.3. Let A be a second-order strongly elliptic diﬀerential operator on Ω1 with smooth coeﬃcients, and let Pa = Aa for some a > 0, a ψdo of order 2a by Seeley’s construction. Let d(x) > 0 on Ω, d ∈ C∞(Ω) and proportional to dist(x, ∂Ω) near ∂Ω. Consider the homogeneous Dirichlet problem (7.5), taking u ∈ H˙ pa−1/p +0(Ω) for some p,
+cf. also (7.8).
+Let p > n/a. Then (7.5) is solvable when f is in a subspace of Lp(Ω) with ﬁnite codimension, and the solutions satisfy (7.9)ﬀ.
+A similar statement holds for f ∈ L∞(Ω) with solutions satisfying (7.10), and for f ∈ Ct+0(Ω) with solutions satisfying (7.11). Moreover, (7.12) holds with Fredholm solv-
+ability.
+
+Since a > 0, we can also apply Theorem 7.1 3◦ with M = 1. Recall that γa−1,0u is a constant times γ0(d(x)1−au). According to the theorem, the nonhomogeneous Dirichlet
+problem
+
+r+Pau = f,
+
+γ0d(x)1−au = ϕ,
+
+(7.13)
+
+is, when s > a − 1/p , Fredholm solvable for f ∈ Hps−2a(Ω), ϕ ∈ Bps−a+1−1/p(∂Ω), with solution u ∈ Hp(a−1)(s)(Ω).
+Since s > (a − 1) + 1 − 1/p , and a − 1 > −1, Theorem 5.4 and its corollary apply to
+show that when s > n/p,
+
+Hp(a−1)(s)(Ω) ⊂ e+d(x)a−1Hsp−a+1(Ω) + H˙ ps−0(Ω) ⊂ e+d(x)a−1Cs−a+1−n/p−0(Ω) + C˙ s−n/p−0(Ω),
+
+(7.14)
+
+where −0 can be left out except at certain values of t. (The C˙ -term is needed when a < 1.) Here we ﬁnd:
+
+f ∈ Lp(Ω), ϕ ∈ Ca+1−1/p+0(∂Ω) =⇒ u ∈ e+d(x)a−1Ca+1−n/p−0(Ω) ∩ C2a−n/p−0(Ω) + C˙ 2a−n/p−0(Ω),
+
+(7.15)
+
+when p > n/(a + 1); the −0 can be left out when a − n/p, 2a − n/p and a − 1/p are not integer. For p → ∞ this gives, since L∞(Ω) ⊂ Lp(Ω) and Ca+1(∂Ω) ⊂ Ca+1−1/p+0(∂Ω) for all p,
+
+f ∈ L∞(Ω), ϕ ∈ Ca+1(∂Ω) =⇒ u ∈ e+d(x)a−1Ca+1−0(Ω) ∩ C2a−0(Ω) + C˙ 2a−0(Ω).
+
+(7.16)
+
+526
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+For t ≥ 0 we likewise ﬁnd
+
+f ∈ Ct+0(Ω), ϕ ∈ Ct+a+1(∂Ω) =⇒ u ∈ e+d(x)a−1Ct+a+1−0(Ω) ∩ Ct+2a−0(Ω) + C˙ t+2a−0(Ω).
+
+(7.17)
+
+In each of these situations, there is solvability when the data {f, ϕ} are subject to a ﬁnite dimensional linear condition. We recall moreover from Theorem 7.1 3◦ that
+
+f ∈ C∞(Ω), ϕ ∈ C∞(∂Ω) ⇐⇒ u ∈ e+d(x)a−1C∞(Ω) = Ea−1(Ω) , (7.18)
+with Fredholm solvability, when u ∈ Hp(a−1)(s)(Ω) for some s, p with s > a − 1/p . We have then obtained:
+
+Theorem 7.4. Hypotheses as in Theorem 7.3. Consider the nonhomogeneous Dirichlet
+problem (7.13). Let p > n/(a + 1). For u ∈ H(a−1)(σ)(Ω) with σ > max{a − 1/p , n/p}, cf. also (7.14),
+(7.13) is solvable when f ∈ Lp(Ω), ϕ ∈ Ca+1−1/p+0(∂Ω), subject to a ﬁnite dimensional linear condition, with solutions satisfying (7.15)ﬀ.
+A similar statement holds when f ∈ L∞(Ω), ϕ ∈ Ca+1(∂Ω), with solutions satisfying (7.16), and when f ∈ Ct+0(Ω), ϕ ∈ Ct+a+1(∂Ω), with solutions satisfying (7.17).
+Moreover, (7.18) holds with Fredholm solvability.
+
+Note that since a can be any positive number, this covers powers between 0 and 1 of Δ2, Δ3, etc. When a > 1, we can also apply Theorem 7.1 3◦ for larger M (namely for M < a + 1), which gives natural extensions of Theorem 7.4. Details are left to the reader.
+The theory moreover applies to a-th powers of 2m-order strongly elliptic diﬀerential operators, since they are of order 2am and type am, and have factorization index am, cf. Example 3.2. The power a can also be taken complex.
+Other boundary operators (e.g. the Neumann operator γa−1,1 in lieu of γa−1,0 in (7.13), and more generally combinations of μ,M with suitable ψdo’s) can also be investigated, and one can make applications to mixed problems and transmission problems, and to spectral asymptotics. The solvability properties in Hölder spaces can be sharpened slightly by applying the ψdo techniques directly to scales of Hölder–Zygmund spaces B∞ s ,∞. We shall return to these subjects in subsequent works.
+Remark 7.5. The notes [19], labeled Chapter II, were given to me by Lars Hörmander in 1980, but I have only studied them in depth recently. They have been given to a number of people, but those colleagues that I have asked (in order to ﬁnd the missing Chapter I) have lost track of them. I have typed the text in TEX (with comments on misprints, etc.), and am willing to send it to interested readers; it can also be found on my homepage.
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+527
+
+References
+[1] P. Albin, R.B. Melrose, Fredholm realizations of elliptic symbols on manifolds with boundary, J. Reine Angew. Math. 627 (2009) 155–181.
+[2] K. Bogdan, T. Grzywny, M. Ryznar, Heat kernel estimates for the fractional Laplacian with Dirichlet conditions, Ann. Probab. 38 (2010) 1901–1923.
+[3] L. Boutet de Monvel, Opérateurs pseudo-diﬀérentiels elliptiques et problémes aux limites, Ann. Inst. Fourier (Grenoble) 19 (1969) 169–268.
+[4] L. Boutet de Monvel, Boundary problems for pseudo-diﬀerential operators, Acta Math. 126 (1971) 11–51.
+[5] L. Boutet de Monvel, Lacunas and Transmissions, Ann. of Math. Stud., vol. 91, Princeton, 1979, pp. 209–218.
+[6] O. Chkadua, R. Duduchava, Pseudodiﬀerential equations on manifolds with boundary: Fredholm property and asymptotics, Math. Nachr. 222 (2001) 79–139.
+[7] G. Eskin, Boundary Value Problems for Elliptic Pseudodiﬀerential Equations, Amer. Math. Soc., Providence, RI, 1981.
+[8] R. Frank, L. Geisinger, Reﬁned semiclassical asymptotics for fractional powers of the Laplace operator, arXiv:1105.5181, J. Reine Angew. Math. (2014), http://dx.doi.org/10.1515/crelle-2013-0120, in press.
+[9] J. Franke, Elliptische Randwertprobleme in Besov–Triebel–Lizorkin-Raümen, Dissertation, Friedrich-Schiller-Universität Jena, 1986.
+[10] M. Gonzalez, R. Mazzeo, Y. Sire, Singular solutions of fractional order conformal Laplacians, J. Geom. Anal. 22 (2012) 845–863.
+[11] G. Grubb, Pseudo-diﬀerential boundary problems in Lp-spaces, Comm. Partial Diﬀerential Equations 13 (1990) 289–340.
+[12] G. Grubb, Functional Calculus of Pseudodiﬀerential Boundary Problems, second edition, Progr. Math., vol. 65, Birkhäuser, Boston, 1996, ﬁrst edition issued 1986.
+[13] G. Grubb, Distributions and Operators, Grad. Texts in Math., vol. 252, Springer, New York, 2009. [14] G. Grubb, L. Hörmander, The transmission property, Math. Scand. 67 (1990) 273–289. [15] G. Grubb, N.J. Kokholm, A global calculus of parameter-dependent pseudodiﬀerential boundary
+problems in Lp Sobolev spaces, Acta Math. 171 (1993) 165–229. [16] G. Harutyunyan, B.-W. Schulze, Elliptic Mixed, Transmission and Singular Crack Problems, EMS
+Tracts Math., vol. 4, European Mathematical Society (EMS), Zürich, 2008. [17] A. Hirschowitz, A. Piriou, Propriétés de transmission pour les distributions intégrales de Fourier,
+Comm. Partial Diﬀerential Equations 4 (1979) 113–217. [18] L. Hörmander, Linear Partial Diﬀerential Operators, Springer, 1963. [19] L. Hörmander, Ch. II, Boundary problems for “classical” pseudo-diﬀerential operators, photocopied
+lecture notes at Inst. Adv. Study, Princeton, 1965. [20] L. Hörmander, The Analysis of Linear Partial Diﬀerential Operators, I, Springer Verlag, Berlin,
+New York, 1983. [21] L. Hörmander, The Analysis of Linear Partial Diﬀerential Operators, III, Springer Verlag, Berlin,
+New York, 1985. [22] R.B. Melrose, The Atiyah–Patodi–Singer Index Theorem, A.K. Peters, Wellesley, MA, 1993. [23] S. Rempel, B.-W. Schulze, Complex powers for pseudo-diﬀerential boundary problems II, Math.
+Nachr. 116 (1984) 269–314. [24] Y. Roitberg, Elliptic Boundary Value Problems in the Spaces of Distributions, Math. Appl., vol. 384,
+Kluwer Academic Publishers Group, Dordrecht, 1996, 415 pp. [25] Y.A. Roitberg, V. Sheftel, A homeomorphism theorem for elliptic systems and its applications, Mat.
+Sb. 78 (1969) 446–472. [26] X. Ros-Oton, J. Serra, The Dirichlet problem for the fractional Laplacian, J. Math. Pures Appl.
+101 (2014) 275–302. [27] R.T. Seeley, Complex powers of an elliptic operator, in: Proc. Sympos. Pure Math., vol. 10, Amer.
+Math. Soc., 1967, pp. 288–307. [28] E. Shargorodsky, An Lp-analogue of the Vishik–Eskin theory, Mem. Diﬀerential Equations Math.
+Phys. 2 (1994) 41–146, Math. Inst. Georgian Acad. Sci., Tbilisi. [29] H. Triebel, Interpolation Theory, Function Spaces, Diﬀerential Operators, 2nd edition, J.A. Barth,
+Leipzig, 1995.
+
+528
+
+G. Grubb / Advances in Mathematics 268 (2015) 478–528
+
+[30] M.I. Vishik, G.I. Eskin, Convolution equations in a bounded region, Uspekhi Mat. Nauk 20 (1965) 89–152; English translation in: Russian Math. Surveys 20 (1965) 86–151.
+[31] M.I. Vishik, G.I. Eskin, Convolution equations of variable order, Tr. Mosk. Mat. Obs. 16 (1967) 25–50; English translation in: Trans. Moscow Math. Soc. 16 (1967) 27–52.
+
