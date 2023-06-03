@@ -4,8 +4,9 @@ import re
 import shutil
 import sqlite3
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Optional
 
+import papis.config
 import papis.bibtex
 import papis.strings
 import papis.document
@@ -255,13 +256,19 @@ ZOTERO_QUERY_ITEMS = """
 """.format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
 
 
-def add_from_sql(input_path: str, output_path: str) -> None:
+def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
     """
     :param inpath: path to zotero SQLite database "zoter.sqlite" and
         "storage" to be imported
     :param outpath: path where all items will be exported to created if not
         existing
     """
+    import yaml
+    import papis.yaml
+
+    if output_path is None:
+        output_path = papis.config.get_lib_dirs()[0]
+
     if not os.path.exists(input_path):
         raise FileNotFoundError(
             "[Errno 2] No such file or directory: '{}'".format(input_path))
@@ -274,9 +281,6 @@ def add_from_sql(input_path: str, output_path: str) -> None:
     if not os.path.exists(zotero_sqlite_file):
         raise FileNotFoundError(
             "No 'zotero.sqlite' file found in '{}'".format(input_path))
-
-    import yaml
-    import papis.yaml
 
     connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
@@ -296,7 +300,6 @@ def add_from_sql(input_path: str, output_path: str) -> None:
             datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
             .strftime(papis.strings.time_format))
         item_type = papis.bibtex.bibtex_type_converter.get(item_type, item_type)
-        logger.info("[%4d / %4d] Exporting item '%s'.", i, items_count, item_key)
 
         # get Zotero metadata
         fields = get_fields(connection, item_id)
@@ -325,8 +328,8 @@ def add_from_sql(input_path: str, output_path: str) -> None:
             ref = create_reference(item)
 
         item["ref"] = ref
-        logger.info("Exporting item '%s' with reference '%s' to folder '%s'.",
-                    item_key, ref, path)
+        logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to folder '%s'.",
+                    i, items_count, item_key, ref, path)
 
         # write out the info file
         # FIXME: should use papis.yaml.data_to_yaml, but blocked by
