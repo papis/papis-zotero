@@ -5,6 +5,7 @@ import shutil
 import sqlite3
 from typing import Any, Dict, List
 
+import papis.strings
 import papis.document
 import papis.logging
 
@@ -12,6 +13,11 @@ logger = papis.logging.get_logger(__name__)
 
 # Zotero item types to be excluded.
 ZOTERO_EXCLUDED_TYPES = ("attachment", "note")
+
+# Zotero excluded fields
+ZOTERO_EXCLUDED_FIELDS = frozenset({
+    "accessDate",
+})
 
 # dictionary of Zotero attachments mimetypes to be included
 # NOTE: mapped onto their respective extension to be used in papis
@@ -48,6 +54,11 @@ ZOTERO_TAG_DELIMITER = " "
 
 
 def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
+    """
+    :arg item_id: an identifier for the item to query.
+    :returns: a dictionary mapping fields to their values, e.g. ``"doi"``.
+    """
+
     item_field_query = """
     SELECT
       fields.fieldName,
@@ -66,8 +77,23 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
 
     fields = {}
     for name, value in cursor:
+        if name in ZOTERO_EXCLUDED_FIELDS:
+            continue
+
         name = ZOTERO_TO_PAPIS_FIELD_MAP.get(name, name)
         fields[name] = value
+
+    date = fields.pop("date", None)
+    if date is not None:
+        from datetime import datetime
+
+        try:
+            d = datetime.strptime(date.split(" ")[0][:-3], "%Y-%m")
+            fields["year"] = d.year
+            fields["month"] = d.month
+        except Exception as exc:
+            logger.error("Failed to parse date.", exc_info=exc)
+            fields["date"] = date
 
     return fields
 
@@ -239,9 +265,7 @@ def add_from_sql(input_path: str, output_path: str) -> None:
         item.itemID,
         itemType.typeName,
         key,
-        dateAdded,
-        dateModified,
-        clientDateModified
+        dateAdded
       FROM
         items item,
         itemTypes itemType
@@ -252,9 +276,12 @@ def add_from_sql(input_path: str, output_path: str) -> None:
         item.itemID
     """.format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
 
+    from datetime import datetime
     cursor.execute(items_query, ZOTERO_EXCLUDED_TYPES)
-    for i, (item_id, item_type, item_key,
-            date_added, date_modified, client_date_modified) in enumerate(cursor):
+    for i, (item_id, item_type, item_key, date_added) in enumerate(cursor):
+        date_added = (
+            datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
+            .strftime(papis.strings.time_format))
         item_type = ZOTERO_TO_PAPIS_TYPE_MAP.get(item_type, item_type)
         logger.info("[%4d / %4d] Exporting item '%s'.", i, items_count, item_key)
 
@@ -275,9 +302,7 @@ def add_from_sql(input_path: str, output_path: str) -> None:
         item = {
             "ref": ref,
             "type": item_type,
-            "created": date_added,
-            "modified": date_modified,
-            "modified.client": client_date_modified,
+            "time-added": date_added,
         }
         item.update(fields)
         item.update(get_creators(connection, item_id))
