@@ -37,9 +37,6 @@ ZOTERO_INCLUDED_MIMETYPE_MAP = {
     "application/zip": "zip",
 }
 
-# dictionary translating from Zotero to papis type names
-ZOTERO_TO_PAPIS_TYPE_MAP = {"journalArticle": "article"}
-
 # dictionary translating from zotero to papis field names
 ZOTERO_TO_PAPIS_FIELD_MAP = {
     "abstractNote": "abstract",
@@ -298,7 +295,7 @@ def add_from_sql(input_path: str, output_path: str) -> None:
         date_added = (
             datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
             .strftime(papis.strings.time_format))
-        item_type = ZOTERO_TO_PAPIS_TYPE_MAP.get(item_type, item_type)
+        item_type = papis.bibtex.bibtex_type_converter.get(item_type, item_type)
         logger.info("[%4d / %4d] Exporting item '%s'.", i, items_count, item_key)
 
         # get Zotero metadata
