@@ -111,7 +111,7 @@ def get_creators(connection: sqlite3.Connection,
 
 
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
-              input_path: str, output_path: str) -> Dict[str, List[str]]:
+              input_path: str, output_path: str) -> List[str]:
     item_attachment_query = """
     SELECT
       items.key,
@@ -133,23 +133,23 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
 
     files = []
     for key, path, mime in cursor:
+        import_paths = glob.glob(os.path.join(input_path, "storage", key, "*.*"))
+        if not import_paths:
+            continue
+
+        import_path = import_paths[0]
+        _, ext = os.path.splitext(import_path)
+        file_name = "{}{}".format(key, ext)
+        local_path = os.path.join(output_path, item_key, file_name)
+
         try:
-            # NOTE: a single file is assumed in the attachment's folder
-            # to avoid using path, which may contain invalid characters
-            import_path = glob.glob(
-                os.path.join(input_path, "storage", key, "*.*"))[0]
-
-            extension = os.path.splitext(import_path)[1]
-            file_name = "{}.{}".format(key, extension)
-            local_path = os.path.join(output_path, item_key, file_name)
-
             shutil.copyfile(import_path, local_path)
             files.append(file_name)
-        except Exception:
+        except Exception as exc:
             logger.error("Failed to export attachment '%s': '%s' (%s).", key,
-                         path, mime)
+                         path, mime, exc_info=exc)
 
-    return {"files": files}
+    return files
 
 
 def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
@@ -279,14 +279,13 @@ def add_from_sql(input_path: str, output_path: str) -> None:
         item.update(get_creators(connection, item_id))
         item.update(get_tags(connection, item_id))
         item.update(get_collections(connection, item_id))
-        item.update(
-            get_files(connection,
-                      item_id,
-                      item_key,
-                      input_path=input_path,
-                      output_path=output_path))
 
-        item.update({"ref": ref})
+        files = get_files(connection,
+                          item_id,
+                          item_key,
+                          input_path=input_path,
+                          output_path=output_path)
+        item.update({"ref": ref, "files": files})
 
         with open(os.path.join(path, "info.yaml"), "w+") as item_file:
             yaml.dump(item, item_file, default_flow_style=False)
