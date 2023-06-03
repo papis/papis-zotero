@@ -1,13 +1,13 @@
-import logging
 import os
 import http.server
 from typing import Optional
 
 import click
 
+import papis.logging
 import papis_zotero.server
 
-logger = logging.getLogger("papis.{}".format(__name__))
+logger = papis.logging.get_logger(__name__)
 
 
 @click.group("zotero")

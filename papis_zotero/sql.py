@@ -1,14 +1,14 @@
 import glob
-import logging
 import os
 import re
 import shutil
 import sqlite3
 from typing import Any, Dict, List
 
+import papis.logging
 from papis_zotero.utils import to_sql_tuple
 
-logger = logging.getLogger("papis.{}".format(__name__))
+logger = papis.logging.get_logger(__name__)
 
 # Zotero item types to be excluded.
 ZOTERO_EXCLUDED_TYPES = ["attachment", "note"]

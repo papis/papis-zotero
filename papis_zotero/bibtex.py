@@ -1,5 +1,4 @@
 import os
-import logging
 from typing import Optional
 
 import tqdm
@@ -11,8 +10,9 @@ import papis.bibtex
 import papis.commands.add
 import papis.config
 import papis.utils
+import papis.logging
 
-logger = logging.getLogger("papis.{}".format(__name__))
+logger = papis.logging.get_logger(__name__)
 
 BIBTEX_INFO_TEMPLATE = """{c.Back.BLACK}
 {c.Fore.RED}||
