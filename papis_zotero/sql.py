@@ -5,6 +5,7 @@ import shutil
 import sqlite3
 from typing import Any, Dict, List
 
+import papis.document
 import papis.logging
 
 logger = papis.logging.get_logger(__name__)
@@ -92,28 +93,21 @@ def get_creators(connection: sqlite3.Connection,
     cursor = connection.cursor()
     cursor.execute(item_creator_query, (item_id,))
 
-    creators: Dict[str, Any] = {}
-    for creator_row in cursor:
-        creator_name = creator_row[0]
-        creator_name_list = "{}_list".format(creator_name)
-        given_name = creator_row[1]
-        surname = creator_row[2]
+    # gather creators
+    creators_by_type: Dict[str, List[Dict[str, str]]] = {}
+    for ctype, given_name, family_name in cursor:
+        creators_by_type.setdefault(ctype.lower(), []).append({
+            "given": given_name,
+            "family": family_name,
+            })
 
-        current_creators = creators.get(creator_name, "")
-        if current_creators != "":
-            current_creators += " and "
+    # convert to papis format
+    result: Dict[str, Any] = {}
+    for ctype, creators in creators_by_type.items():
+        result[ctype] = papis.document.author_list_to_author({"author_list": creators})
+        result[f"{ctype}_list"] = creators
 
-        current_creators += "{}, {}".format(surname, given_name)
-        creators[creator_name] = current_creators
-
-        current_creators_list = creators.get(creator_name_list, [])
-        current_creators_list.append({
-            "given_name": given_name,
-            "surname": surname
-        })
-        creators[creator_name_list] = current_creators_list
-
-    return creators
+    return result
 
 
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
