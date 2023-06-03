@@ -1,0 +1,22 @@
+author: Svärd, Magnus and Nordström, Jan
+author_list:
+- family: Svärd
+  given: Magnus
+- family: Nordström
+  given: Jan
+doi: 10.1016/j.jcp.2014.02.031
+files:
+- svard-and-nordstrom-2014-review-of-summation-by-parts-schemes-for-initial-b.pdf
+issn: 00219991
+journaltitle: Journal of Computational Physics
+langid: english
+month: 7
+pages: 17--38
+ref: ReviewOfSummaSvard2014
+tags: sbp
+title: Review of summation-by-parts schemes for initial–boundary-value problems
+type: article
+url: https://linkinghub.elsevier.com/retrieve/pii/S002199911400151X
+urldate: '2023-02-26'
+volume: '268'
+year: 2014
