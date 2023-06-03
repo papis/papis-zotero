@@ -5,6 +5,7 @@ import shutil
 import sqlite3
 from typing import Any, Dict, List
 
+import papis.bibtex
 import papis.strings
 import papis.document
 import papis.logging
@@ -225,8 +226,6 @@ def add_from_sql(input_path: str, output_path: str) -> None:
     :param outpath: path where all items will be exported to created if not
         existing
     """
-    import yaml
-
     if not os.path.exists(input_path):
         raise FileNotFoundError(
             "[Errno 2] No such file or directory: '{}'".format(input_path))
@@ -239,6 +238,9 @@ def add_from_sql(input_path: str, output_path: str) -> None:
     if not os.path.exists(zotero_sqlite_file):
         raise FileNotFoundError(
             "No 'zotero.sqlite' file found in '{}'".format(input_path))
+
+    import yaml
+    import papis.yaml
 
     connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
@@ -279,45 +281,55 @@ def add_from_sql(input_path: str, output_path: str) -> None:
     from datetime import datetime
     cursor.execute(items_query, ZOTERO_EXCLUDED_TYPES)
     for i, (item_id, item_type, item_key, date_added) in enumerate(cursor):
+        path = os.path.join(output_path, item_key)
+        if not os.path.exists(path):
+            os.makedirs(path)
+
+        # convert fields
         date_added = (
             datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
             .strftime(papis.strings.time_format))
         item_type = ZOTERO_TO_PAPIS_TYPE_MAP.get(item_type, item_type)
         logger.info("[%4d / %4d] Exporting item '%s'.", i, items_count, item_key)
 
-        path = os.path.join(output_path, item_key)
-        if not os.path.exists(path):
-            os.makedirs(path)
-
-        # Get mendeley keys
+        # get Zotero metadata
         fields = get_fields(connection, item_id)
-        extra = fields.get("extra", None)
-        ref = item_key
-        if extra:
-            matches = re.search(r".*Citation Key: (\w+)", extra)
-            if matches:
-                ref = matches.group(1)
-
-        logger.info("Exporting under ref: '%s'.", ref)
-        item = {
-            "ref": ref,
-            "type": item_type,
-            "time-added": date_added,
-        }
-        item.update(fields)
-        item.update(get_creators(connection, item_id))
-        item.update(get_tags(connection, item_id))
-        item.update(get_collections(connection, item_id))
-
         files = get_files(connection,
                           item_id,
                           item_key,
                           input_path=input_path,
                           output_path=output_path)
-        item.update({"ref": ref, "files": files})
 
-        with open(os.path.join(path, "info.yaml"), "w+") as item_file:
-            yaml.dump(item, item_file, default_flow_style=False)
+        item = {"type": item_type, "time-added": date_added, "files": files}
+        item.update(fields)
+        item.update(get_creators(connection, item_id))
+        item.update(get_tags(connection, item_id))
+        item.update(get_collections(connection, item_id))
+
+        # create a reference
+        ref = None
+        extra = item.get("extra", None)
+        if extra:
+            matches = re.search(r".*Citation Key: (\w+)", extra)
+            if matches:
+                ref = matches.group(1)
+
+        if ref is None:
+            from papis.bibtex import create_reference
+            ref = create_reference(item)
+
+        item["ref"] = ref
+        logger.info("Exporting item '%s' with reference '%s' to folder '%s'.",
+                    item_key, ref, path)
+
+        # write out the info file
+        # FIXME: should use papis.yaml.data_to_yaml, but blocked by
+        #   https://github.com/papis/papis/pull/571
+        with open(os.path.join(path, "info.yaml"), "w+", encoding="utf-8") as fd:
+            yaml.dump(item,
+                      stream=fd,
+                      allow_unicode=True,
+                      default_flow_style=False)
 
     logger.info("Finished exporting from '%s'.", input_path)
     logger.info("Exported files can be found at '%s'.", output_path)
