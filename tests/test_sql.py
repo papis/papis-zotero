@@ -12,7 +12,7 @@ from .testlib import TemporaryLibrary
 
 @pytest.mark.library_setup(populate=False)
 def test_simple(tmp_library: TemporaryLibrary) -> None:
-    sqlpath = os.path.join(os.path.dirname(__file__), "data", "Zotero")
+    sqlpath = os.path.join(os.path.dirname(__file__), "resources", "sql")
     papis_zotero.sql.add_from_sql(sqlpath)
     folders = os.listdir(tmp_library.libdir)
     assert len(folders) == 5
