@@ -3,6 +3,7 @@ import os
 import re
 import shutil
 import sqlite3
+from datetime import datetime
 from typing import Any, Dict, List
 
 import papis.bibtex
@@ -54,28 +55,30 @@ ZOTERO_TO_PAPIS_FIELD_MAP = {
 ZOTERO_TAG_DELIMITER = " "
 
 
+ZOTERO_QUERY_ITEM_FIELD = """
+SELECT
+    fields.fieldName,
+    itemDataValues.value
+FROM
+    fields,
+    itemData,
+    itemDataValues
+WHERE
+    itemData.itemID = ? AND
+    fields.fieldID = itemData.fieldID AND
+    itemDataValues.valueID = itemData.valueID
+"""
+
+
 def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     """
     :arg item_id: an identifier for the item to query.
     :returns: a dictionary mapping fields to their values, e.g. ``"doi"``.
     """
-
-    item_field_query = """
-    SELECT
-      fields.fieldName,
-      itemDataValues.value
-    FROM
-      fields,
-      itemData,
-      itemDataValues
-    WHERE
-      itemData.itemID = ? AND
-      fields.fieldID = itemData.fieldID AND
-      itemDataValues.valueID = itemData.valueID
-    """
     cursor = connection.cursor()
-    cursor.execute(item_field_query, (item_id,))
+    cursor.execute(ZOTERO_QUERY_ITEM_FIELD, (item_id,))
 
+    # get fields
     fields = {}
     for name, value in cursor:
         if name in ZOTERO_EXCLUDED_FIELDS:
@@ -84,6 +87,7 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
         name = ZOTERO_TO_PAPIS_FIELD_MAP.get(name, name)
         fields[name] = value
 
+    # get year and month from date if available
     date = fields.pop("date", None)
     if date is not None:
         from datetime import datetime
@@ -99,28 +103,29 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     return fields
 
 
+ZOTERO_QUERY_ITEM_CREATORS = """
+SELECT
+    creatorTypes.creatorType,
+    creators.firstName,
+    creators.lastName
+FROM
+    creatorTypes,
+    creators,
+    itemCreators
+WHERE
+    itemCreators.itemID = ? AND
+    creatorTypes.creatorTypeID = itemCreators.creatorTypeID AND
+    creators.creatorID = itemCreators.creatorID
+ORDER BY
+    creatorTypes.creatorType,
+    itemCreators.orderIndex
+"""
+
+
 def get_creators(connection: sqlite3.Connection,
                  item_id: str) -> Dict[str, List[str]]:
-    item_creator_query = """
-    SELECT
-      creatorTypes.creatorType,
-      creators.firstName,
-      creators.lastName
-    FROM
-      creatorTypes,
-      creators,
-      itemCreators
-    WHERE
-      itemCreators.itemID = ? AND
-      creatorTypes.creatorTypeID = itemCreators.creatorTypeID AND
-      creators.creatorID = itemCreators.creatorID
-    ORDER BY
-      creatorTypes.creatorType,
-      itemCreators.orderIndex
-    """
-
     cursor = connection.cursor()
-    cursor.execute(item_creator_query, (item_id,))
+    cursor.execute(ZOTERO_QUERY_ITEM_CREATORS, (item_id,))
 
     # gather creators
     creators_by_type: Dict[str, List[Dict[str, str]]] = {}
@@ -139,25 +144,26 @@ def get_creators(connection: sqlite3.Connection,
     return result
 
 
+ZOTERO_QUERY_ITEM_ATTACHMENTS = """
+SELECT
+    items.key,
+    itemAttachments.path,
+    itemAttachments.contentType
+FROM
+    itemAttachments,
+    items
+WHERE
+    itemAttachments.parentItemID = ? AND
+    itemAttachments.contentType IN ({}) AND
+    items.itemID = itemAttachments.itemID
+""".format(",".join(["?"] * len(ZOTERO_INCLUDED_MIMETYPE_MAP)))
+
+
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
               input_path: str, output_path: str) -> List[str]:
-    item_attachment_query = """
-    SELECT
-      items.key,
-      itemAttachments.path,
-      itemAttachments.contentType
-    FROM
-      itemAttachments,
-      items
-    WHERE
-      itemAttachments.parentItemID = ? AND
-      itemAttachments.contentType IN ({}) AND
-      items.itemID = itemAttachments.itemID
-    """.format(",".join(["?"] * len(ZOTERO_INCLUDED_MIMETYPE_MAP)))
-
     cursor = connection.cursor()
     cursor.execute(
-        item_attachment_query,
+        ZOTERO_QUERY_ITEM_ATTACHMENTS,
         (item_id,) + tuple(ZOTERO_INCLUDED_MIMETYPE_MAP))
 
     files = []
@@ -181,42 +187,75 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
     return files
 
 
-def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
-    item_tag_query = """
-    SELECT
-      tags.name
-    FROM
-      tags,
-      itemTags
-    WHERE
-      itemTags.itemID = ? AND
-      tags.tagID = itemTags.tagID
-    """
+ZOTERO_QUERY_ITEM_TAGS = """
+SELECT
+    tags.name
+FROM
+    tags,
+    itemTags
+WHERE
+    itemTags.itemID = ? AND
+    tags.tagID = itemTags.tagID
+"""
 
+
+def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     cursor = connection.cursor()
-    cursor.execute(item_tag_query, (item_id,))
+    cursor.execute(ZOTERO_QUERY_ITEM_TAGS, (item_id,))
 
     tags = ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in cursor)
     return {"tags": tags} if tags else {}
 
 
+ZOTERO_QUERY_ITEM_COLLECTIONS = """
+SELECT
+    collections.collectionName
+FROM
+    collections,
+    collectionItems
+WHERE
+    collectionItems.itemID = ? AND
+    collections.collectionID = collectionItems.collectionID
+"""
+
+
 def get_collections(connection: sqlite3.Connection,
                     item_id: str) -> Dict[str, List[str]]:
-    item_collection_query = """
-      SELECT
-        collections.collectionName
-      FROM
-        collections,
-        collectionItems
-      WHERE
-        collectionItems.itemID = ? AND
-        collections.collectionID = collectionItems.collectionID
-    """
     cursor = connection.cursor()
-    cursor.execute(item_collection_query, (item_id,))
+    cursor.execute(ZOTERO_QUERY_ITEM_COLLECTIONS, (item_id,))
 
-    project = [name for name, in cursor]
-    return {"project": project} if project else {}
+    collections = [name for name, in cursor]
+    return {"collections": collections} if collections else {}
+
+
+ZOTERO_QUERY_ITEM_COUNT = """
+    SELECT
+    COUNT(item.itemID)
+    FROM
+    items item,
+    itemTypes itemType
+    WHERE
+    itemType.itemTypeID = item.itemTypeID AND
+    itemType.typeName NOT IN ({})
+    ORDER BY
+    item.itemID
+""".format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
+
+ZOTERO_QUERY_ITEMS = """
+    SELECT
+    item.itemID,
+    itemType.typeName,
+    key,
+    dateAdded
+    FROM
+    items item,
+    itemTypes itemType
+    WHERE
+    itemType.itemTypeID = item.itemTypeID AND
+    itemType.typeName NOT IN ({})
+    ORDER BY
+    item.itemID
+""".format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
 
 
 def add_from_sql(input_path: str, output_path: str) -> None:
@@ -245,41 +284,11 @@ def add_from_sql(input_path: str, output_path: str) -> None:
     connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
 
-    items_count_query = """
-      SELECT
-        COUNT(item.itemID)
-      FROM
-        items item,
-        itemTypes itemType
-      WHERE
-        itemType.itemTypeID = item.itemTypeID AND
-        itemType.typeName NOT IN ({})
-      ORDER BY
-        item.itemID
-    """.format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
-
-    cursor.execute(items_count_query, ZOTERO_EXCLUDED_TYPES)
+    cursor.execute(ZOTERO_QUERY_ITEM_COUNT, ZOTERO_EXCLUDED_TYPES)
     for row in cursor:
         items_count = row[0]
 
-    items_query = """
-      SELECT
-        item.itemID,
-        itemType.typeName,
-        key,
-        dateAdded
-      FROM
-        items item,
-        itemTypes itemType
-      WHERE
-        itemType.itemTypeID = item.itemTypeID AND
-        itemType.typeName NOT IN ({})
-      ORDER BY
-        item.itemID
-    """.format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
-
-    from datetime import datetime
-    cursor.execute(items_query, ZOTERO_EXCLUDED_TYPES)
+    cursor.execute(ZOTERO_QUERY_ITEMS, ZOTERO_EXCLUDED_TYPES)
     for i, (item_id, item_type, item_key, date_added) in enumerate(cursor):
         path = os.path.join(output_path, item_key)
         if not os.path.exists(path):
