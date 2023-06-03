@@ -39,10 +39,12 @@ ZOTERO_TO_PAPIS_FIELD_MAP = {
     "DOI": "doi",
     "itemType": "type",
     "ISBN": "isbn",
+    "ISSN": "issn",
 }
 
-# seperator between multiple tags
-ZOTERO_TAG_DELIMITER = ","
+# separator between multiple tags
+# FIXME: this should be handled by papis
+ZOTERO_TAG_DELIMITER = " "
 
 
 def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
@@ -167,7 +169,8 @@ def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     cursor = connection.cursor()
     cursor.execute(item_tag_query, (item_id,))
 
-    return {"tags": ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in cursor)}
+    tags = ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in cursor)
+    return {"tags": tags} if tags else {}
 
 
 def get_collections(connection: sqlite3.Connection,
