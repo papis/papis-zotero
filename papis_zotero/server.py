@@ -43,7 +43,7 @@ ZOTERO_TO_PAPIS_CONVERSIONS = [
         {"key": "eprint", "action": lambda a: a.split(":")[-1]}
         ]),
     _k("type", [
-        {"key": "type", "action": papis.bibtex.bibtex_type_converter.get}
+        {"key": "type", "action": papis_zotero.utils.ZOTERO_TO_PAPIS_TYPES.get}
         ]),
 ]
 
@@ -93,7 +93,6 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
-    from papis.downloaders import download_document
     files = []
 
     for attachment in attachments:
@@ -107,7 +106,8 @@ def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
         extension = papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION[mime]
         logger.info("Downloading file (%s): '%s'.", mime, url)
 
-        filename = download_document(url, expected_document_extension=extension)
+        filename = papis_zotero.utils.download_document(
+            url, expected_document_extension=extension)
         if filename is not None:
             files.append(filename)
 

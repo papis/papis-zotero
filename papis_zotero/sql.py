@@ -6,6 +6,7 @@ import sqlite3
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
+import papis.yaml
 import papis.config
 import papis.bibtex
 import papis.strings
@@ -233,7 +234,6 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
         existing
     """
     import yaml
-    import papis.yaml
 
     if output_path is None:
         output_path = papis.config.get_lib_dirs()[0]
@@ -270,7 +270,7 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
         date_added = (
             datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
             .strftime(papis.strings.time_format))
-        item_type = papis.bibtex.bibtex_type_converter.get(item_type, item_type)
+        item_type = papis_zotero.utils.ZOTERO_TO_PAPIS_TYPES.get(item_type, item_type)
 
         # get Zotero metadata
         fields = get_fields(connection, item_id)
@@ -295,8 +295,7 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
                 ref = matches.group(1)
 
         if ref is None:
-            from papis.bibtex import create_reference
-            ref = create_reference(item)
+            ref = papis.bibtex.create_reference(item)
 
         item["ref"] = ref
         logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to folder '%s'.",
