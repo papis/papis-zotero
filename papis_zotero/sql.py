@@ -12,41 +12,9 @@ import papis.strings
 import papis.document
 import papis.logging
 
+import papis_zotero.utils
+
 logger = papis.logging.get_logger(__name__)
-
-# Zotero item types to be excluded.
-ZOTERO_EXCLUDED_TYPES = ("attachment", "note")
-
-# Zotero excluded fields
-ZOTERO_EXCLUDED_FIELDS = frozenset({
-    "accessDate",
-})
-
-# dictionary of Zotero attachments mimetypes to be included
-# NOTE: mapped onto their respective extension to be used in papis
-ZOTERO_INCLUDED_MIMETYPE_MAP = {
-    "application/vnd.ms-htmlhelp": "chm",
-    "image/vnd.djvu": "djvu",
-    "application/msword": "doc",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-    "docx",
-    "application/epub+zip": "epub",
-    "application/octet-stream": "fb2",
-    "application/x-mobipocket-ebook": "mobi",
-    "application/pdf": "pdf",
-    "text/rtf": "rtf",
-    "application/zip": "zip",
-}
-
-# dictionary translating from zotero to papis field names
-ZOTERO_TO_PAPIS_FIELD_MAP = {
-    "abstractNote": "abstract",
-    "publicationTitle": "journal",
-    "DOI": "doi",
-    "itemType": "type",
-    "ISBN": "isbn",
-    "ISSN": "issn",
-}
 
 # separator between multiple tags
 # FIXME: this should be handled by papis
@@ -79,10 +47,10 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     # get fields
     fields = {}
     for name, value in cursor:
-        if name in ZOTERO_EXCLUDED_FIELDS:
+        if name in papis_zotero.utils.ZOTERO_EXCLUDED_FIELDS:
             continue
 
-        name = ZOTERO_TO_PAPIS_FIELD_MAP.get(name, name)
+        name = papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.get(name, name)
         fields[name] = value
 
     # get year and month from date if available
@@ -154,7 +122,8 @@ WHERE
     itemAttachments.parentItemID = ? AND
     itemAttachments.contentType IN ({}) AND
     items.itemID = itemAttachments.itemID
-""".format(",".join(["?"] * len(ZOTERO_INCLUDED_MIMETYPE_MAP)))
+""".format(",".join(["?"] * len(
+    papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION)))
 
 
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
@@ -162,7 +131,7 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
     cursor = connection.cursor()
     cursor.execute(
         ZOTERO_QUERY_ITEM_ATTACHMENTS,
-        (item_id,) + tuple(ZOTERO_INCLUDED_MIMETYPE_MAP))
+        (item_id,) + tuple(papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
 
     files = []
     for key, path, mime in cursor:
@@ -237,7 +206,7 @@ ZOTERO_QUERY_ITEM_COUNT = """
     itemType.typeName NOT IN ({})
     ORDER BY
     item.itemID
-""".format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
+""".format(",".join(["?"] * len(papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)))
 
 ZOTERO_QUERY_ITEMS = """
     SELECT
@@ -253,7 +222,7 @@ ZOTERO_QUERY_ITEMS = """
     itemType.typeName NOT IN ({})
     ORDER BY
     item.itemID
-""".format(",".join(["?"] * len(ZOTERO_EXCLUDED_TYPES)))
+""".format(",".join(["?"] * len(papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)))
 
 
 def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
@@ -285,11 +254,13 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
     connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
 
-    cursor.execute(ZOTERO_QUERY_ITEM_COUNT, ZOTERO_EXCLUDED_TYPES)
+    cursor.execute(ZOTERO_QUERY_ITEM_COUNT,
+                   papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)
     for row in cursor:
         items_count = row[0]
 
-    cursor.execute(ZOTERO_QUERY_ITEMS, ZOTERO_EXCLUDED_TYPES)
+    cursor.execute(ZOTERO_QUERY_ITEMS,
+                   papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)
     for i, (item_id, item_type, item_key, date_added) in enumerate(cursor):
         path = os.path.join(output_path, item_key)
         if not os.path.exists(path):

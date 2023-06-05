@@ -15,6 +15,8 @@ import papis.document
 import papis.commands.add
 import papis.logging
 
+import papis_zotero.utils
+
 logger = papis.logging.get_logger(__name__)
 
 ZOTERO_CONNECTOR_API_VERSION = 2
@@ -22,10 +24,6 @@ ZOTERO_VERSION = "5.0.25"
 ZOTERO_PORT = 23119
 
 _k = papis.document.KeyConversionPair
-
-ZOTERO_IGNORED_FIELDS = frozenset({
-    "id", "attachments", "extra", "shortTitle", "accessDate",
-})
 
 ZOTERO_TO_PAPIS_CONVERSIONS = [
     _k("creators", [{
@@ -67,15 +65,14 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     item.pop("id", None)
     item.pop("attachments", None)
 
-    from papis_zotero.sql import ZOTERO_TO_PAPIS_FIELD_MAP
-    for foreign_key, key in ZOTERO_TO_PAPIS_FIELD_MAP.items():
+    for foreign_key, key in papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.items():
         if foreign_key in item:
             item[key] = item.pop(foreign_key)
 
     item = papis.document.keyconversion_to_data(ZOTERO_TO_PAPIS_CONVERSIONS,
                                                 item,
                                                 keep_unknown_keys=True)
-    for key in ZOTERO_IGNORED_FIELDS:
+    for key in papis_zotero.utils.ZOTERO_EXCLUDED_FIELDS:
         if key in item:
             del item[key]
 
@@ -96,18 +93,17 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 
 def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
     from papis.downloaders import download_document
-    from papis_zotero.sql import ZOTERO_INCLUDED_MIMETYPE_MAP
     files = []
 
     for attachment in attachments:
         logger.info("Checking attachment: %s", attachment)
 
         mime = str(attachment.get("mimeType"))
-        if mime not in ZOTERO_INCLUDED_MIMETYPE_MAP:
+        if mime not in papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION:
             continue
 
         url = attachment["url"]
-        extension = ZOTERO_INCLUDED_MIMETYPE_MAP[mime]
+        extension = papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION[mime]
         logger.info("Downloading file (%s): '%s'.", mime, url)
 
         filename = download_document(url, expected_document_extension=extension)
