@@ -19,8 +19,9 @@ import papis_zotero.utils
 
 logger = papis.logging.get_logger(__name__)
 
+# NOTE: 5.0.75 was released in October 8, 2019 at the same time with Python 3.8
 ZOTERO_CONNECTOR_API_VERSION = 2
-ZOTERO_VERSION = "5.0.25"
+ZOTERO_VERSION = "5.0.75"
 ZOTERO_PORT = 23119
 
 _k = papis.document.KeyConversionPair
