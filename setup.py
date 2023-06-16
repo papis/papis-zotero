@@ -5,7 +5,7 @@ with open("README.rst") as fd:
 
 setup(
     name="papis-zotero",
-    version="0.1.1",
+    version="0.1.2",
     author="Alejandro Gallo",
     author_email="aamsgallo@gmail.com",
     license="GPLv3",
