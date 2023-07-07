@@ -1,7 +1,7 @@
 .. image:: https://badge.fury.io/py/papis-zotero.svg
     :target: https://badge.fury.io/py/papis-zotero
 .. image:: https://github.com/papis/papis-zotero/workflows/CI/badge.svg
-   :target: https://github.com/papis/papis-zotero/actions?query=branch%3Amaster+workflow%3ACI
+   :target: https://github.com/papis/papis-zotero/actions?query=branch%3Amain+workflow%3ACI
 
 Zotero compatibility for papis
 ==============================
