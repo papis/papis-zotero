@@ -21,6 +21,9 @@ logger = papis.logging.get_logger(__name__)
 # FIXME: this should be handled by papis
 ZOTERO_TAG_DELIMITER = " "
 
+# fuzzy date matching
+ISO_DATE_RE = re.compile(r"(?P<year>\d{4})-?(?P<month>\d{2})?-?(?P<day>\d{2})?")
+
 
 ZOTERO_QUERY_ITEM_FIELD = """
 SELECT
@@ -57,14 +60,14 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     # get year and month from date if available
     date = fields.pop("date", None)
     if date is not None:
-        from datetime import datetime
-
-        try:
-            d = datetime.strptime(date.split(" ")[0][:-3], "%Y-%m")
-            fields["year"] = d.year
-            fields["month"] = d.month
-        except Exception as exc:
-            logger.error("Failed to parse date.", exc_info=exc)
+        m = ISO_DATE_RE.match(date)
+        if m:
+            if m.group("year"):
+                fields["year"] = int(m.group("year"))
+            if m.group("month"):
+                fields["month"] = int(m.group("month"))
+        else:
+            # NOTE: didn't manage to match, so just save the whole date
             fields["date"] = date
 
     return fields
