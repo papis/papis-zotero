@@ -264,7 +264,7 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
 
     cursor.execute(ZOTERO_QUERY_ITEMS,
                    papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)
-    for i, (item_id, item_type, item_key, date_added) in enumerate(cursor):
+    for i, (item_id, item_type, item_key, date_added) in enumerate(cursor, start=1):
         path = os.path.join(output_path, item_key)
         if not os.path.exists(path):
             os.makedirs(path)
