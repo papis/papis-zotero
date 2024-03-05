@@ -4,7 +4,6 @@ import sqlite3
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-import papis.yaml
 import papis.config
 import papis.bibtex
 import papis.strings
@@ -129,7 +128,7 @@ WHERE
 
 
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
-              input_path: str, output_path: str) -> List[str]:
+              input_path: str, out_folder: str) -> List[str]:
     cursor = connection.cursor()
     cursor.execute(
         ZOTERO_QUERY_ITEM_ATTACHMENTS,
@@ -140,8 +139,8 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
         if file_name := re.match("storage:(.*)", path).group(1):
             files.append(os.path.join(input_path, "storage", key, file_name))
         else:
-            logger.error("Failed to export attachment with key '%s' from path '%s'", key,
-                         path)
+            logger.error("Failed to export attachment with key '%s' from path '%s'",
+                         key, path)
 
     return files
 
@@ -217,25 +216,25 @@ ZOTERO_QUERY_ITEMS = """
 """.format(",".join(["?"] * len(papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)))
 
 
-def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
+def add_from_sql(input_path: str, out_folder: Optional[str] = None,
+                 link: bool = False) -> None:
     """
     :param inpath: path to zotero SQLite database "zoter.sqlite" and
         "storage" to be imported
     :param outpath: path where all items will be exported to created if not
         existing
     """
-    import yaml
 
-    if output_path is None:
-        output_path = papis.config.get_lib_dirs()[0]
+    if out_folder is None:
+        out_folder = papis.config.get_lib_dirs()[0]
 
     if not os.path.exists(input_path):
         raise FileNotFoundError(
             "[Errno 2] No such file or directory: '{}'".format(input_path))
 
-    if not os.path.exists(output_path):
+    if not os.path.exists(out_folder):
         raise FileNotFoundError(
-            "[Errno 2] No such file or directory: '{}'".format(output_path))
+            "[Errno 2] No such file or directory: '{}'".format(out_folder))
 
     zotero_sqlite_file = os.path.join(input_path, "zotero.sqlite")
     if not os.path.exists(zotero_sqlite_file):
@@ -252,11 +251,10 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
 
     cursor.execute(ZOTERO_QUERY_ITEMS,
                    papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)
-    for i, (item_id, item_type, item_key, date_added) in enumerate(cursor, start=1):
-        path = os.path.join(output_path, item_key)
-        if not os.path.exists(path):
-            os.makedirs(path)
+    if out_folder is not None:
+        papis.config.set_lib_from_name(out_folder)
 
+    for i, (item_id, item_type, item_key, date_added) in enumerate(cursor, start=1):
         # convert fields
         date_added = (
             datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
@@ -269,7 +267,7 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
                           item_id,
                           item_key,
                           input_path=input_path,
-                          output_path=output_path)
+                          out_folder=out_folder)
 
         item = {"type": item_type, "time-added": date_added, "files": files}
         item.update(fields)
@@ -289,10 +287,10 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
             ref = papis.bibtex.create_reference(item)
 
         item["ref"] = ref
-        logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to folder '%s'.",
-                    i, items_count, item_key, ref, path)
+        logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to library '%s'.",
+                    i, items_count, item_key, ref, out_folder)
 
-        papis.commands.add.run(paths=files, data=item, confirm=False)
+        papis.commands.add.run(paths=files, data=item, link=link)
 
     logger.info("Finished exporting from '%s'.", input_path)
-    logger.info("Exported files can be found at '%s'.", output_path)
+    logger.info("Exported files can be found at '%s'.", out_folder)
