@@ -136,7 +136,8 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
 
     files = []
     for key, path in cursor:
-        if file_name := re.match("storage:(.*)", path).group(1):
+        if match := re.match("storage:(.*)", path):
+            file_name = match.group(1)
             files.append(os.path.join(input_path, "storage", key, file_name))
         else:
             logger.error("Failed to export attachment with key '%s' from path '%s'",
