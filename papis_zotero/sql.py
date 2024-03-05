@@ -1,7 +1,5 @@
-import glob
 import os
 import re
-import shutil
 import sqlite3
 from datetime import datetime
 from typing import Any, Dict, List, Optional
@@ -12,6 +10,7 @@ import papis.bibtex
 import papis.strings
 import papis.document
 import papis.logging
+import papis.commands.add
 
 import papis_zotero.utils
 
@@ -117,8 +116,7 @@ def get_creators(connection: sqlite3.Connection,
 ZOTERO_QUERY_ITEM_ATTACHMENTS = """
 SELECT
     items.key,
-    itemAttachments.path,
-    itemAttachments.contentType
+    itemAttachments.path
 FROM
     itemAttachments,
     items
@@ -138,22 +136,12 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
         (item_id,) + tuple(papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
 
     files = []
-    for key, path, mime in cursor:
-        import_paths = glob.glob(os.path.join(input_path, "storage", key, "*.*"))
-        if not import_paths:
-            continue
-
-        import_path = import_paths[0]
-        _, ext = os.path.splitext(import_path)
-        file_name = "{}{}".format(key, ext)
-        local_path = os.path.join(output_path, item_key, file_name)
-
-        try:
-            shutil.copyfile(import_path, local_path)
-            files.append(file_name)
-        except Exception as exc:
-            logger.error("Failed to export attachment '%s': '%s' (%s).", key,
-                         path, mime, exc_info=exc)
+    for key, path in cursor:
+        if file_name := re.match("storage:(.*)", path).group(1):
+            files.append(os.path.join(input_path, "storage", key, file_name))
+        else:
+            logger.error("Failed to export attachment with key '%s' from path '%s'", key,
+                         path)
 
     return files
 
@@ -304,14 +292,7 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
         logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to folder '%s'.",
                     i, items_count, item_key, ref, path)
 
-        # write out the info file
-        # FIXME: should use papis.yaml.data_to_yaml, but blocked by
-        #   https://github.com/papis/papis/pull/571
-        with open(os.path.join(path, "info.yaml"), "w+", encoding="utf-8") as fd:
-            yaml.dump(item,
-                      stream=fd,
-                      allow_unicode=True,
-                      default_flow_style=False)
+        papis.commands.add.run(paths=files, data=item, confirm=False)
 
     logger.info("Finished exporting from '%s'.", input_path)
     logger.info("Exported files can be found at '%s'.", output_path)
