@@ -304,14 +304,7 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
         logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to folder '%s'.",
                     i, items_count, item_key, ref, path)
 
-        # write out the info file
-        # FIXME: should use papis.yaml.data_to_yaml, but blocked by
-        #   https://github.com/papis/papis/pull/571
-        with open(os.path.join(path, "info.yaml"), "w+", encoding="utf-8") as fd:
-            yaml.dump(item,
-                      stream=fd,
-                      allow_unicode=True,
-                      default_flow_style=False)
+        papis.yaml.data_to_yaml(yaml_path=os.path.join(path, "info.yaml"), data=item)
 
     logger.info("Finished exporting from '%s'.", input_path)
     logger.info("Exported files can be found at '%s'.", output_path)
