@@ -19,14 +19,19 @@ def test_simple(tmp_library: TemporaryLibrary) -> None:
     assert len(folders) == 5
     assert len(glob.glob(tmp_library.libdir + "/**/*.pdf")) == 4
 
-    doc = papis.document.from_folder(os.path.join(tmp_library.libdir, "IH8J2JJP"))
+    doc = papis.document.from_folder(
+        os.path.join(
+            tmp_library.libdir,
+            "95e29aafd24e14274ab8a1bb7887e2b7-svard-magnus-and-no"
+            )
+        )
 
     info_name = os.path.join(os.path.dirname(__file__), "resources", "sql_out.yaml")
     with open(info_name, encoding="utf-8") as fd:
         data = yaml.load(fd, Loader=papis.yaml.Loader)  # type: ignore[attr-defined]
         expected_doc = papis.document.from_data(data)
 
-    assert expected_doc["ref"] == doc["ref"]
+    assert expected_doc["authors"] == doc["authors"]
 
     # FIXME: currently fails on windows
     # assert doc.get_files()
