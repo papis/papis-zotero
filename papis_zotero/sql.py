@@ -236,7 +236,6 @@ def add_from_sql(input_path: str, output_path: Optional[str] = None) -> None:
     :param outpath: path where all items will be exported to created if not
         existing
     """
-    import yaml
 
     if output_path is None:
         output_path = papis.config.get_lib_dirs()[0]
