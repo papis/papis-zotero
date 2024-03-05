@@ -94,7 +94,7 @@ def do_importer(from_bibtex: Optional[str], from_sql: Optional[str],
     elif from_sql is not None:
         import papis_zotero.sql
         try:
-            papis_zotero.sql.add_from_sql(from_sql, outfolder)
+            papis_zotero.sql.add_from_sql(from_sql, outfolder, link)
         except Exception as exc:
             logger.error("Failed to import from file: %s",
                          from_sql,
