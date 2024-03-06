@@ -13,6 +13,7 @@ from .testlib import TemporaryLibrary
 @pytest.mark.library_setup(populate=False)
 def test_simple(tmp_library: TemporaryLibrary) -> None:
     sqlpath = os.path.join(os.path.dirname(__file__), "resources", "sql")
+    papis.config.set("add-folder-name", "{doc[author]}")
     papis_zotero.sql.add_from_sql(sqlpath)
 
     folders = os.listdir(tmp_library.libdir)
@@ -22,7 +23,7 @@ def test_simple(tmp_library: TemporaryLibrary) -> None:
     doc = papis.document.from_folder(
         os.path.join(
             tmp_library.libdir,
-            "95e29aafd24e14274ab8a1bb7887e2b7-svard-magnus-and-no"
+            "svard-magnus-and-nordstrom-jan"
             )
         )
 
@@ -31,7 +32,7 @@ def test_simple(tmp_library: TemporaryLibrary) -> None:
         data = yaml.load(fd, Loader=papis.yaml.Loader)  # type: ignore[attr-defined]
         expected_doc = papis.document.from_data(data)
 
-    assert expected_doc["authors"] == doc["authors"]
+    assert expected_doc["author"] == doc["author"]
 
     # FIXME: currently fails on windows
     # assert doc.get_files()
