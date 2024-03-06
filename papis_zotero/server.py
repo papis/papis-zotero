@@ -217,7 +217,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
     def handle_post_snapshot(self) -> None:
         import tempfile
         import datetime
-        import urllib
+        import urllib.parse
 
         rawinput = self.read_input()
         data = json.loads(rawinput.decode("utf-8"))
