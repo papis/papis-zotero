@@ -70,6 +70,9 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     item.pop("uri", None)
     item.pop("sessionID", None)
 
+    if item["referrer"] == "":
+        item.pop("referrer", None)
+
     for foreign_key, key in papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.items():
         if foreign_key in item:
             item[key] = item.pop(foreign_key)
