@@ -276,20 +276,8 @@ def add_from_sql(input_path: str, out_folder: Optional[str] = None,
         item.update(get_tags(connection, item_id))
         item.update(get_collections(connection, item_id))
 
-        # create a reference
-        ref = None
-        extra = item.get("extra", None)
-        if extra:
-            matches = re.search(r".*Citation Key: (\w+)", extra)
-            if matches:
-                ref = matches.group(1)
-
-        if ref is None:
-            ref = papis.bibtex.create_reference(item)
-
-        item["ref"] = ref
-        logger.info("[%4d/%-4d] Exporting item '%s' with ref '%s' to library '%s'.",
-                    i, items_count, item_key, ref, out_folder)
+        logger.info("[%4d/%-4d] Exporting item '%s' to library '%s'.",
+                    i, items_count, item_key, out_folder)
 
         papis.commands.add.run(paths=files, data=item, link=link)
 
