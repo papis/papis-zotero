@@ -141,8 +141,8 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
             file_name = match.group(1)
             files.append(os.path.join(input_path, "storage", key, file_name))
         else:
-            logger.error("Failed to export attachment with type (%s) and key '%s' from path '%s'",
-                         mime_type, key, path)
+            logger.error("Failed to export attachment %s (with type %s) from path '%s'",
+                         key, mime_type, path)
 
     return files
 
@@ -280,7 +280,9 @@ def add_from_sql(input_path: str, out_folder: Optional[str] = None,
         logger.info("[%4d/%-4d] Exporting item '%s' to library '%s'.",
                     i, items_count, item_key, out_folder)
 
-        papis.commands.add.run(paths=files, data=item, link=link)
+        papis.commands.add.run(paths=files, data=item, link=link,
+                               folder_name=papis.config.getstring("add-folder-name")
+                               )
 
     logger.info("Finished exporting from '%s'.", input_path)
     logger.info("Exported files can be found at '%s'.", out_folder)
