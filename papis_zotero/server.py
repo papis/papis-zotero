@@ -65,6 +65,10 @@ def zotero_authors(creators: List[Dict[str, str]]) -> List[Dict[str, str]]:
 def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     item.pop("id", None)
     item.pop("attachments", None)
+    item.pop("html", None)
+    item.pop("detailedCookies", None)
+    item.pop("uri", None)
+    item.pop("sessionID", None)
 
     for foreign_key, key in papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.items():
         if foreign_key in item:
@@ -211,6 +215,37 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(rawinput)
 
     def handle_post_snapshot(self) -> None:
-        logger.error("Snapshot not implemented!")
+        import tempfile
+        import datetime
+        import urllib
+
+        rawinput = self.read_input()
+        data = json.loads(rawinput.decode("utf-8"))
+
+        html_template = """
+        <!DOCTYPE html>
+        <html>
+            {html}
+        </html>
+        """
+        full_html = html_template.lstrip().format(**data)
+        temp_html = tempfile.mktemp(suffix=".html")
+        logger.debug("Writing temp html to '%s'", temp_html)
+        with open(temp_html, mode="w") as f:
+            f.write(full_html)
+
+        current_date = datetime.datetime.now()
+        data["date"] = data.get("date", current_date.isoformat())
+
+        url = urllib.parse.urlparse(data["url"])
+        data["author"] = url.hostname
+
+        papis_item = zotero_data_to_papis_data(data)
+
+        logger.info("Adding snapshot to papis.")
+        papis.commands.add.run([temp_html], data=papis_item,
+                               folder_name=papis.config.getstring("add-folder-name")
+                               )
+
         self.send_response(201)
         self.set_zotero_headers()
