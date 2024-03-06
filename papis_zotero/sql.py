@@ -115,7 +115,8 @@ def get_creators(connection: sqlite3.Connection,
 ZOTERO_QUERY_ITEM_ATTACHMENTS = """
 SELECT
     items.key,
-    itemAttachments.path
+    itemAttachments.path,
+    itemAttachments.contentType
 FROM
     itemAttachments,
     items
@@ -135,13 +136,13 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
         (item_id,) + tuple(papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
 
     files = []
-    for key, path in cursor:
+    for key, path, mime_type in cursor:
         if match := re.match("storage:(.*)", path):
             file_name = match.group(1)
             files.append(os.path.join(input_path, "storage", key, file_name))
         else:
-            logger.error("Failed to export attachment with key '%s' from path '%s'",
-                         key, path)
+            logger.error("Failed to export attachment with type (%s) and key '%s' from path '%s'",
+                         mime_type, key, path)
 
     return files
 
