@@ -223,7 +223,10 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         import urllib.parse
 
         rawinput = self.read_input()
-        data = json.loads(rawinput.decode("utf-8"))
+        try:
+            data = json.loads(rawinput.decode("utf-8"))
+        except json.JSONDecodeError as e:
+            logger.error("Failed to decode data from the Zotero connector.", exc_info=e)
 
         html_template = """
         <!DOCTYPE html>
