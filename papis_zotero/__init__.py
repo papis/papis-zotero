@@ -73,7 +73,7 @@ def serve(address: str, port: int) -> None:
               default=None,
               type=str)
 @click.option("--link",
-              help="Wether to link the pdf files or copy them",
+              help="Whether to link the pdf files or copy them",
               is_flag=True,
               default=False)
 def do_importer(from_bibtex: Optional[str], from_sql: Optional[str],

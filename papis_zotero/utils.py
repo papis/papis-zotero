@@ -14,7 +14,7 @@ ZOTERO_EXCLUDED_FIELDS = frozenset({
     "accessDate",
     "id",
     "shortTitle",
-    "attachements",
+    "attachments",
 })
 
 # dictionary of Zotero attachments mimetypes to be included
