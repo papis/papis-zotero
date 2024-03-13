@@ -1,0 +1,61 @@
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = [
+    "setuptools>=65",
+    "wheel",
+]
+
+[project]
+name = "papis-zotero"
+description = "Interact with Zotero using papis"
+version = "0.1.2"
+authors = [{ name = "Alejandro Gallo", email = "aamsgallo@gmail.com" }]
+maintainers = [{ name = "Alejandro Gallo", email = "aamsgallo@gmail.com" }]
+readme = "README.rst"
+license = { text = "GPLv3" }
+classifiers = [
+    "Environment :: Console :: Curses",
+    "Environment :: Console",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: System Administrators",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: MacOS",
+    "Operating System :: Microsoft",
+    "Operating System :: OS Independent",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Utilities",
+]
+keywords = ["bibtex", "biliography", "cli", "management", "papis", "zotero"]
+dependencies = ["papis==0.13"]
+
+[project.urls]
+Repository = "https://github.com/papis/papis-zotero"
+
+[project.optional-dependencies]
+"develop" = [
+    "flake8",
+    "flake8-bugbear",
+    "flake8-quotes",
+    "mypy>=0.7",
+    "pep8-naming",
+    "pytest",
+    "pytest-cov",
+    "python-coveralls",
+    "types-PyYAML",
+    "types-tqdm",
+]
+
+[project.entry-points."papis.command"]
+"zotero" = "papis_zotero:main"
+
+[tool.setuptools]
+packages = ["papis_zotero"]
