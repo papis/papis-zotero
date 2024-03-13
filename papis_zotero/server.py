@@ -122,6 +122,11 @@ def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
 
 
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
+    def __init__(self, add_tag: str, request: Any,
+                 client_address: Any, server: Any) -> None:
+        self.add_tag: str = add_tag
+        super().__init__(request, client_address, server)
+
     def log_message(self, fmt: str, *args: Any) -> None:
         logger.info(fmt, *args)
 
@@ -209,6 +214,11 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                 files = []
 
             papis_item = zotero_data_to_papis_data(item)
+            if papis_item.get("tags"):
+                papis_item["tags"].append(self.add_tag)
+            else:
+                papis_item["tags"] = [self.add_tag]
+
             logger.info("Adding paper to papis.")
             papis.commands.add.run(files, data=papis_item)
 
