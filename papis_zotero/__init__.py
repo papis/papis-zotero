@@ -1,3 +1,4 @@
+from functools import partial
 import os
 import http.server
 from typing import Optional
@@ -24,7 +25,8 @@ def main() -> None:
               default=papis_zotero.server.ZOTERO_PORT,
               type=int)
 @click.option("--address", help="Address to bind", default="localhost")
-def serve(address: str, port: int) -> None:
+@click.option("-t", "--add-tag", help="Tag that is added to the document", default=None)
+def serve(address: str, port: int, add_tag: Optional[str]) -> None:
     """Start a ``zotero-connector`` server."""
 
     logger.warning("The 'zotero-connector' server is experimental. "
@@ -32,9 +34,9 @@ def serve(address: str, port: int) -> None:
                    "https://github.com/papis/papis-zotero/issues.")
 
     server_address = (address, port)
+    request_handler = partial(papis_zotero.server.PapisRequestHandler, add_tag)
     try:
-        httpd = http.server.HTTPServer(server_address,
-                                       papis_zotero.server.PapisRequestHandler)
+        httpd = http.server.HTTPServer(server_address, request_handler)
     except OSError:
         logger.error(
             "Address '%s:%s' is already in use. This may be because you "
