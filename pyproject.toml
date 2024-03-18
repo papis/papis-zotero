@@ -42,6 +42,7 @@ Repository = "https://github.com/papis/papis-zotero"
     "flake8",
     "flake8-bugbear",
     "flake8-quotes",
+    "Flake8-pyproject",
     "mypy>=0.7",
     "pep8-naming",
     "pytest",
@@ -53,3 +54,24 @@ Repository = "https://github.com/papis/papis-zotero"
 
 [project.entry-points."papis.command"]
 "zotero" = "papis_zotero:main"
+
+[tool.flake8]
+select = ["B", "D", "E", "F", "N", "Q", "W"]
+extend-ignore = ["B019", "E123", "N818", "W503"]
+max-line-length = 88
+inline-quotes = "double"
+multiline-quotes = "double"
+
+[tool.pytest.ini_options]
+norecursedirs = ".git doc build dist"
+python_files = "*.py"
+markers = ["config_setup: setup for tmp_config",
+    "library_setup: setup for tmp_library",
+]
+
+[tool.mypy]
+strict = true
+show_column_numbers = true
+hide_error_codes = false
+pretty = true
+warn_unused_ignores = false
