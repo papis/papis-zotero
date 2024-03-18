@@ -1,9 +1,6 @@
 [build-system]
-build-backend = "setuptools.build_meta"
-requires = [
-    "setuptools>=65",
-    "wheel",
-]
+build-backend = "hatchling.build"
+requires = ["hatchling>=1.10.0"]
 
 [project]
 name = "papis-zotero"
@@ -56,6 +53,3 @@ Repository = "https://github.com/papis/papis-zotero"
 
 [project.entry-points."papis.command"]
 "zotero" = "papis_zotero:main"
-
-[tool.setuptools]
-packages = ["papis_zotero"]
