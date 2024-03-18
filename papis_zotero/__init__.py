@@ -1,7 +1,7 @@
 from functools import partial
 import os
 import http.server
-from typing import Optional
+from typing import List, Optional, Tuple
 
 import click
 
@@ -25,8 +25,12 @@ def main() -> None:
               default=papis_zotero.server.ZOTERO_PORT,
               type=int)
 @click.option("--address", help="Address to bind", default="localhost")
-@click.option("-t", "--add-tag", help="Tag that is added to the document", default=None)
-def serve(address: str, port: int, add_tag: Optional[str]) -> None:
+@click.option(
+    "-s", "--set", "set_list",
+    help="Set imported document metadata as <key> <value>. Can be used multiple times.",
+    multiple=True,
+    type=(str, str))
+def serve(address: str, port: int, set_list: List[Tuple[str, str]],) -> None:
     """Start a ``zotero-connector`` server."""
 
     logger.warning("The 'zotero-connector' server is experimental. "
@@ -34,7 +38,7 @@ def serve(address: str, port: int, add_tag: Optional[str]) -> None:
                    "https://github.com/papis/papis-zotero/issues.")
 
     server_address = (address, port)
-    request_handler = partial(papis_zotero.server.PapisRequestHandler, add_tag)
+    request_handler = partial(papis_zotero.server.PapisRequestHandler, set_list)
     try:
         httpd = http.server.HTTPServer(server_address, request_handler)
     except OSError:
