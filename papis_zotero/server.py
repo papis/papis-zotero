@@ -7,7 +7,7 @@ into papis.
 
 import json
 import http.server
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 import papis.api
 import papis.crossref
@@ -122,9 +122,9 @@ def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
 
 
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
-    def __init__(self, add_tag: str, request: Any,
+    def __init__(self, set_list: List[Tuple[str, str]], request: Any,
                  client_address: Any, server: Any) -> None:
-        self.add_tag: str = add_tag
+        self.set_list = set_list
         super().__init__(request, client_address, server)
 
     def log_message(self, fmt: str, *args: Any) -> None:
@@ -214,10 +214,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                 files = []
 
             papis_item = zotero_data_to_papis_data(item)
-            if papis_item.get("tags"):
-                papis_item["tags"].append(self.add_tag)
-            else:
-                papis_item["tags"] = [self.add_tag]
+            if self.set_list:
+                papis_item.update(self.set_list)
 
             logger.info("Adding paper to papis.")
             papis.commands.add.run(files, data=papis_item)
