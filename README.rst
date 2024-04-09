@@ -19,7 +19,39 @@ To install the latest development version
 
 .. code:: bash
 
-   python -m pip install papis-zotero@https://github.com/papis/papis-zotero.git#egg=papis-zotero
+    python -m pip install papis-zotero@https://github.com/papis/papis-zotero.git#egg=papis-zotero
+
+For Nix or NixOS users, a ``flake.nix`` is available for use.  It currently
+provides a ``devShell`` configuration for use with ``nix develop``, as well as
+packages for `nix shell` or for installation. While the `devShell` is ready to
+use when you activate a develop shell, for installation you might want to do
+something like
+
+.. code:: nix
+{
+  pkgs,
+  inputs,
+  ...
+}: {
+  home.packages = with pkgs; [
+    (
+      python3.withPackages
+      (
+        ps: [
+          inputs.papis.packages.${system}.default
+          inputs.papis-zotero.packages.${system}.default
+          # you can add other packages you might want to make available for papis
+          # ps.jinja2
+        ]
+      )
+    )
+    # Here you can list other packages, such as
+    # typst
+    # hayagriva
+    # zotero_7
+  ];
+}
+
 
 Development
 -----------
