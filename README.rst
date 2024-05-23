@@ -1,13 +1,13 @@
-.. image:: https://badge.fury.io/py/papis-zotero.svg
-    :target: https://badge.fury.io/py/papis-zotero
-.. image:: https://github.com/papis/papis-zotero/workflows/CI/badge.svg
-   :target: https://github.com/papis/papis-zotero/actions?query=branch%3Amain+workflow%3ACI
+|pypi| |ci|
 
-Zotero compatibility for papis
+Zotero compatibility for Papis
 ==============================
 
 Installation
 ------------
+
+Pip
+^^^
 
 To install the latest release from PyPI
 
@@ -21,11 +21,11 @@ To install the latest development version
 
     python -m pip install papis-zotero@https://github.com/papis/papis-zotero.git#egg=papis-zotero
 
-For Nix or NixOS users, a ``flake.nix`` is available to install.  It currently
-provides a ``devShell`` configuration for use with ``nix develop``, as well as
-packages for `nix shell` or for installation. While the `devShell` is ready to
-use when you activate a develop shell, for installation you might want to do
-something like
+Nix
+^^^
+
+For Nix and NixOS users, a Nix flake is included in this repository and can be
+used to install the package. There are many ways of doing so, for instance like so:
 
 .. code:: nix
 
@@ -53,44 +53,48 @@ something like
       ];
     }
 
+Arch
+^^^^
 
-Development
------------
+Arch users can use the AUR to install `the package
+<https://aur.archlinux.org/packages/papis-zotero>`__.
 
-This project uses ``setup.py`` and ``setuptools`` for its build system.
-To develop the code, it is recommended to start up a
-`virtual environment <https://docs.python.org/3/library/venv.html>`__ and
-install the project in editable mode using, e.g.::
+Importing from Zotero SQLite (preferred)
+----------------------------------------
 
-    python -m pip install -e '.[develop]'
+Zotero also maintains a database of all its files and collections under a
+``zotero.sqlite`` file. You can check where this file is located by going to
+``Edit > Preferences > Advanced > Data Directory Location`` (may vary depending
+on the Zotero version). The Zotero data directory should contain the ``zotero.sqlite``
+file and a ``storage`` directory with the files for each document.
 
-After installation always check that the command is correctly recognized, e.g.
-by looking at the help output
-
-.. code:: bash
-
-    papis zotero --help
-
-Importing from BibTeX
----------------------
-
-Zotero supports exporting different variants of BibTeX or BibLaTeX files
-(from ``Files > Export Library``). The resulting ``bib`` file can be directly
-imported into ``papis`` using
+The SQLite database maintained by Zotero can be imported directly (without
+using a BibTeX export) by ``papis-zotero``. This can be done with:
 
 .. code:: bash
 
-   papis bibtex read library.bib import --all
+  papis zotero import --from-sql-folder <ZOTERO_DATA_DIRECTORY>
 
-but a better choice is using this command, as it has better support for special
-Zotero fields. To import a given exported library run
+Here, ``ZOTERO_DATA_DIRECTORY`` is the folder containing the ``zotero.sqlite``
+file. By default, ``papis-zotero`` will add the imported documents to your
+current library directory, but it can be customized using the
+``--outfolder`` argument.
+
+Importing from BibTeX (alternative)
+-----------------------------------
+
+Zotero can export different variants of BibTeX or BibLaTeX files
+(from ``Files > Export Library``). You could import the resulting ``.bib`` file
+directly with Papis (with the ``papis bibtex`` command), but ``papis-zotero``
+provides a specialised command. This command has better support for special Zotero
+fields. To import a given exported library run:
 
 .. code:: bash
 
     papis zotero import --from-bibtex library.bib
 
-BibTeX files exported by Zotero can also include has some PDF entries, e.g.
-they can look like
+BibTeX files exported by Zotero can include attached files as shown in the below
+example:
 
 .. code:: bibtex
 
@@ -106,55 +110,60 @@ they can look like
         year = { 1905 },
     }
 
-From this, ``papis-zotero`` will interpret the path of the ``file`` entry
-as a relative path to ``library.bib`` passed to the import command using
+Given this, ``papis-zotero`` will interpret the path of the ``file`` entry
+as a relative path to the ``library.bib`` passed to the import command using
 ``--from-bibtex``. The files are skipped if they do not exist at the expected
 location.
 
 By default, ``papis-zotero`` will add the documents to your current library.
 When initially importing a big library, it is recommended to always import it
-into a scratch folder, so that you can check the import. This can be easily done
-using
+into a scratch folder, so that you can verify the import. This can be easily done
+using:
 
 .. code:: bash
 
     papis zotero import --from-bibtex library.bib --outfolder some/folder/lib
 
-When you are ready you can move this folder to a final ``papis`` library.
-
-Importing from Zotero SQLite
-----------------------------
-
-Zotero also maintains a database of all its files and collections under a
-``zotero.sqlite`` file. You can check where this file is located by going to
-``Edit > Preferences > Advanced > Data Directory Location`` (may vary depending
-on the Zotero version). The Zotero data directory should contain the ``zotero.sqlite``
-file and a ``storage`` directory with the files for each document.
-
-The SQLite database maintained by Zotero can be imported directly (without
-using a BibTeX export) by ``papis-zotero``. This can be done by passing
-
-.. code:: bash
-
-  papis zotero import --from-sql-folder <ZOTERO_DATA_DIRECTORY>
-
-where ``ZOTERO_DATA_DIRECTORY`` is the folder containing the ``zotero.sqlite``
-file. By default, ``papis-zotero`` will add the imported documents to your
-current library directory, but it can be customized using the
-``--outfolder`` argument.
+When you are ready you can move this folder to a final Papis library.
 
 Using Zotero connectors
 -----------------------
 
-This plugin can also connect to a Zotero connector browser plugin. First, one
-such plugin should be installed from the
+This plugin can also connect to a Zotero connector browser plugin. First, such
+a plugin should be installed from the
 `Zotero website <https://www.zotero.org/download/>`__. Then, make sure that
-Zotero itself is not running (and connected to the connector) and run
+Zotero itself is not running (and connected to the connector) and run:
 
 .. code:: bash
 
     papis zotero serve
 
-to start listening to your browser for incoming data.  Whenever you click the
-Zotero button to add a paper, ``papis-zotero`` will add this paper to its
+Papis now starts listening to your browser for incoming data. Whenever you click the
+Zotero button to add a paper, ``papis-zotero`` will add this paper to the Papis
 library instead.
+
+Development
+-----------
+
+This project uses ``pyproject.toml`` and ``hatchling`` for its build system.
+To develop the code, it is recommended to start up a
+`virtual environment <https://docs.python.org/3/library/venv.html>`__ and
+install the project in editable mode using, e.g.::
+
+    python -m pip install -e '.[develop]'
+
+After installation, always check that the command is correctly recognized, e.g.
+by looking at the help output
+
+.. code:: bash
+
+    papis zotero --help
+
+If you use the Nix flake, you can also use the included ``devShell`` with
+``nix develop``.
+
+
+.. |pypi| image:: https://badge.fury.io/py/papis-zotero.svg
+   :target: https://badge.fury.io/py/papis-zotero
+.. |ci| image:: https://github.com/papis/papis-zotero/workflows/CI/badge.svg
+   :target: https://github.com/papis/papis-zotero/actions?query=branch%3Amain+workflow%3ACI
