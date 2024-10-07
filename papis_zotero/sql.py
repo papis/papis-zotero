@@ -140,6 +140,9 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
         if match := re.match("storage:(.*)", path):
             file_name = match.group(1)
             files.append(os.path.join(input_path, "storage", key, file_name))
+        elif os.path.exists(path):
+            # NOTE: this is likely a symlink to some other on-disk location
+            files.append(path)
         else:
             logger.error("Failed to export attachment %s (with type %s) from path '%s'",
                          key, mime_type, path)
