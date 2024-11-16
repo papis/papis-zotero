@@ -12,13 +12,13 @@ import papis_zotero.server
 logger = papis.logging.get_logger(__name__)
 
 
-@click.group("zotero")                  # type: ignore[arg-type]
+@click.group("zotero")
 @click.help_option("-h", "--help")
 def main() -> None:
     """Zotero interface for papis."""
 
 
-@main.command("serve")                  # type: ignore[arg-type]
+@main.command("serve")
 @click.help_option("-h", "--help")
 @click.option("--port",
               help="Port to listen to",
@@ -56,7 +56,7 @@ def serve(address: str, port: int, set_list: List[Tuple[str, str]],) -> None:
     httpd.serve_forever()
 
 
-@main.command("import")                 # type: ignore[arg-type]
+@main.command("import")
 @click.help_option("-h", "--help")
 @click.option(
     "-f",

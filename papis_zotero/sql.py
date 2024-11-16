@@ -217,7 +217,8 @@ ZOTERO_QUERY_ITEMS = """
 """.format(",".join(["?"] * len(papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)))
 
 
-def add_from_sql(input_path: str, out_folder: Optional[str] = None,
+def add_from_sql(input_path: str,
+                 out_folder: Optional[str] = None,
                  link: bool = False) -> None:
     """
     :param inpath: path to zotero SQLite database "zoter.sqlite" and
@@ -255,6 +256,7 @@ def add_from_sql(input_path: str, out_folder: Optional[str] = None,
     if out_folder is not None:
         papis.config.set_lib_from_name(out_folder)
 
+    folder_name = papis.config.getstring("add-folder-name")
     for i, (item_id, item_type, item_key, date_added) in enumerate(cursor, start=1):
         # convert fields
         date_added = (
@@ -280,7 +282,7 @@ def add_from_sql(input_path: str, out_folder: Optional[str] = None,
                     i, items_count, item_key, out_folder)
 
         papis.commands.add.run(paths=files, data=item, link=link,
-                               folder_name=papis.config.getstring("add-folder-name")
+                               folder_name=folder_name
                                )
 
     logger.info("Finished exporting from '%s'.", input_path)
