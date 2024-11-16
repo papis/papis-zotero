@@ -25,10 +25,10 @@ mypy:								## Run (strict) mypy checks
 .PHONY: mypy
 
 pytest:								## Run pytest test and doctests
-	python -m pytest -rswx --cov=papis_zotero -v -s tests
+	python -m pytest -rswx -v -s tests
 .PHONY: pytest
 
 ci-install:							## Run pip and install dependencies on CI
-	python -m pip install --upgrade pip setuptools wheel
+	python -m pip install --upgrade pip hatchling wheel
 	python -m pip install -e '.[develop]'
 .PHONY: ci-install
