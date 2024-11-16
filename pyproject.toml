@@ -1,18 +1,20 @@
 [build-system]
 build-backend = "hatchling.build"
-requires = ["hatchling>=1.10.0"]
+requires = [ "hatchling>=1.10" ]
 
 [project]
 name = "papis-zotero"
-description = "Interact with Zotero using papis"
 version = "0.1.2"
-authors = [{ name = "Alejandro Gallo", email = "aamsgallo@gmail.com" }]
-maintainers = [{ name = "Alejandro Gallo", email = "aamsgallo@gmail.com" }]
+description = "Interact with Zotero using papis"
 readme = "README.rst"
-license = { text = "GPLv3" }
+keywords = [ "bibtex", "biliography", "cli", "management", "papis", "zotero" ]
+license = { text = "GPL-3.0-or-later" }
+maintainers = [ { name = "Alejandro Gallo", email = "aamsgallo@gmail.com" } ]
+authors = [ { name = "Alejandro Gallo", email = "aamsgallo@gmail.com" } ]
+requires-python = ">=3.8"
 classifiers = [
-    "Environment :: Console :: Curses",
     "Environment :: Console",
+    "Environment :: Console :: Curses",
     "Intended Audience :: Developers",
     "Intended Audience :: Education",
     "Intended Audience :: Science/Research",
@@ -29,35 +31,34 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Utilities",
 ]
-keywords = ["bibtex", "biliography", "cli", "management", "papis", "zotero"]
-dependencies = ["papis==0.13"]
-
-[project.urls]
-Repository = "https://github.com/papis/papis-zotero"
+dependencies = [ "papis>=0.14,<0.15" ]
 
 [project.optional-dependencies]
-"develop" = [
+develop = [
     "flake8",
     "flake8-bugbear",
+    "flake8-pyproject",
     "flake8-quotes",
-    "Flake8-pyproject",
     "mypy>=0.7",
     "pep8-naming",
     "pytest",
     "pytest-cov",
     "python-coveralls",
-    "types-PyYAML",
-    "types-tqdm",
+    "types-pyyaml",
 ]
 
+[project.urls]
+Repository = "https://github.com/papis/papis-zotero"
+
 [project.entry-points."papis.command"]
-"zotero" = "papis_zotero:main"
+zotero = "papis_zotero:main"
 
 [tool.flake8]
-select = ["B", "D", "E", "F", "N", "Q", "W"]
-extend-ignore = ["B019", "E123", "N818", "W503"]
+select = [ "B", "D", "E", "F", "N", "Q", "W" ]
+extend-ignore = [ "B019", "E123", "N818", "W503" ]
 max-line-length = 88
 inline-quotes = "double"
 multiline-quotes = "double"
@@ -65,7 +66,8 @@ multiline-quotes = "double"
 [tool.pytest.ini_options]
 norecursedirs = ".git doc build dist"
 python_files = "*.py"
-markers = ["config_setup: setup for tmp_config",
+markers = [
+    "config_setup: setup for tmp_config",
     "library_setup: setup for tmp_library",
 ]
 
