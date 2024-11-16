@@ -6,8 +6,7 @@ import pytest
 import papis.yaml
 import papis.document
 import papis_zotero.sql
-
-from .testlib import TemporaryLibrary
+from papis.testing import TemporaryLibrary
 
 
 @pytest.mark.skipif(os.name == "nt", reason="encoding is incorrect on windows")

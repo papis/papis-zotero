@@ -7,8 +7,7 @@ import papis.yaml
 import papis.database
 import papis.document
 import papis_zotero.bibtex
-
-from .testlib import TemporaryLibrary
+from papis.testing import TemporaryLibrary
 
 
 @pytest.mark.skipif(os.name == "nt", reason="encoding is incorrect on windows")
