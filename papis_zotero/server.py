@@ -33,7 +33,7 @@ ZOTERO_TO_PAPIS_CONVERSIONS = [
         }]),
     _k("tags", [{
         "key": "tags",
-        "action": lambda t: "; ".join(tag["tag"] for tag in t)
+        "action": lambda t: [tag["tag"] for tag in t]
         }]),
     _k("date", [
         {"key": "year", "action": lambda d: int(d.split("-")[0])},

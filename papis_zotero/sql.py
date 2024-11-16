@@ -15,10 +15,6 @@ import papis_zotero.utils
 
 logger = papis.logging.get_logger(__name__)
 
-# separator between multiple tags
-# FIXME: this should be handled by papis
-ZOTERO_TAG_DELIMITER = " "
-
 # fuzzy date matching
 ISO_DATE_RE = re.compile(r"(?P<year>\d{4})-?(?P<month>\d{2})?-?(?P<day>\d{2})?")
 
@@ -162,11 +158,11 @@ WHERE
 """
 
 
-def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
+def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, List[str]]:
     cursor = connection.cursor()
     cursor.execute(ZOTERO_QUERY_ITEM_TAGS, (item_id,))
 
-    tags = ZOTERO_TAG_DELIMITER.join(str(row[0]) for row in cursor)
+    tags = [str(row[0]) for row in cursor]
     return {"tags": tags} if tags else {}
 
 
