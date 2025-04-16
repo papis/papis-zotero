@@ -4,7 +4,7 @@ requires = [ "hatchling>=1.10" ]
 
 [project]
 name = "papis-zotero"
-version = "0.1.2"
+version = "0.2"
 description = "Interact with Zotero using papis"
 readme = "README.rst"
 keywords = [ "bibtex", "biliography", "cli", "management", "papis", "zotero" ]
