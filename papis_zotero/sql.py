@@ -135,7 +135,7 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
     for key, path, mime_type in cursor:
         if path is None:
             logger.warning("Attachment %s (with type %s) skipped. Path not specified.",
-                          key, mime_type)
+                           key, mime_type)
             continue
 
         if match := re.match("storage:(.*)", path):
