@@ -27,7 +27,8 @@ def add_from_bibtex(bib_file: str,
         if "date" in result:
             date = str(result.pop("date")).split("-")
             result["year"] = int(date[0])
-            result["month"] = int(date[1])
+            if len(date) >= 2:
+                result["month"] = int(date[1])
 
         # cleanup tags
         if "keywords" in result:
