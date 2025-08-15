@@ -16,9 +16,9 @@ tags:								## Generate ctags for main codebase
 		papis_zotero
 .PHONY: tags
 
-flake8:								## Run flake8 checks
-	python -m flake8 papis_zotero tests
-.PHONY: flake8
+ruff:								## Run ruff checks
+	ruff check papis_zotero tests
+.PHONY: ruff
 
 mypy:								## Run (strict) mypy checks
 	python -m mypy papis_zotero tests

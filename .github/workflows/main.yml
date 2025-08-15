@@ -42,9 +42,9 @@ jobs:
       run: |
         make ci-install
 
-    - name: Lint with flake8
+    - name: Lint with ruff
       run: |
-        make flake8
+        make ruff
 
     - name: Lint with mypy
       run: |
