@@ -1,8 +1,8 @@
 import tempfile
 from typing import Any, Dict, Optional
 
-import papis.utils
 import papis.logging
+import papis.utils
 
 logger = papis.logging.get_logger(__name__)
 
@@ -121,13 +121,14 @@ def download_document(
     ext = expected_document_extension
     if ext is None:
         from papis.filetype import guess_content_extension
+
         ext = guess_content_extension(response.content)
         if not ext:
             logger.warning("Downloaded document does not have a "
                            "recognizable (binary) mimetype: '%s'.",
                            response.headers["Content-Type"])
 
-    ext = ".{}".format(ext) if ext else ""
+    ext = f".{ext}" if ext else ""
     with tempfile.NamedTemporaryFile(
             mode="wb+",
             suffix=ext,

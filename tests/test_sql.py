@@ -1,12 +1,14 @@
-import os
 import glob
-import yaml
-import pytest
+import os
 
-import papis.yaml
+import pytest
+import yaml
+
 import papis.document
-import papis_zotero.sql
+import papis.yaml
 from papis.testing import TemporaryLibrary
+
+import papis_zotero.sql
 
 
 @pytest.mark.skipif(os.name == "nt", reason="encoding is incorrect on windows")

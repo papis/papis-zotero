@@ -5,14 +5,14 @@ into papis.
 
 """
 
-import json
 import http.server
+import json
 from typing import Any, Dict, List, Tuple
 
 import papis.api
+import papis.commands.add
 import papis.crossref
 import papis.document
-import papis.commands.add
 import papis.logging
 
 import papis_zotero.utils
@@ -29,7 +29,7 @@ _k = papis.document.KeyConversionPair
 ZOTERO_TO_PAPIS_CONVERSIONS = [
     _k("creators", [{
         "key": "author_list",
-        "action": lambda a: zotero_authors(a)
+        "action": lambda a: zotero_authors(a)  # noqa: PLW0108
         }]),
     _k("tags", [{
         "key": "tags",
@@ -70,7 +70,7 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     item.pop("uri", None)
     item.pop("sessionID", None)
 
-    if item.get("referrer") == "":
+    if not item.get("referrer"):
         item.pop("referrer", None)
 
     for foreign_key, key in papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.items():
@@ -95,7 +95,7 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 
         item.update(crossref_data)
 
-    logger.info("Document metadata: %s", item)
+    logger.info("Document metadata: %s.", item)
     return item
 
 
@@ -103,7 +103,7 @@ def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
     files = []
 
     for attachment in attachments:
-        logger.info("Checking attachment: %s", attachment)
+        logger.info("Checking attachment: %s.", attachment)
 
         mime = str(attachment.get("mimeType"))
         if mime not in papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION:
@@ -127,7 +127,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.set_list = set_list
         super().__init__(request, client_address, server)
 
-    def log_message(self, fmt: str, *args: Any) -> None:
+    def log_message(self, fmt: str, *args: Any) -> None:  # noqa: PLR6301
         logger.info(fmt, *args)
 
     def set_zotero_headers(self) -> None:
@@ -140,8 +140,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         length = int(self.headers["content-length"])
         return self.rfile.read(length)
 
-    def do_GET(self) -> None:  # noqa: N802
-        logger.info("Received GET request at '%s'", self.path)
+    def do_GET(self) -> None:
+        logger.info("Received GET request at '%s'.", self.path)
         if self.path == "/connector/ping":
             self.handle_get_ping()
 
@@ -163,8 +163,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
         self.wfile.write(response.encode("utf-8"))
 
-    def do_POST(self) -> None:  # noqa: N802
-        logger.info("Received POST request at '%s'", self.path)
+    def do_POST(self) -> None:
+        logger.info("Received POST request at '%s'.", self.path)
         if self.path == "/connector/ping":
             self.handle_post_ping()
         elif self.path == "/connector/getSelectedCollection":
@@ -204,7 +204,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         rawinput = self.read_input()
         data = json.loads(rawinput.decode("utf-8"))
 
-        logger.info("Response: %s", data)
+        logger.info("Response: %s.", data)
         for item in data["items"]:
             attachments = item.get("attachments", [])
             if attachments:
@@ -217,7 +217,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
             if self.set_list:
                 papis_item.update(self.set_list)
 
-            logger.info("Adding paper to papis.")
+            logger.info("Adding paper to Papis.")
             papis.commands.add.run(files, data=papis_item)
 
         self.send_response(201)
@@ -226,8 +226,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.wfile.write(rawinput)
 
     def handle_post_snapshot(self) -> None:
-        import tempfile
         import datetime
+        import tempfile
         import urllib.parse
 
         rawinput = self.read_input()
@@ -244,8 +244,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         """
         full_html = html_template.lstrip().format(**data)
         temp_html = tempfile.mktemp(suffix=".html")
-        logger.debug("Writing temp html to '%s'", temp_html)
-        with open(temp_html, mode="w") as f:
+        logger.debug("Writing temporary HTML: '%s'.", temp_html)
+        with open(temp_html, mode="w", encoding="utf-8") as f:
             f.write(full_html)
 
         current_date = datetime.datetime.now()
@@ -256,7 +256,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
 
         papis_item = zotero_data_to_papis_data(data)
 
-        logger.info("Adding snapshot to papis.")
+        logger.info("Adding snapshot to Papis.")
         papis.commands.add.run([temp_html], data=papis_item,
                                folder_name=papis.config.getstring("add-folder-name")
                                )
