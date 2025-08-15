@@ -1,12 +1,13 @@
-from functools import partial
-import os
 import http.server
+import os
+from functools import partial
 from typing import List, Optional, Tuple
 
 import click
 
 import papis.config
 import papis.logging
+
 import papis_zotero.server
 
 logger = papis.logging.get_logger(__name__)

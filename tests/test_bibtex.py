@@ -1,13 +1,15 @@
 import os
-import yaml
-import pytest
 
-import papis.id
-import papis.yaml
+import pytest
+import yaml
+
 import papis.database
 import papis.document
-import papis_zotero.bibtex
+import papis.id
+import papis.yaml
 from papis.testing import TemporaryLibrary
+
+import papis_zotero.bibtex
 
 
 @pytest.mark.skipif(os.name == "nt", reason="encoding is incorrect on windows")

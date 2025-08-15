@@ -4,12 +4,12 @@ import sqlite3
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-import papis.config
 import papis.bibtex
-import papis.strings
+import papis.commands.add
+import papis.config
 import papis.document
 import papis.logging
-import papis.commands.add
+import papis.strings
 
 import papis_zotero.utils
 
@@ -48,8 +48,8 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
         if name in papis_zotero.utils.ZOTERO_EXCLUDED_FIELDS:
             continue
 
-        name = papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.get(name, name)
-        fields[name] = value
+        papis_name = papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.get(name, name)
+        fields[papis_name] = value
 
     # get year and month from date if available
     date = fields.pop("date", None)
@@ -129,7 +129,7 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
     cursor = connection.cursor()
     cursor.execute(
         ZOTERO_QUERY_ITEM_ATTACHMENTS,
-        (item_id,) + tuple(papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
+        (item_id, *papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
 
     files = []
     for key, path, mime_type in cursor:
@@ -138,14 +138,14 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
                            key, mime_type)
             continue
 
-        if match := re.match("storage:(.*)", path):
+        if match := re.match(r"storage:(.*)", path):
             file_name = match.group(1)
             files.append(os.path.join(input_path, "storage", key, file_name))
         elif os.path.exists(path):
             # NOTE: this is likely a symlink to some other on-disk location
             files.append(path)
         else:
-            logger.error("Failed to export attachment %s (with type %s) from path '%s'",
+            logger.error("Failed to export attachment %s (with type %s) from '%s'.",
                          key, mime_type, path)
 
     return files
@@ -237,16 +237,16 @@ def add_from_sql(input_path: str,
 
     if not os.path.exists(input_path):
         raise FileNotFoundError(
-            "[Errno 2] No such file or directory: '{}'".format(input_path))
+            f"[Errno 2] No such file or directory: '{input_path}'")
 
     if not os.path.exists(out_folder):
         raise FileNotFoundError(
-            "[Errno 2] No such file or directory: '{}'".format(out_folder))
+            f"[Errno 2] No such file or directory: '{out_folder}'")
 
     zotero_sqlite_file = os.path.join(input_path, "zotero.sqlite")
     if not os.path.exists(zotero_sqlite_file):
         raise FileNotFoundError(
-            "No 'zotero.sqlite' file found in '{}'".format(input_path))
+            f"No 'zotero.sqlite' file found in '{input_path}'")
 
     connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
@@ -262,12 +262,12 @@ def add_from_sql(input_path: str,
         papis.config.set_lib_from_name(out_folder)
 
     folder_name = papis.config.getstring("add-folder-name")
-    for i, (item_id, item_type, item_key, date_added) in enumerate(cursor, start=1):
+    for i, (item_id, zitem_type, item_key, zdate_added) in enumerate(cursor, start=1):
         # convert fields
         date_added = (
-            datetime.strptime(date_added, "%Y-%m-%d %H:%M:%S")
+            datetime.strptime(zdate_added, "%Y-%m-%d %H:%M:%S")
             .strftime(papis.strings.time_format))
-        item_type = papis_zotero.utils.ZOTERO_TO_PAPIS_TYPES.get(item_type, item_type)
+        item_type = papis_zotero.utils.ZOTERO_TO_PAPIS_TYPES.get(zitem_type, zitem_type)
 
         # get Zotero metadata
         fields = get_fields(connection, item_id)
