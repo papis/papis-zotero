@@ -1,3 +1,6 @@
+PYTHON?=python -X dev
+NIX?=nix --extra-experimental-features nix-command --extra-experimental-features flakes
+
 all: help
 
 help: 								## Show this help
@@ -21,17 +24,21 @@ ruff:								## Run ruff checks
 .PHONY: ruff
 
 mypy:								## Run (strict) mypy checks
-	python -m mypy papis_zotero tests
+	$(PYTHON) -m mypy papis_zotero tests
 .PHONY: mypy
 
 pytest:								## Run pytest test and doctests
-	python -m pytest -rswx -v -s tests
+	$(PYTHON) -m pytest -rswx -v -s tests
 .PHONY: pytest
 
+nix-update: 						## Update the nix flake.lock file
+	$(NIX) flake update
+.PHONY: nix-update
+
 ci-install-build-system:
-	python -m pip install --upgrade pip hatchling wheel build
+	$(PYTHON) -m pip install --upgrade pip hatchling wheel build
 .PHONY: ci-install-build-system
 
 ci-install: ci-install-build-system	## Run pip and install dependencies on CI
-	python -m pip install -e '.[develop]'
+	$(PYTHON) -m pip install -e '.[develop]'
 .PHONY: ci-install
