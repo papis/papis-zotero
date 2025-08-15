@@ -41,7 +41,6 @@ develop = [
     "mypy>=0.7",
     "pytest",
     "pytest-cov",
-    "python-coveralls",
     "ruff",
     "types-pyyaml",
 ]

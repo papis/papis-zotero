@@ -19,35 +19,15 @@
     papis,
   }:
     flake-utils.lib.eachDefaultSystem (
-      system: let
-        pypkgs = pkgs.python3Packages;
+      system:
+      let
         pkgs = nixpkgs.legacyPackages.${system};
         python = pkgs.python3.override {
           packageOverrides = self: super: {
             papis = papis.packages.${system}.default;
-            python-coveralls = python-coveralls;
           };
         };
         project = pyproject-nix.lib.project.loadPyproject {projectRoot = ./.;};
-
-        python-coveralls = python.pkgs.buildPythonPackage rec {
-          pname = "python-coveralls";
-          version = "4.0.1";
-
-          src = python.pkgs.fetchPypi {
-            inherit pname version;
-            sha256 = "sha256-v694EefcVijoO2sWKWKk4khdv/GEsw5J84A3TtG87lU=";
-          };
-
-          doCheck = false;
-          checkInputs = [];
-
-          meta = with pkgs.lib; {
-            homepage = "http://github.com/z4r/python-coveralls";
-            description = "Python interface to coveralls.io API ";
-            license = licenses.asl20;
-          };
-        };
       in {
         packages = {
           papis-zotero = let
