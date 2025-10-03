@@ -1,21 +1,19 @@
-"""Start a web server listening on port 23119. This server is
-compatible with the `zotero connector`. This means that if zotero is
-*not* running, you can have items from your web browser added directly
-into papis.
+"""Start a web server listening for Zotero.
 
+This server is compatible with the "Zotero connector". This means that if Zotero
+is *not* running, you can have items from your web browser added directly
+into Papis.
 """
 
 import http.server
 import json
-from typing import Any, Dict, List, Tuple
+from functools import lru_cache as cache
+from typing import TYPE_CHECKING, Any, Dict, List, Tuple
 
-import papis.api
-import papis.commands.add
-import papis.crossref
-import papis.document
 import papis.logging
 
-import papis_zotero.utils
+if TYPE_CHECKING:
+    from papis.document import KeyConversionPair
 
 logger = papis.logging.get_logger(__name__)
 
@@ -24,28 +22,33 @@ ZOTERO_CONNECTOR_API_VERSION = 2
 ZOTERO_VERSION = "5.0.75"
 ZOTERO_PORT = 23119
 
-_k = papis.document.KeyConversionPair
 
-ZOTERO_TO_PAPIS_CONVERSIONS = [
-    _k("creators", [{
-        "key": "author_list",
-        "action": lambda a: zotero_authors(a)  # noqa: PLW0108
-        }]),
-    _k("tags", [{
-        "key": "tags",
-        "action": lambda t: [tag["tag"] for tag in t]
-        }]),
-    _k("date", [
-        {"key": "year", "action": lambda d: int(d.split("-")[0])},
-        {"key": "month", "action": lambda d: int(d.split("-")[1])},
-        ]),
-    _k("archiveID", [
-        {"key": "eprint", "action": lambda a: a.split(":")[-1]}
-        ]),
-    _k("type", [
-        {"key": "type", "action": papis_zotero.utils.ZOTERO_TO_PAPIS_TYPES.get}
-        ]),
-]
+@cache
+def _zotero_key_conversions() -> "List[KeyConversionPair]":
+    from papis.document import KeyConversionPair
+
+    from papis_zotero.utils import ZOTERO_TO_PAPIS_TYPES
+
+    return [
+        KeyConversionPair("creators", [{
+            "key": "author_list",
+            "action": lambda a: zotero_authors(a)  # noqa: PLW0108
+            }]),
+        KeyConversionPair("tags", [{
+            "key": "tags",
+            "action": lambda t: [tag["tag"] for tag in t]
+            }]),
+        KeyConversionPair("date", [
+            {"key": "year", "action": lambda d: int(d.split("-")[0])},
+            {"key": "month", "action": lambda d: int(d.split("-")[1])},
+            ]),
+        KeyConversionPair("archiveID", [
+            {"key": "eprint", "action": lambda a: a.split(":")[-1]}
+            ]),
+        KeyConversionPair("type", [
+            {"key": "type", "action": ZOTERO_TO_PAPIS_TYPES.get}
+            ]),
+    ]
 
 
 def zotero_authors(creators: List[Dict[str, str]]) -> List[Dict[str, str]]:
@@ -73,21 +76,26 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     if not item.get("referrer"):
         item.pop("referrer", None)
 
-    for foreign_key, key in papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.items():
+    from papis_zotero.utils import ZOTERO_EXCLUDED_FIELDS, ZOTERO_TO_PAPIS_FIELDS
+
+    for foreign_key, key in ZOTERO_TO_PAPIS_FIELDS.items():
         if foreign_key in item:
             item[key] = item.pop(foreign_key)
 
-    item = papis.document.keyconversion_to_data(ZOTERO_TO_PAPIS_CONVERSIONS,
-                                                item,
-                                                keep_unknown_keys=True)
-    for key in papis_zotero.utils.ZOTERO_EXCLUDED_FIELDS:
+    from papis.document import keyconversion_to_data
+    item = keyconversion_to_data(
+        _zotero_key_conversions(), item,
+        keep_unknown_keys=True)
+
+    for key in ZOTERO_EXCLUDED_FIELDS:
         if key in item:
             del item[key]
 
     # try to get information from Crossref as well
     if "doi" in item:
+        from papis.crossref import doi_to_data
         try:
-            crossref_data = papis.crossref.doi_to_data(item["doi"])
+            crossref_data = doi_to_data(item["doi"])
             crossref_data.pop("title", None)
             logger.info("Updating document with data from Crossref.")
         except ValueError:
@@ -100,21 +108,24 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
-    files = []
+    from papis_zotero.utils import (
+        ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION,
+        download_document,
+    )
 
+    files = []
     for attachment in attachments:
         logger.info("Checking attachment: %s.", attachment)
 
         mime = str(attachment.get("mimeType"))
-        if mime not in papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION:
+        if mime not in ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION:
             continue
 
         url = attachment["url"]
-        extension = papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION[mime]
+        extension = ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION[mime]
         logger.info("Downloading file (%s): '%s'.", mime, url)
 
-        filename = papis_zotero.utils.download_document(
-            url, expected_document_extension=extension)
+        filename = download_document(url, expected_document_extension=extension)
         if filename is not None:
             files.append(filename)
 
@@ -186,7 +197,9 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.set_zotero_headers()
-        papis_library = papis.api.get_lib_name()
+
+        from papis.api import get_lib_name
+        papis_library = get_lib_name()
 
         response = json.dumps({
             "libraryID": 1,
@@ -204,6 +217,8 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         rawinput = self.read_input()
         data = json.loads(rawinput.decode("utf-8"))
 
+        from papis.commands.add import run as add
+
         logger.info("Response: %s.", data)
         for item in data["items"]:
             attachments = item.get("attachments", [])
@@ -218,7 +233,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
                 papis_item.update(self.set_list)
 
             logger.info("Adding paper to Papis.")
-            papis.commands.add.run(files, data=papis_item)
+            add(files, data=papis_item)
 
         self.send_response(201)
         self.set_zotero_headers()
@@ -257,9 +272,10 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         papis_item = zotero_data_to_papis_data(data)
 
         logger.info("Adding snapshot to Papis.")
-        papis.commands.add.run([temp_html], data=papis_item,
-                               folder_name=papis.config.getstring("add-folder-name")
-                               )
+
+        from papis.commands.add import run as add
+        from papis.config import getstring
+        add([temp_html], data=papis_item, folder_name=getstring("add-folder-name"))
 
         self.send_response(201)
         self.set_zotero_headers()
