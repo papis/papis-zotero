@@ -5,10 +5,9 @@ from typing import List, Optional, Tuple
 
 import click
 
-import papis.config
 import papis.logging
 
-import papis_zotero.server
+from papis_zotero.server import ZOTERO_PORT
 
 logger = papis.logging.get_logger(__name__)
 
@@ -23,7 +22,7 @@ def main() -> None:
 @click.help_option("-h", "--help")
 @click.option("--port",
               help="Port to listen to",
-              default=papis_zotero.server.ZOTERO_PORT,
+              default=ZOTERO_PORT,
               type=int)
 @click.option("--address", help="Address to bind", default="localhost")
 @click.option(
@@ -38,8 +37,10 @@ def serve(address: str, port: int, set_list: List[Tuple[str, str]],) -> None:
                    "Please report bugs and improvements at "
                    "https://github.com/papis/papis-zotero/issues.")
 
+    from papis_zotero.server import PapisRequestHandler
+
     server_address = (address, port)
-    request_handler = partial(papis_zotero.server.PapisRequestHandler, set_list)
+    request_handler = partial(PapisRequestHandler, set_list)
     try:
         httpd = http.server.HTTPServer(server_address, request_handler)
     except OSError:
@@ -86,22 +87,20 @@ def serve(address: str, port: int, set_list: List[Tuple[str, str]],) -> None:
 def do_importer(from_bibtex: Optional[str], from_sql: Optional[str],
                 outfolder: Optional[str], link: bool) -> None:
     """Import zotero libraries into papis libraries."""
-    import papis_zotero.bibtex
-    import papis_zotero.sql
-
     if outfolder is None:
-        outfolder = papis.config.get_lib_dirs()[0]
+        from papis.config import get_lib_dirs
+        outfolder = get_lib_dirs()[0]
 
     if not os.path.exists(outfolder):
         os.makedirs(outfolder)
 
     if from_bibtex is not None:
-        import papis_zotero.bibtex
-        papis_zotero.bibtex.add_from_bibtex(from_bibtex, outfolder, link)
+        from papis_zotero.bibtex import add_from_bibtex
+        add_from_bibtex(from_bibtex, outfolder, link)
     elif from_sql is not None:
-        import papis_zotero.sql
+        from papis_zotero.sql import add_from_sql
         try:
-            papis_zotero.sql.add_from_sql(from_sql, outfolder, link)
+            add_from_sql(from_sql, outfolder, link)
         except Exception as exc:
             logger.error("Failed to import from file: %s",
                          from_sql,

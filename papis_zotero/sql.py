@@ -4,14 +4,15 @@ import sqlite3
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
-import papis.bibtex
-import papis.commands.add
-import papis.config
-import papis.document
 import papis.logging
-import papis.strings
 
-import papis_zotero.utils
+from papis_zotero.utils import (
+    ZOTERO_EXCLUDED_FIELDS,
+    ZOTERO_EXCLUDED_ITEM_TYPES,
+    ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION,
+    ZOTERO_TO_PAPIS_FIELDS,
+    ZOTERO_TO_PAPIS_TYPES,
+)
 
 logger = papis.logging.get_logger(__name__)
 
@@ -45,10 +46,10 @@ def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
     # get fields
     fields = {}
     for name, value in cursor:
-        if name in papis_zotero.utils.ZOTERO_EXCLUDED_FIELDS:
+        if name in ZOTERO_EXCLUDED_FIELDS:
             continue
 
-        papis_name = papis_zotero.utils.ZOTERO_TO_PAPIS_FIELDS.get(name, name)
+        papis_name = ZOTERO_TO_PAPIS_FIELDS.get(name, name)
         fields[papis_name] = value
 
     # get year and month from date if available
@@ -88,6 +89,8 @@ ORDER BY
 
 def get_creators(connection: sqlite3.Connection,
                  item_id: str) -> Dict[str, List[str]]:
+    from papis.document import author_list_to_author
+
     cursor = connection.cursor()
     cursor.execute(ZOTERO_QUERY_ITEM_CREATORS, (item_id,))
 
@@ -102,7 +105,7 @@ def get_creators(connection: sqlite3.Connection,
     # convert to papis format
     result: Dict[str, Any] = {}
     for ctype, creators in creators_by_type.items():
-        result[ctype] = papis.document.author_list_to_author({"author_list": creators})
+        result[ctype] = author_list_to_author({"author_list": creators})
         result[f"{ctype}_list"] = creators
 
     return result
@@ -120,8 +123,7 @@ WHERE
     itemAttachments.parentItemID = ? AND
     itemAttachments.contentType IN ({}) AND
     items.itemID = itemAttachments.itemID
-""".format(",".join(["?"] * len(
-    papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION)))
+""".format(",".join(["?"] * len(ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION)))
 
 
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
@@ -129,7 +131,7 @@ def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
     cursor = connection.cursor()
     cursor.execute(
         ZOTERO_QUERY_ITEM_ATTACHMENTS,
-        (item_id, *papis_zotero.utils.ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
+        (item_id, *ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION))
 
     files = []
     for key, path, mime_type in cursor:
@@ -203,7 +205,7 @@ ZOTERO_QUERY_ITEM_COUNT = """
     itemType.typeName NOT IN ({})
     ORDER BY
     item.itemID
-""".format(",".join(["?"] * len(papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)))
+""".format(",".join(["?"] * len(ZOTERO_EXCLUDED_ITEM_TYPES)))
 
 ZOTERO_QUERY_ITEMS = """
     SELECT
@@ -219,7 +221,7 @@ ZOTERO_QUERY_ITEMS = """
     itemType.typeName NOT IN ({})
     ORDER BY
     item.itemID
-""".format(",".join(["?"] * len(papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)))
+""".format(",".join(["?"] * len(ZOTERO_EXCLUDED_ITEM_TYPES)))
 
 
 def add_from_sql(input_path: str,
@@ -231,9 +233,10 @@ def add_from_sql(input_path: str,
     :param outpath: path where all items will be exported to created if not
         existing
     """
+    from papis.config import get_lib_dirs, getstring, set_lib_from_name
 
     if out_folder is None:
-        out_folder = papis.config.get_lib_dirs()[0]
+        out_folder = get_lib_dirs()[0]
 
     if not os.path.exists(input_path):
         raise FileNotFoundError(
@@ -251,23 +254,23 @@ def add_from_sql(input_path: str,
     connection = sqlite3.connect(zotero_sqlite_file)
     cursor = connection.cursor()
 
-    cursor.execute(ZOTERO_QUERY_ITEM_COUNT,
-                   papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)
+    cursor.execute(ZOTERO_QUERY_ITEM_COUNT, ZOTERO_EXCLUDED_ITEM_TYPES)
     for row in cursor:
         items_count = row[0]
 
-    cursor.execute(ZOTERO_QUERY_ITEMS,
-                   papis_zotero.utils.ZOTERO_EXCLUDED_ITEM_TYPES)
+    cursor.execute(ZOTERO_QUERY_ITEMS, ZOTERO_EXCLUDED_ITEM_TYPES)
     if out_folder is not None:
-        papis.config.set_lib_from_name(out_folder)
+        set_lib_from_name(out_folder)
 
-    folder_name = papis.config.getstring("add-folder-name")
+    from papis.strings import time_format
+
+    folder_name = getstring("add-folder-name")
     for i, (item_id, zitem_type, item_key, zdate_added) in enumerate(cursor, start=1):
         # convert fields
         date_added = (
             datetime.strptime(zdate_added, "%Y-%m-%d %H:%M:%S")
-            .strftime(papis.strings.time_format))
-        item_type = papis_zotero.utils.ZOTERO_TO_PAPIS_TYPES.get(zitem_type, zitem_type)
+            .strftime(time_format))
+        item_type = ZOTERO_TO_PAPIS_TYPES.get(zitem_type, zitem_type)
 
         # get Zotero metadata
         fields = get_fields(connection, item_id)
@@ -286,9 +289,8 @@ def add_from_sql(input_path: str,
         logger.info("[%4d/%-4d] Exporting item '%s' to library '%s'.",
                     i, items_count, item_key, out_folder)
 
-        papis.commands.add.run(paths=files, data=item, link=link,
-                               folder_name=folder_name
-                               )
+        from papis.commands.add import run as add
+        add(paths=files, data=item, link=link, folder_name=folder_name)
 
     logger.info("Finished exporting from '%s'.", input_path)
     logger.info("Exported files can be found at '%s'.", out_folder)

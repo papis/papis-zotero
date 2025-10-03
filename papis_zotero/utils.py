@@ -2,7 +2,6 @@ import tempfile
 from typing import Any, Dict, Optional
 
 import papis.logging
-import papis.utils
 
 logger = papis.logging.get_logger(__name__)
 
@@ -106,8 +105,10 @@ def download_document(
     if cookies is None:
         cookies = {}
 
+    from papis.utils import get_session
+
     try:
-        with papis.utils.get_session() as session:
+        with get_session() as session:
             response = session.get(url, cookies=cookies, allow_redirects=True)
     except Exception as exc:
         logger.error("Failed to fetch '%s'.", url, exc_info=exc)
