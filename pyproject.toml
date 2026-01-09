@@ -11,7 +11,7 @@ keywords = [ "bibtex", "biliography", "cli", "management", "papis", "zotero" ]
 license = { text = "GPL-3.0-or-later" }
 maintainers = [ { name = "Alejandro Gallo", email = "aamsgallo@gmail.com" } ]
 authors = [ { name = "Alejandro Gallo", email = "aamsgallo@gmail.com" } ]
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 classifiers = [
     "Environment :: Console",
     "Environment :: Console :: Curses",
@@ -26,12 +26,11 @@ classifiers = [
     "Operating System :: POSIX",
     "Operating System :: Unix",
     "Programming Language :: Python :: 3 :: Only",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Utilities",
 ]
 dependencies = [ "papis>=0.14,<0.15" ]

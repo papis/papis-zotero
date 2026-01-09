@@ -1,5 +1,5 @@
 import tempfile
-from typing import Any, Dict, Optional
+from typing import Any
 
 import papis.logging
 
@@ -46,7 +46,7 @@ ZOTERO_TO_PAPIS_FIELDS = {
 # no changes. It will be available in papis>0.13, so it should be deleted and
 # replaced when we can depend on a newer version
 
-ZOTERO_TO_PAPIS_TYPES: Dict[str, str] = {
+ZOTERO_TO_PAPIS_TYPES: dict[str, str] = {
     # Zotero
     "annotation": "misc",
     "attachment": "misc",
@@ -92,9 +92,9 @@ ZOTERO_TO_PAPIS_TYPES: Dict[str, str] = {
 
 def download_document(
         url: str,
-        expected_document_extension: Optional[str] = None,
-        cookies: Optional[Dict[str, Any]] = None,
-        ) -> Optional[str]:
+        expected_document_extension: str | None = None,
+        cookies: dict[str, Any] | None = None,
+        ) -> str | None:
     """Download a document from *url* and store it in a local file.
 
     :param url: the URL of a remote file.

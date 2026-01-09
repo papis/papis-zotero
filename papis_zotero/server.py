@@ -8,7 +8,7 @@ into Papis.
 import http.server
 import json
 from functools import lru_cache as cache
-from typing import TYPE_CHECKING, Any, Dict, List, Tuple
+from typing import TYPE_CHECKING, Any
 
 import papis.logging
 
@@ -24,7 +24,7 @@ ZOTERO_PORT = 23119
 
 
 @cache
-def _zotero_key_conversions() -> "List[KeyConversionPair]":
+def _zotero_key_conversions() -> "list[KeyConversionPair]":
     from papis.document import KeyConversionPair
 
     from papis_zotero.utils import ZOTERO_TO_PAPIS_TYPES
@@ -51,7 +51,7 @@ def _zotero_key_conversions() -> "List[KeyConversionPair]":
     ]
 
 
-def zotero_authors(creators: List[Dict[str, str]]) -> List[Dict[str, str]]:
+def zotero_authors(creators: list[dict[str, str]]) -> list[dict[str, str]]:
     authors = []
     for creator in creators:
         if creator["creatorType"] != "author":
@@ -65,7 +65,7 @@ def zotero_authors(creators: List[Dict[str, str]]) -> List[Dict[str, str]]:
     return authors
 
 
-def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
+def zotero_data_to_papis_data(item: dict[str, Any]) -> dict[str, Any]:
     item.pop("id", None)
     item.pop("attachments", None)
     item.pop("html", None)
@@ -107,7 +107,7 @@ def zotero_data_to_papis_data(item: Dict[str, Any]) -> Dict[str, Any]:
     return item
 
 
-def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
+def download_zotero_attachments(attachments: list[dict[str, str]]) -> list[str]:
     from papis_zotero.utils import (
         ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION,
         download_document,
@@ -133,7 +133,7 @@ def download_zotero_attachments(attachments: List[Dict[str, str]]) -> List[str]:
 
 
 class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
-    def __init__(self, set_list: List[Tuple[str, str]], request: Any,
+    def __init__(self, set_list: list[tuple[str, str]], request: Any,
                  client_address: Any, server: Any) -> None:
         self.set_list = set_list
         super().__init__(request, client_address, server)

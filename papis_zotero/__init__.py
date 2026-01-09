@@ -1,7 +1,6 @@
 import http.server
 import os
 from functools import partial
-from typing import List, Optional, Tuple
 
 import click
 
@@ -30,7 +29,7 @@ def main() -> None:
     help="Set imported document metadata as <key> <value>. Can be used multiple times.",
     multiple=True,
     type=(str, str))
-def serve(address: str, port: int, set_list: List[Tuple[str, str]],) -> None:
+def serve(address: str, port: int, set_list: list[tuple[str, str]],) -> None:
     """Start a ``zotero-connector`` server."""
 
     logger.warning("The 'zotero-connector' server is experimental. "
@@ -84,8 +83,10 @@ def serve(address: str, port: int, set_list: List[Tuple[str, str]],) -> None:
               help="Whether to link the pdf files or copy them",
               is_flag=True,
               default=False)
-def do_importer(from_bibtex: Optional[str], from_sql: Optional[str],
-                outfolder: Optional[str], link: bool) -> None:
+def do_importer(from_bibtex: str | None,
+                from_sql: str | None,
+                outfolder: str | None,
+                link: bool) -> None:
     """Import zotero libraries into papis libraries."""
     if outfolder is None:
         from papis.config import get_lib_dirs
