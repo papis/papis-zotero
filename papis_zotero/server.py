@@ -5,6 +5,8 @@ is *not* running, you can have items from your web browser added directly
 into Papis.
 """
 
+from __future__ import annotations
+
 import http.server
 import json
 from functools import lru_cache as cache
@@ -24,7 +26,7 @@ ZOTERO_PORT = 23119
 
 
 @cache
-def _zotero_key_conversions() -> "list[KeyConversionPair]":
+def _zotero_key_conversions() -> list[KeyConversionPair]:
     from papis.document import KeyConversionPair
 
     from papis_zotero.utils import ZOTERO_TO_PAPIS_TYPES

@@ -114,6 +114,7 @@ multiline-quotes = "double"
 combine-as-imports = true
 known-first-party = ["papis"]
 known-local-folder = ["papis_zotero"]
+required-imports = ["from __future__ import annotations"]
 
 [tool.mypy]
 python_version = "3.10"

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import os
 from typing import TYPE_CHECKING
 
@@ -10,7 +12,7 @@ if TYPE_CHECKING:
 
 @pytest.mark.skipif(os.name == "nt", reason="encoding is incorrect on windows")
 @pytest.mark.library_setup(populate=False)
-def test_simple(tmp_library: "TemporaryLibrary") -> None:
+def test_simple(tmp_library: TemporaryLibrary) -> None:
     from papis_zotero.bibtex import add_from_bibtex
     bibpath = os.path.join(os.path.dirname(__file__),
                            "resources", "bibtex", "zotero-library.bib")
