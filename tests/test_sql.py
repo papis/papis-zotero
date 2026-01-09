@@ -1,14 +1,19 @@
+from __future__ import annotations
+
 import glob
 import os
+from typing import TYPE_CHECKING
 
 import pytest
 import yaml
 
 import papis.document
 import papis.yaml
-from papis.testing import TemporaryLibrary
 
 import papis_zotero.sql
+
+if TYPE_CHECKING:
+    from papis.testing import TemporaryLibrary
 
 
 @pytest.mark.skipif(os.name == "nt", reason="encoding is incorrect on windows")
