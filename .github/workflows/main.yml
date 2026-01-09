@@ -52,7 +52,13 @@ jobs:
 
     - name: Test with pytest
       run: |
+        # NOTE: This is necessary for Python 3.14 and papis<0.15. The `docmatcher`
+        # code in versions <0.15 does not work with the multiprocessing chances
+        # in Python 3.14. See the following PR for the fix
+        #   https://github.com/papis/papis/pull/1082
+        export PAPIS_NP=0
         make pytest
+      shell: bash
 
   pypi-release:
     needs: [build]
