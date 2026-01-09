@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Any, Dict, Optional
+from typing import Any
 
 import papis.logging
 
@@ -10,7 +10,7 @@ RE_SEPARATOR = re.compile(r"\s*,\s*")
 
 
 def add_from_bibtex(bib_file: str,
-                    out_folder: Optional[str] = None,
+                    out_folder: str | None = None,
                     link: bool = False) -> None:
     from papis.config import set_lib_from_name
 
@@ -22,7 +22,7 @@ def add_from_bibtex(bib_file: str,
     entries = bibtex_to_dict(bib_file)
     nentries = len(entries)
     for i, entry in enumerate(entries):
-        result: Dict[str, Any] = entry.copy()
+        result: dict[str, Any] = entry.copy()
 
         # cleanup date
         if "date" in result:

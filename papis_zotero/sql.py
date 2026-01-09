@@ -2,7 +2,7 @@ import os
 import re
 import sqlite3
 from datetime import datetime
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import papis.logging
 
@@ -35,7 +35,7 @@ WHERE
 """
 
 
-def get_fields(connection: sqlite3.Connection, item_id: str) -> Dict[str, str]:
+def get_fields(connection: sqlite3.Connection, item_id: str) -> dict[str, str]:
     """
     :arg item_id: an identifier for the item to query.
     :returns: a dictionary mapping fields to their values, e.g. ``"doi"``.
@@ -88,14 +88,14 @@ ORDER BY
 
 
 def get_creators(connection: sqlite3.Connection,
-                 item_id: str) -> Dict[str, List[str]]:
+                 item_id: str) -> dict[str, list[str]]:
     from papis.document import author_list_to_author
 
     cursor = connection.cursor()
     cursor.execute(ZOTERO_QUERY_ITEM_CREATORS, (item_id,))
 
     # gather creators
-    creators_by_type: Dict[str, List[Dict[str, str]]] = {}
+    creators_by_type: dict[str, list[dict[str, str]]] = {}
     for ctype, given_name, family_name in cursor:
         creators_by_type.setdefault(ctype.lower(), []).append({
             "given": given_name,
@@ -103,7 +103,7 @@ def get_creators(connection: sqlite3.Connection,
             })
 
     # convert to papis format
-    result: Dict[str, Any] = {}
+    result: dict[str, Any] = {}
     for ctype, creators in creators_by_type.items():
         result[ctype] = author_list_to_author({"author_list": creators})
         result[f"{ctype}_list"] = creators
@@ -127,7 +127,7 @@ WHERE
 
 
 def get_files(connection: sqlite3.Connection, item_id: str, item_key: str,
-              input_path: str, out_folder: str) -> List[str]:
+              input_path: str, out_folder: str) -> list[str]:
     cursor = connection.cursor()
     cursor.execute(
         ZOTERO_QUERY_ITEM_ATTACHMENTS,
@@ -165,7 +165,7 @@ WHERE
 """
 
 
-def get_tags(connection: sqlite3.Connection, item_id: str) -> Dict[str, List[str]]:
+def get_tags(connection: sqlite3.Connection, item_id: str) -> dict[str, list[str]]:
     cursor = connection.cursor()
     cursor.execute(ZOTERO_QUERY_ITEM_TAGS, (item_id,))
 
@@ -186,7 +186,7 @@ WHERE
 
 
 def get_collections(connection: sqlite3.Connection,
-                    item_id: str) -> Dict[str, List[str]]:
+                    item_id: str) -> dict[str, list[str]]:
     cursor = connection.cursor()
     cursor.execute(ZOTERO_QUERY_ITEM_COLLECTIONS, (item_id,))
 
@@ -225,7 +225,7 @@ ZOTERO_QUERY_ITEMS = """
 
 
 def add_from_sql(input_path: str,
-                 out_folder: Optional[str] = None,
+                 out_folder: str | None = None,
                  link: bool = False) -> None:
     """
     :param inpath: path to zotero SQLite database "zoter.sqlite" and
