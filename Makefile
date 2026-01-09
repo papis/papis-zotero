@@ -36,7 +36,8 @@ nix-update: 						## Update the nix flake.lock file
 .PHONY: nix-update
 
 ci-install-build-system:
-	$(PYTHON) -m pip install --upgrade pip hatchling wheel build
+	# NOTE: pinning setuptools<81 for pkg_resources, which isbnlib needs
+	$(PYTHON) -m pip install --upgrade pip hatchling wheel build 'setuptools<81'
 .PHONY: ci-install-build-system
 
 ci-install: ci-install-build-system	## Run pip and install dependencies on CI
