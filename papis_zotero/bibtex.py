@@ -14,15 +14,17 @@ RE_SEPARATOR = re.compile(r"\s*,\s*")
 def add_from_bibtex(bib_file: str,
                     out_folder: str | None = None,
                     link: bool = False) -> None:
-    from papis.config import set_lib_from_name
+    from papis.config import getformatpattern, set_lib_from_name
 
     if out_folder is not None:
         set_lib_from_name(out_folder)
+    folder_name = getformatpattern("add-folder-name")
 
     from papis.bibtex import bibtex_to_dict, create_reference, ref_cleanup
 
     entries = bibtex_to_dict(bib_file)
     nentries = len(entries)
+
     for i, entry in enumerate(entries):
         result: dict[str, Any] = entry.copy()
 
@@ -60,4 +62,5 @@ def add_from_bibtex(bib_file: str,
                     i, nentries, result["ref"])
 
         from papis.commands.add import run as add
-        add([pdf_file] if pdf_file is not None else [], data=result, link=link)
+        add([pdf_file] if pdf_file is not None else [], data=result, link=link,
+            folder_name=folder_name)
