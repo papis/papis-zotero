@@ -276,8 +276,9 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         logger.info("Adding snapshot to Papis.")
 
         from papis.commands.add import run as add
-        from papis.config import getstring
-        add([temp_html], data=papis_item, folder_name=getstring("add-folder-name"))
+        from papis.config import getformatpattern
+        add([temp_html], data=papis_item,
+            folder_name=getformatpattern("add-folder-name"))
 
         self.send_response(201)
         self.set_zotero_headers()

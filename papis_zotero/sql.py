@@ -235,7 +235,7 @@ def add_from_sql(input_path: str,
     :param outpath: path where all items will be exported to created if not
         existing
     """
-    from papis.config import get_lib_dirs, getstring, set_lib_from_name
+    from papis.config import get_lib_dirs, getformatpattern, set_lib_from_name
 
     if out_folder is None:
         out_folder = get_lib_dirs()[0]
@@ -266,7 +266,7 @@ def add_from_sql(input_path: str,
 
     from papis.strings import time_format
 
-    folder_name = getstring("add-folder-name")
+    folder_name = getformatpattern("add-folder-name")
     for i, (item_id, zitem_type, item_key, zdate_added) in enumerate(cursor, start=1):
         # convert fields
         date_added = (
@@ -292,7 +292,8 @@ def add_from_sql(input_path: str,
                     i, items_count, item_key, out_folder)
 
         from papis.commands.add import run as add
-        add(paths=files, data=item, link=link, folder_name=folder_name)
+        add(files, data=item, link=link,
+            folder_name=folder_name)
 
     logger.info("Finished exporting from '%s'.", input_path)
     logger.info("Exported files can be found at '%s'.", out_folder)
