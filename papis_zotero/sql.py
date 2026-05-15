@@ -14,6 +14,7 @@ from papis_zotero.utils import (
     ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION,
     ZOTERO_TO_PAPIS_FIELDS,
     ZOTERO_TO_PAPIS_TYPES,
+    set_lib_from_path,
 )
 
 logger = papis.logging.get_logger(__name__)
@@ -235,7 +236,7 @@ def add_from_sql(input_path: str,
     :param outpath: path where all items will be exported to created if not
         existing
     """
-    from papis.config import get_lib_dirs, getformatpattern, set_lib_from_name
+    from papis.config import get_lib_dirs, getformatpattern
 
     if out_folder is None:
         out_folder = get_lib_dirs()[0]
@@ -262,7 +263,7 @@ def add_from_sql(input_path: str,
 
     cursor.execute(ZOTERO_QUERY_ITEMS, ZOTERO_EXCLUDED_ITEM_TYPES)
     if out_folder is not None:
-        set_lib_from_name(out_folder)
+        set_lib_from_path(out_folder)
 
     from papis.strings import time_format
 

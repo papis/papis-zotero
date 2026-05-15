@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import tempfile
 from typing import Any
 
@@ -139,3 +140,20 @@ def download_document(
         f.write(response.content)
 
     return f.name
+
+
+def set_lib_from_path(libname_or_path: str) -> None:
+    from papis.config import get_lib_from_name, get_libs, set_lib_from_name
+
+    if os.path.exists(libname_or_path):
+        libname_or_path = os.path.abspath(os.path.expanduser(libname_or_path))
+
+    orig_libname = None
+    libs = get_libs()
+    for libname in libs:
+        lib = get_lib_from_name(libname)
+        if libname_or_path in lib.paths:
+            orig_libname = lib.name
+            break
+
+    set_lib_from_name(orig_libname if orig_libname else libname_or_path)
