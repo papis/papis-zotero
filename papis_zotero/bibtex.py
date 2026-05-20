@@ -47,22 +47,29 @@ def add_from_bibtex(bib_file: str,
             result["ref"] = create_reference(result)
 
         # get file
-        pdf_file = result.pop("file", None)
-        if pdf_file is not None:
-            pdf_file = pdf_file.split(":")[1]
-            pdf_file = os.path.join(*pdf_file.split("/"))
-            pdf_file = os.path.join(os.path.dirname(bib_file), pdf_file)
+        file_field = result.pop("file", None)
+        if file_field is not None:
 
-            if os.path.exists(pdf_file):
-                logger.info("Document file found: '%s'.", pdf_file)
-            else:
-                logger.warning("Document file not found: '%s'.", pdf_file)
-                pdf_file = None
+            # captures path ending in ".extension", followed by :, ; or }
+            pattern = r"(?:/home|\./|(?<=:)).+?\.\w+(?=[:;}])"
 
-        # add to library
-        logger.info("[%4d/%-4d] Exporting item with ref '%s'.",
-                    i, nentries, result["ref"])
+            paths = re.findall(pattern, file_field)
 
-        from papis.commands.add import run as add
-        add([pdf_file] if pdf_file is not None else [], data=result, link=link,
-            folder_name=folder_name)
+            from papis.commands.add import run as add
+            for p in paths:
+
+                if not p.startswith("/home"):
+                    path = os.path.join(os.path.dirname(bib_file), p)
+                else:
+                    path = p
+
+                if os.path.exists(path):
+                    logger.info("Document file found: '%s'.", path)
+
+                    logger.info("[%4d/%-4d] Exporting item with ref '%s'.",
+                            i, nentries, result["ref"])
+
+                    add([path], data=result, link=link, folder_name=folder_name)
+
+                else:
+                    logger.warning("Document file not found: '%s'.", path)
