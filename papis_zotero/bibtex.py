@@ -47,29 +47,32 @@ def add_from_bibtex(bib_file: str,
             result["ref"] = create_reference(result)
 
         # get file
-        file_field = result.pop("file", None)
-        if file_field is not None:
+        file_field = result.pop("file", "")
 
-            # captures path ending in ".extension", followed by :, ; or }
-            pattern = r"(?:/home|\./|(?<=:)).+?\.\w+(?=[:;}])"
+        path_list = []
 
-            paths = re.findall(pattern, file_field)
+        # captures path ending in ".extension", followed by :, ; or }
+        pattern = r"(?:/home|\./|(?<=:)).+?\.\w+(?=[:;}])"
+        captured_paths = re.findall(pattern, file_field)
 
-            from papis.commands.add import run as add
-            for p in paths:
+        for p in captured_paths:
 
-                if not p.startswith("/home"):
-                    path = os.path.join(os.path.dirname(bib_file), p)
-                else:
-                    path = p
+            path = (p if os.path.isabs(p)
+                    else os.path.join(os.path.dirname(bib_file), p))
 
-                if os.path.exists(path):
-                    logger.info("Document file found: '%s'.", path)
+            if os.path.exists(path):
+                logger.info("Document file found: '%s'.", path)
+                path_list.append(path)
+            else:
+                logger.warning(
+                    "Attachment found but path does not exist: '%s'.", path)
 
-                    logger.info("[%4d/%-4d] Exporting item with ref '%s'.",
-                            i, nentries, result["ref"])
+        if len(path_list) == 0:
+            logger.warning("Document files not found: '%s'.")
 
-                    add([path], data=result, link=link, folder_name=folder_name)
-
-                else:
-                    logger.warning("Document file not found: '%s'.", path)
+        from papis.commands.add import run as add
+        logger.info(
+            "[%4d/%-4d] Exporting item with ref '%s'.",
+            i, nentries, result["ref"]
+        )
+        add(path_list, data=result, link=link, folder_name=folder_name)
