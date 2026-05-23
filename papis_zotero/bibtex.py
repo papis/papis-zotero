@@ -47,22 +47,32 @@ def add_from_bibtex(bib_file: str,
             result["ref"] = create_reference(result)
 
         # get file
-        pdf_file = result.pop("file", None)
-        if pdf_file is not None:
-            pdf_file = pdf_file.split(":")[1]
-            pdf_file = os.path.join(*pdf_file.split("/"))
-            pdf_file = os.path.join(os.path.dirname(bib_file), pdf_file)
+        file_field = result.pop("file", "")
 
-            if os.path.exists(pdf_file):
-                logger.info("Document file found: '%s'.", pdf_file)
+        path_list = []
+
+        # captures path ending in ".extension", followed by :, ; or }
+        pattern = r"(?:/home|\./|(?<=:)).+?\.\w+(?=[:;}])"
+        captured_paths = re.findall(pattern, file_field)
+
+        for p in captured_paths:
+
+            path = (p if os.path.isabs(p)
+                    else os.path.join(os.path.dirname(bib_file), p))
+
+            if os.path.exists(path):
+                logger.info("Document file found: '%s'.", path)
+                path_list.append(path)
             else:
-                logger.warning("Document file not found: '%s'.", pdf_file)
-                pdf_file = None
+                logger.warning(
+                    "Attachment found but path does not exist: '%s'.", path)
 
-        # add to library
-        logger.info("[%4d/%-4d] Exporting item with ref '%s'.",
-                    i, nentries, result["ref"])
+        if len(path_list) == 0:
+            logger.warning("Document files not found: '%s'.")
 
         from papis.commands.add import run as add
-        add([pdf_file] if pdf_file is not None else [], data=result, link=link,
-            folder_name=folder_name)
+        logger.info(
+            "[%4d/%-4d] Exporting item with ref '%s'.",
+            i, nentries, result["ref"]
+        )
+        add(path_list, data=result, link=link, folder_name=folder_name)
