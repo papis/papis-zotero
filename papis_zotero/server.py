@@ -34,7 +34,7 @@ def _zotero_key_conversions() -> list[KeyConversionPair]:
     return [
         KeyConversionPair("creators", [{
             "key": "author_list",
-            "action": lambda a: zotero_authors(a)  # noqa: PLW0108
+            "action": lambda a: zotero_authors(a)  # ruff:ignore[unnecessary-lambda]
             }]),
         KeyConversionPair("tags", [{
             "key": "tags",
@@ -140,7 +140,7 @@ class PapisRequestHandler(http.server.BaseHTTPRequestHandler):
         self.set_list = set_list
         super().__init__(request, client_address, server)
 
-    def log_message(self, fmt: str, *args: Any) -> None:  # noqa: PLR6301
+    def log_message(self, fmt: str, *args: Any) -> None:  # ruff:ignore[no-self-use]
         logger.info(fmt, *args)
 
     def set_zotero_headers(self) -> None:
