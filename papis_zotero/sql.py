@@ -13,8 +13,6 @@ from papis_zotero.utils import (
     ZOTERO_EXCLUDED_ITEM_TYPES,
     ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION,
     ZOTERO_TO_PAPIS_FIELDS,
-    ZOTERO_TO_PAPIS_TYPES,
-    set_lib_from_path,
 )
 
 logger = papis.logging.get_logger(__name__)
@@ -263,8 +261,10 @@ def add_from_sql(input_path: str,
 
     cursor.execute(ZOTERO_QUERY_ITEMS, ZOTERO_EXCLUDED_ITEM_TYPES)
     if out_folder is not None:
-        set_lib_from_path(out_folder)
+        from papis.config import set_lib_from_name
+        set_lib_from_name(out_folder)
 
+    from papis.bibtex import bibtex_type_converter
     from papis.strings import time_format
 
     folder_name = getformatpattern("add-folder-name")
@@ -273,7 +273,7 @@ def add_from_sql(input_path: str,
         date_added = (
             datetime.strptime(zdate_added, "%Y-%m-%d %H:%M:%S")
             .strftime(time_format))
-        item_type = ZOTERO_TO_PAPIS_TYPES.get(zitem_type, zitem_type)
+        item_type = bibtex_type_converter.get(zitem_type, zitem_type)
 
         # get Zotero metadata
         fields = get_fields(connection, item_id)

@@ -27,9 +27,8 @@ ZOTERO_PORT = 23119
 
 @cache
 def _zotero_key_conversions() -> list[KeyConversionPair]:
+    from papis.bibtex import bibtex_type_converter
     from papis.document import KeyConversionPair
-
-    from papis_zotero.utils import ZOTERO_TO_PAPIS_TYPES
 
     return [
         KeyConversionPair("creators", [{
@@ -48,7 +47,7 @@ def _zotero_key_conversions() -> list[KeyConversionPair]:
             {"key": "eprint", "action": lambda a: a.split(":")[-1]}
             ]),
         KeyConversionPair("type", [
-            {"key": "type", "action": ZOTERO_TO_PAPIS_TYPES.get}
+            {"key": "type", "action": bibtex_type_converter.get}
             ]),
     ]
 
@@ -110,10 +109,9 @@ def zotero_data_to_papis_data(item: dict[str, Any]) -> dict[str, Any]:
 
 
 def download_zotero_attachments(attachments: list[dict[str, str]]) -> list[str]:
-    from papis_zotero.utils import (
-        ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION,
-        download_document,
-    )
+    from papis.downloaders import download_document
+
+    from papis_zotero.utils import ZOTERO_SUPPORTED_MIMETYPES_TO_EXTENSION
 
     files = []
     for attachment in attachments:
