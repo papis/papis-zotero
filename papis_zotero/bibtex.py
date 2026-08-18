@@ -6,8 +6,6 @@ from typing import Any
 
 import papis.logging
 
-from papis_zotero.utils import set_lib_from_path
-
 logger = papis.logging.get_logger(__name__)
 
 RE_SEPARATOR = re.compile(r"\s*,\s*")
@@ -19,7 +17,8 @@ def add_from_bibtex(bib_file: str,
     from papis.config import getformatpattern
 
     if out_folder is not None:
-        set_lib_from_path(out_folder)
+        from papis.config import set_lib_from_name
+        set_lib_from_name(out_folder)
     folder_name = getformatpattern("add-folder-name")
 
     from papis.bibtex import bibtex_to_dict, create_reference, ref_cleanup
