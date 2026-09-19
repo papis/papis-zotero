@@ -23,13 +23,13 @@ def test_simple(tmp_library: TemporaryLibrary) -> None:
     db.clear()
     db.initialize()
 
-    from papis.id import key_name
+    from papis.id import ID_KEY_NAME
     from papis.yaml import Loader  # type: ignore[attr-defined]
 
     doc, = db.query_dict({"author": "Magnus"})
     with open(doc.get_info_file(), encoding="utf-8") as fd:
         data = yaml.load(fd, Loader=Loader)
-        del data[key_name()]
+        del data[ID_KEY_NAME]
 
     info_name = os.path.join(os.path.dirname(__file__), "resources", "bibtex_out.yaml")
     with open(info_name, encoding="utf-8") as fd:
